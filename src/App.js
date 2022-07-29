@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<MainPage/>}/>
         <Route path="/login" element={<LoginPage/>}/>
-        <Route path="/*" element={<div>404</div>}/>
+        <Route path="*" element={<div>404</div>}/>
       </Routes>
     </div>
   );

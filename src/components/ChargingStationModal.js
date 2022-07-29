@@ -2,16 +2,15 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import '../styles/components/ChargingStationModal.css';
 
-const ChargingStationModal = ({show, setShow}) => {
-    const handleClose = () => setShow(false);
+const ChargingStationModal = ({show, onHide}) => {
     
     return (
         <div className='ChargingStationModal'>
-            <Modal centered show={show} onHide={handleClose}>
+            <Modal centered show={show} onHide={onHide}>
                 <Modal.Header>
                     <div></div>
                     <span>충전소 운영 현황</span>
-                    <div id='close-icon' onClick={handleClose}><img src='/images/CL_icon_close.png'/></div>
+                    <div id='close-icon' onClick={onHide}><img src='/images/CL_icon_close.png'/></div>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='modal-charging-info'>

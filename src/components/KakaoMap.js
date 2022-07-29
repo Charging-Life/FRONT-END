@@ -1,8 +1,11 @@
 /*global kakao*/ 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/components/KakaoMap.css';
+import ChargingStationModal from './ChargingStationModal'
 
 const KakaoMap = () => {
+    const [showModal, setShowModal] = useState(false)
+
     useEffect(()=>{
         const mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapOption = { 
@@ -15,7 +18,14 @@ const KakaoMap = () => {
     });
 
     return (
-        <div id='map' className='KakaoMap'></div>
+        <>
+            <div id='map' className='KakaoMap'></div>
+
+            <ChargingStationModal
+                show={showModal}
+                onHide={()=>{setShowModal(false)}}
+            />
+        </>
     );
 };
 

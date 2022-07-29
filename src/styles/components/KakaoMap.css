@@ -1,9 +1,3 @@
-.KakaoMap{
-    width: 100%;
-    height: 100vh;
-}
-
-
 /* media query */
 @media only screen and (min-width: 270px) and (max-width: 299px) {
 
@@ -15,4 +9,8 @@
 
 @media only screen and (min-width: 450px) {
 
+}
+
+.KakaoMap{
+    height: 100%;
 }

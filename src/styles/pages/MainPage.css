@@ -1,12 +1,32 @@
+.MainPage{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainpage_header{
+    border-bottom: 3px solid #48DB8C;
+}
+
+.mainpage_kakaomap{
+    flex-grow: 1;
+}
+
 /* media query */
 @media only screen and (min-width: 270px) and (max-width: 299px) {
-
+    .mainpage_header{
+        height: 50px;
+    }
 }
 
 @media only screen and (min-width: 300px) and (max-width: 449px) {
-
+    .mainpage_header{
+        height: 50px;
+    }
 }
 
 @media only screen and (min-width: 450px) {
-
+    .mainpage_header{
+        height: 60px;
+    }
 }

@@ -6,8 +6,12 @@ import Header from '../components/Header';
 const MainPage = () => {
     return (
         <div className='MainPage'>
-            <Header/>
-            <KakaoMap/>
+            <div className='mainpage_header'>
+                <Header/>
+            </div>
+            <div className='mainpage_kakaomap'>
+                <KakaoMap/>
+            </div>
         </div>
     );
 };

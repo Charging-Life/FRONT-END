@@ -25,3 +25,4 @@ yarn-error.log*
 # 보안
 # security 디렉터리 추가할 것
 security
+index.html

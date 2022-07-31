@@ -1,0 +1,96 @@
+.FilterList{
+    padding: 20px;
+    overflow: scroll;
+    width: 400px;
+}
+.filterlist_box{
+    margin-bottom: 20px;
+}
+.filterlist_title{
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid #cdcdcd;
+    color: rgb(62, 62, 62);
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+
+.filterlist_button_group_large > button{
+    background-color: white;
+    border: 2px solid #48DB8C;
+    width: 48%;
+    margin: 1% 1%;
+    padding: 5px;
+    color: #34a268;
+    font-weight: bold;
+    border-radius: 7px;
+    text-align: center;
+}
+.filterlist_button_group_large > button:hover, .filterlist_button_group_large > .filter_clicked_button{
+    background-color: #48DB8C;
+    border: 2px solid #48DB8C;
+    width: 48%;
+    margin: 1% 1%;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.filterlist_button_group > button{
+    background-color: white;
+    border: 2px solid #48DB8C;
+    width: 31%;
+    margin: 1% 1%;
+    padding: 5px;
+    color: #34a268;
+    font-weight: bold;
+    border-radius: 7px;
+    text-align: center;
+}
+.filterlist_button_group > button:hover, .filterlist_button_group > .filter_clicked_button{
+    background-color: #48DB8C;
+    border: 2px solid #48DB8C;
+    width: 31%;
+    margin: 1% 1%;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.filterlist_searchButton{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 10px 5px;
+    margin-top: 50px;
+    border-top: 1px solid #cdcdcd;;
+}
+.filterlist_searchButton > button {
+    background-color: #2eb56d;
+    border: 2px solid #2eb56d;
+    width: 100px;
+    padding: 5px 10px;
+    color: white;
+    font-weight: bold;
+    border-radius: 7px;
+    font-size: 18px;
+
+}
+
+/* media query */
+@media only screen and (min-width: 270px) and (max-width: 299px) {    
+
+}
+
+@media only screen and (min-width: 300px) and (max-width: 449px) {
+
+}
+
+@media only screen and (min-width: 450px) {
+
+}

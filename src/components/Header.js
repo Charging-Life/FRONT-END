@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import '../styles/components/Header.css';
-import NoticeOffCanvas from './NoticeOffCanvas.js';
+import FilterOffCanvas from './OffCanvases/FilterOffCanvas';
+import NoticeOffCanvas from './OffCanvases/NoticeOffCanvas';
 
 const Header = () => {
     const [showNotice, setShowNotice] = useState(false);
+    const [showFilter, setShowFilter] = useState(false);
 
     return (
         <>
@@ -12,7 +14,8 @@ const Header = () => {
                     className='header_logo'/>
                 <div>
                     <img src='images/CL_icon_search.png' alt='search' 
-                        className='header_search'/>
+                        className='header_search'
+                        onClick={()=>{setShowFilter(true)}}/>
                     <img src='images/CL_icon_notice.png' alt='notice' 
                         className='header_notice'
                         onClick={()=>{setShowNotice(true)}}/>
@@ -22,6 +25,10 @@ const Header = () => {
             <NoticeOffCanvas
                 show = {showNotice}
                 onHide = {()=>{setShowNotice(false)}}
+            />
+            <FilterOffCanvas
+                show = {showFilter}
+                onHide = {()=>{setShowFilter(false)}}
             />
         </>
 

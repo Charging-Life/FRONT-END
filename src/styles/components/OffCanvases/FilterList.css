@@ -7,7 +7,6 @@
     margin-bottom: 20px;
 }
 .filterlist_title{
-    font-size: 20px;
     font-weight: bold;
     border-bottom: 1px solid #cdcdcd;
     color: rgb(62, 62, 62);
@@ -68,7 +67,7 @@
     justify-content: flex-end;
     padding: 10px 5px;
     margin-top: 50px;
-    border-top: 1px solid #cdcdcd;;
+    border-top: 1px solid #cdcdcd;
 }
 .filterlist_searchButton > button {
     background-color: #2eb56d;
@@ -78,19 +77,47 @@
     color: white;
     font-weight: bold;
     border-radius: 7px;
-    font-size: 18px;
-
 }
 
 /* media query */
-@media only screen and (min-width: 270px) and (max-width: 299px) {    
-
+@media only screen and (min-width: 270px) and (max-width: 299px) {  
+    .filterlist_title{
+        font-size: 13px;
+    }  
+    .filterlist_button_group_large > button,
+    .filterlist_button_group_large > button:hover, .filterlist_button_group_large > .filter_clicked_button,
+    .filterlist_button_group > button,
+    .filterlist_button_group > button:hover, .filterlist_button_group > .filter_clicked_button,
+    .filterlist_searchButton, .filterlist_searchButton > button
+    {
+        font-size: 10px;
+    }
 }
 
 @media only screen and (min-width: 300px) and (max-width: 449px) {
-
+    .filterlist_title{
+        font-size: 15px;
+    }
+    .filterlist_button_group_large > button,
+    .filterlist_button_group_large > button:hover, .filterlist_button_group_large > .filter_clicked_button,
+    .filterlist_button_group > button,
+    .filterlist_button_group > button:hover, .filterlist_button_group > .filter_clicked_button,
+    .filterlist_searchButton, .filterlist_searchButton > button
+    {
+        font-size: 12px;
+    }
 }
 
 @media only screen and (min-width: 450px) {
-
+    .filterlist_title{
+        font-size: 20px;
+    }
+    .filterlist_button_group_large > button,
+    .filterlist_button_group_large > button:hover, .filterlist_button_group_large > .filter_clicked_button,
+    .filterlist_button_group > button,
+    .filterlist_button_group > button:hover, .filterlist_button_group > .filter_clicked_button,
+    .filterlist_searchButton, .filterlist_searchButton > button
+    {
+        font-size: 18px;
+    }
 }

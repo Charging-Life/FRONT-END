@@ -37,7 +37,7 @@
 
 @media only screen and (min-width: 450px) {
     .filter_offcanvas{
-        min-width: 50vw;
+        min-width: 400px
     }
     .filter_offcanvas_close{
         height: 22px;

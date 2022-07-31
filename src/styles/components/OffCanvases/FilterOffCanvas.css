@@ -1,0 +1,49 @@
+.filter_offcanvas_title{
+    color: #48DB8C;
+    font-weight: bold;
+}
+.filteroffcanvas_body{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/* media query */
+@media only screen and (min-width: 270px) and (max-width: 299px) {   
+    .filter_offcanvas{
+        min-width: 100vw;
+    } 
+    .filter_offcanvas_close{
+        height: 15px;
+    }
+    
+    .filter_offcanvas_title{
+        font-size: 17px;
+    }
+}
+
+@media only screen and (min-width: 300px) and (max-width: 449px) {
+    .filter_offcanvas{
+        min-width: 100vw;
+    }
+    .filter_offcanvas_close{
+        height: 18px;
+    }
+    
+    .filter_offcanvas_title{
+        font-size: 20px;
+    }
+}
+
+@media only screen and (min-width: 450px) {
+    .filter_offcanvas{
+        min-width: 50vw;
+    }
+    .filter_offcanvas_close{
+        height: 22px;
+    }
+    
+    .filter_offcanvas_title{
+        font-size: 23px;
+    } 
+}

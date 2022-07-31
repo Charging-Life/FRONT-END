@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/components/NoticeOffCanvas.css';
+import '../../styles/components/OffCanvases/NoticeOffCanvas.css';
 import { Offcanvas } from 'react-bootstrap';
 import { useState } from 'react';
 

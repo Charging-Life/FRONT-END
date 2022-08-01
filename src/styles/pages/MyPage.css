@@ -1,0 +1,150 @@
+.MyPage {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+#user-name {
+    font-weight: 900;
+    color: #09512A;
+}
+
+/* 사용자 정보 박스 */
+.user-info-box {
+    width: 85%;
+    margin: 0 auto;
+    flex-grow: 1;
+}
+
+.my-title-text {
+    font-weight: bold;
+    color: #48DB8C;
+    border-bottom: 1px solid #48DB8C;
+}
+
+#email-text {
+    font-size: 15px;
+    width: 90%;
+    margin: 15px auto;
+}
+
+#company-container {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+#company-container::-webkit-scrollbar {
+    display: none;
+}
+
+.company-box {
+    width: auto;
+    height: 40px;
+    margin: 10px 5px;
+    border-radius: 8px;
+    background-color: #48DB8C;
+    color: #fff;
+    font-weight: bold;
+    line-height: 40px;
+    padding: 0px 10px;
+    text-align: center;
+    font-size: 13px;
+    font-family: 'NanumSquare';
+}
+
+/* 버튼들 담은 박스 */
+.add-function-btns {
+    width: 85%;
+    height: 250px;
+    margin: 0 auto;
+}
+
+.my-btns {
+    width: 90%;
+    margin: 10px auto;
+}
+
+.my-btns > button {
+    width: 100%;
+    height: 40px;
+    margin: 5px;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    font-family: 'NanumSquare';
+    font-weight: bold;
+}
+
+.my-btns > button:focus {
+    border: none;
+}
+
+.my-btns > button:nth-child(1) {
+    background-color: #8FF4BD;
+}
+
+.my-btns > button:nth-child(2) {
+    background-color: #48DB8C;
+}
+
+.my-btns > button:nth-child(3) {
+    background-color: #34BD73;
+}
+
+.my-btns > button:nth-child(1):hover{
+    background-color: #63cf94;
+}
+
+.my-btns > button:nth-child(2):hover{
+    background-color: #31b870;
+}
+
+.my-btns > button:nth-child(3):hover{
+    background-color: #249657;
+}
+
+/* media query */
+@media only screen and (min-width: 270px) and (max-width: 299px) {
+    #user-name {
+        font-size: 25px;
+        margin: 15px 15px 15px 0;
+    }
+
+    .my-title-text {
+        font-size: 18px;
+        margin: 3px;
+    }
+}
+
+@media only screen and (min-width: 300px) and (max-width: 449px) {
+    #user-name {
+        font-size: 28px;
+        margin: 18px 18px 18px 0;
+    }
+
+    .my-title-text {
+        font-size: 20px;
+        margin: 5px;
+    }
+}
+
+@media only screen and (min-width: 450px) {
+    .MyPage {
+        width: 400px;
+    }
+
+    #user-name {
+        font-size: 32px;
+        margin: 25px 25px 25px 0;
+    }
+
+    .my-title-text {
+        font-size: 23px;
+        margin: 5px;
+    }
+}

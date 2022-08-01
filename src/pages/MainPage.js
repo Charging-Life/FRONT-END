@@ -7,7 +7,7 @@ const MainPage = () => {
     return (
         <div className='MainPage'>
             <div className='mainpage_header'>
-                <Header/>
+                <Header page={"main"}/>
             </div>
             <div className='mainpage_kakaomap'>
                 <KakaoMap/>

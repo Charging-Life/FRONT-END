@@ -22,7 +22,8 @@ const Header = ({page}) => {
                     page === "main" ? 
                     <div>
                         <img src='images/CL_icon_search.png' alt='search' 
-                            className='header_search'/>
+                            className='header_search'
+                            onClick={()=>{setShowFilter(true)}}/>
                         <img src='images/CL_icon_notice.png' alt='notice' 
                             className='header_notice'
                             onClick={()=>{setShowNotice(true)}}/>

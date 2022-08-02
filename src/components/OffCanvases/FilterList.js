@@ -34,7 +34,7 @@ const FilterList = ({filterStation, setFilterStation, buttonGroup, sendFilterRes
             const temp_ary = filterStation[`${category}`];
 
             const filterAry = temp_ary.filter((data)=>{
-                return data != index;
+                return data !== index;
             })
 
             setFilterStation({...filterStation, [category]: filterAry})

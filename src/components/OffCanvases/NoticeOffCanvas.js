@@ -1,59 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../styles/components/OffCanvases/NoticeOffCanvas.css';
 import { Offcanvas } from 'react-bootstrap';
 import { useState } from 'react';
+import NoticeModal from '../Modals/NoticeModal';
+import ChargingStationModal from '../Modals/ChargingStationModal';
+import { noticeInfo } from '../../security/noticeInfo.js';
 
 const NoticeOffCanvas = ({show, onHide}) => {
+    const [showNotice, setShowNotice] = useState(false);
+    const [showStation, setShowStation] = useState([false]);
+    const [detailInfo, setDetailInfo] = useState({});
+
     const [noticeState] = useState({
         charging_complete: ['차량 충전이 완료되었습니다.', 'images/CL_icon_notice_complete.png'],
         general_vehicle: ['충전소에 일반차량이 있습니다.', 'images/CL_icon_notice_general.png'],
         stowage: ['충전소에 적재물이 있습니다.', 'images/CL_icon_notice_stowage.png'],
         bad_condition: ['충전소 상태가 좋지 않습니다.', 'images/CL_icon_notice_bad.png']
     })
-
-    // 더미 데이터, 후에 지울 것
-    const [dummy] = useState([
-        {
-            state: "charging_complete",
-            number: "12나 3456",
-            location: "구미시 옥계동 삼구아파드"
-        },
-        {
-            state: "general_vehicle",
-            number: "12나 3456",
-            location: "구미시 옥계동 삼구아파드"
-        },
-        {
-            state: "stowage",
-            number: "12나 3456",
-            location: "구미시 옥계동 삼구아파드"
-        },
-        {
-            state: "bad_condition",
-            number: "12나 3456",
-            location: "구미시 옥계동 삼구아파드"
-        },
-        {
-            state: "charging_complete",
-            number: "12나 3456",
-            location: "구미시 옥계동 삼구아파드"
-        },
-        {
-            state: "general_vehicle",
-            number: "12나 3456",
-            location: "구미시 옥계동 삼구아파드"
-        },
-        {
-            state: "stowage",
-            number: "12나 3456",
-            location: "구미시 옥계동 삼구아파드"
-        },
-        {
-            state: "bad_condition",
-            number: "12나 3456",
-            location: "구미시 옥계동 삼구아파드"
-        }
-    ])
 
     const selectState=(state)=>{
         const returnObject = {
@@ -84,32 +47,39 @@ const NoticeOffCanvas = ({show, onHide}) => {
         return returnObject;
     }
 
+    // 알림 누르면 모달창 띄우기
+    const handleNoticeDetail = (e) => {
+        setShowNotice(true);
+        setDetailInfo(noticeInfo[e.target.id-1]);
+    }
+
     const showNotices =()=>{
         const list = [];
-        for(let i = 0; i < dummy.length; i++){
+        for(let i = 0; i < noticeInfo.length; i++){
             list.push(
-                <div key={i} className='notice_box'>
-                    <img src={selectState(dummy[i]['state'])['img_src']}
+                <div key={i} id={noticeInfo[i]['id']} className={noticeInfo[i]['isChecked'] ? 'notice_checked_box' : 'notice_box'}
+                    onClick={handleNoticeDetail}>
+                    <img src={selectState(noticeInfo[i]['state'])['img_src']}
                         className='notice_img'/>
                     <div>
                         <div className='notice_msg'>
-                            {selectState(dummy[i]['state'])['phrases']}
+                            {selectState(noticeInfo[i]['state'])['phrases']}
                         </div>
                         <div className='notice_sub_msg'>
-                            {dummy[i]['number']}
+                            {noticeInfo[i]['number']}
                         </div>
                         <div className='notice_sub_msg'>
-                            {dummy[i]['location']}
+                            {noticeInfo[i]['location']}
                         </div>
                     </div>
                 </div>
             );
         }
-
         return list;
     }
 
     return (
+        <>
         <div className='NoticeOffCanvas'>
             <Offcanvas show={show} onHide={onHide} placement='end'
                         className='notice_offcanvas'>
@@ -124,6 +94,9 @@ const NoticeOffCanvas = ({show, onHide}) => {
                 </Offcanvas.Body>
             </Offcanvas>
         </div>
+        <ChargingStationModal show={showStation} onHide={() => setShowStation(false)}/>
+        <NoticeModal info={detailInfo} show={showNotice} setShowStation={setShowStation} onHide={() => setShowNotice(false)} />
+        </>
     );
 };
 

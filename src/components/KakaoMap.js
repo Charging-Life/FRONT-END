@@ -1,7 +1,7 @@
 /*global kakao*/ 
 import React, { useEffect, useState } from 'react';
 import '../styles/components/KakaoMap.css';
-import ChargingStationModal from './ChargingStationModal'
+import ChargingStationModal from './Modals/ChargingStationModal'
 
 const KakaoMap = () => {
     const [showModal, setShowModal] = useState(false)

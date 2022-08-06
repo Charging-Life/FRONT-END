@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import '../styles/pages/MyPage.css';
 import Header from '../components/Header';
-import UpdateModal from '../components/UpdateModal';
+import UpdateModal from '../components/Modals/UpdateModal';
 
 const MyPage = () => {
     const [show, setShow] = useState(false);

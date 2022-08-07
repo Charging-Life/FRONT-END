@@ -2,15 +2,19 @@ import React, {useEffect, useState} from 'react';
 import '../styles/pages/MyPage.css';
 import Header from '../components/Header';
 import UpdateModal from '../components/Modals/UpdateModal';
+import {PROXY} from '../security/setupProxy';
+import axios from 'axios';
 
 const MyPage = () => {
     const [show, setShow] = useState(false);
 
     const [userInfo, setUserInfo] = useState({
-        name: "이수화",
-        email: "tnghk9611@naver.com",
-        company: ["강남구","세종시","소프트베리"],
-        isAdmin: true
+        name: '',
+        email: '',
+        auth: '',
+        carnumber: '26나2222',
+        // admin : 여러회사 선택가능 / user : 사용자 / company : 하나만 선택가능
+        company: ["강남구","세종시","소프트베리"]
     })
 
     const makeCompanyBox = () => {
@@ -20,6 +24,24 @@ const MyPage = () => {
         })
 
         return companyBoxArr;
+    }
+
+    const classifyAuth = () => {
+        switch(userInfo.auth) {
+            case 'USER': 
+                return <>
+                        <div className='my-title-text'>차량 정보</div>
+                        <div className='company-box'>{userInfo.carnumber}</div>
+                    </>
+            case 'ADMIN': 
+                return <>
+                        <div className='my-title-text'>기업 정보</div>
+                        <div id='company-container'>{makeCompanyBox()}</div>
+                    </>
+            case 'COMPANY': {
+                return ''
+            }
+        }
     }
 
     const onClickLogout = () => {
@@ -32,6 +54,26 @@ const MyPage = () => {
 
     useEffect(() => {
         // axios로 회원정보 통신
+        axios.get(`${PROXY}/member/user`, {
+            headers: {
+                Authorization: localStorage.getItem('accessToken')
+            }
+        })
+        .then((res) => {
+            setUserInfo((prev) => {
+                return { ...prev, 
+                    name: res.data.name,
+                    email: res.data.email,
+                    auth: 'COMPANY',
+                    // carnumber: res.data.carnumber
+                    carnumber: '26나2222'
+                }
+            })
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
     }, []);
 
     return (
@@ -40,20 +82,11 @@ const MyPage = () => {
                 <Header page={"my"}/>
             </div>
             <div className='user-info-box'>
-                <div id='user-name'>{userInfo.name}님</div>
+                <div id='user-name'>{userInfo.name} 님</div>
                 <div className='my-title-text'>이메일</div>
                 <div id='email-text'>{userInfo.email}</div>
                 {
-                    userInfo.isAdmin ? 
-                    <>
-                        <div className='my-title-text'>기업 정보</div>
-                        <div id='company-container'>{makeCompanyBox()}</div>
-                    </>
-                    : 
-                    <>
-                        <div className='my-title-text'>차량 정보</div>
-                        <div className='company-box'>26나 1234</div>
-                    </>
+                    classifyAuth()
                 }
             </div>
             <div className='add-function-btns'>

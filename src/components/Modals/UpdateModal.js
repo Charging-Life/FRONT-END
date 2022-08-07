@@ -1,24 +1,37 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import '../../styles/components/Modals/UpdateModal.css';
 import { companyInfo } from '../../security/companyInfo';
 
 const UpdateModal = ({userInfo, show, onHide}) => {
+    
+    // 수정하는 정보
+    const [ modifyUserInfo, setModifyUserInfo ] = useState({});
 
-    // 기존 유저 정보
-    const [ modifyUserInfo, setModifyUserInfo ] = useState({
-        email: userInfo.email,
-        company: userInfo.company
-    });
+    useEffect(()=> {
+        setModifyUserInfo({
+            name: userInfo.name,
+            email: userInfo.email,
+            auth: userInfo.auth,
+            company: userInfo.company,
+            carnumber: userInfo.carnumber
+        })
+    }, [userInfo]);
 
     // 선택된 회사 저장 배열
     const [ clickedBtnArr, setClickedBtnArr ] = useState(userInfo.company);
 
-    const onChangeEmail = (e) => {
-       setModifyUserInfo((prev) => {
-           return { ...prev, email: e.target.value}
-       })
-    }
+    const handleEmail = (e) => {
+        setModifyUserInfo((prev) => {
+            return { ...prev, email: e.target.value}
+        })
+     }
+
+    const handleCarnumber = (e) => {
+        setModifyUserInfo((prev) => {
+            return { ...prev, carnumber: e.target.value}
+        })
+     }
 
     const onClickCompanyBtn = (e) => {
         if(!clickedBtnArr.includes(e.target.value)) {
@@ -104,16 +117,26 @@ const UpdateModal = ({userInfo, show, onHide}) => {
                     <span>회원정보 수정</span>
                     <div id='close-icon' onClick={onHide}><img src='/images/CL_icon_close.png'/></div>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className={ userInfo.auth === 'ADMIN' ? 'update-admin' : 'update-modal-body'}>
                     <div className='modal-member-info'>
                         <div className='my-title-text'>이메일</div>
-                        <input id='email-input'value={modifyUserInfo.email} onChange={onChangeEmail}/>
-                        <div className='my-title-text'>기업명</div>
-                        <div className='company-btns'>
-                            {
-                                makeCompanyBtns()
-                            }
-                        </div>
+                        <input id='email-input' value={modifyUserInfo.email} onChange={handleEmail}/>
+                        {
+                            userInfo.auth === 'USER' ?
+                            <>
+                                <div className='my-title-text'>차량 번호</div>
+                                <input id='email-input' value={modifyUserInfo.carnumber} onChange={handleCarnumber}/>
+                            </> : null
+                        }
+                        {
+                            userInfo.auth === 'ADMIN' ?
+                            <>
+                                <div className='my-title-text'>기업명</div>
+                                <div className='company-btns'>
+                                    { makeCompanyBtns() }
+                                </div>
+                            </> : null
+                        }
                     </div>
                 </Modal.Body>
                 <div id="modify-btn"><button onClick={onClickModify}>수정하기</button></div>

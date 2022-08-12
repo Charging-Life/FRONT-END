@@ -1,30 +1,38 @@
 import React, {useState} from 'react';
 import '../styles/components/LoginForm.css';
 import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
+import {PROXY} from '../security/setupProxy';
 
 const LoginForm = () => {
     const navigate = useNavigate();
 
     const [loginInfo, setLoginInfo ] = useState({
-        id: '',
-        pw: ''
+        email : '',
+        password : ''
     });
 
     const onChangeId = (e) => {
         setLoginInfo((prev) => {
-            return { ...prev, id: e.target.value}
+            return { ...prev, email : e.target.value}
         })
     }
 
     const onChangePw = (e) => {
         setLoginInfo((prev) => {
-            return { ...prev, pw: e.target.value}
+            return { ...prev, password : e.target.value}
         })
     }
 
     const onClickLogin = () => {
-        // 통신하는 부분 추가
-        navigate("/");
+        axios.post(`${PROXY}/member/login`, loginInfo)
+        .then((res) => {
+            localStorage.setItem('accessToken', res.data.accessToken)
+            navigate("/");
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     }
 
     return (

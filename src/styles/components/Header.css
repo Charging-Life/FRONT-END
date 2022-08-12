@@ -6,6 +6,11 @@
     justify-content: space-between;
 }
 
+.header_logo, .header_search,
+.header_notice, .header_setting {
+    cursor: pointer;
+}
+
 /* media query */
 @media only screen and (min-width: 270px) and (max-width: 299px) {
     .Header{

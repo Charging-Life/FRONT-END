@@ -9,7 +9,7 @@ const NoticeModal = ({info, show, setShowStation, onHide}) => {
     }
 
     return (
-        <div className='ChargingStationModal'>
+        <div className='NoticeModal'>
             <Modal centered show={show} onHide={onHide}>
                 <Modal.Header>
                     <div></div>

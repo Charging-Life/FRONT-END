@@ -7,7 +7,9 @@
 }
 
 .header_logo, .header_search,
-.header_notice, .header_setting {
+.header_notice, .header_setting,
+.header_login, .header_signup
+ {
     cursor: pointer;
 }
 
@@ -34,6 +36,15 @@
         height: 25px;
         margin-left: 7px;
     }
+
+    .header_login {
+        height: 24px;
+    }
+
+    .header_signup {
+        height: 24px;
+        margin-left: 7px;
+    }
 }
 
 @media only screen and (min-width: 300px) and (max-width: 449px) {
@@ -58,6 +69,15 @@
         height: 26px;
         margin-left: 8px;
     }
+
+    .header_login {
+        height: 27px;
+    }
+
+    .header_signup {
+        height: 27px;
+        margin-left: 8px;
+    }
 }
 
 @media only screen and (min-width: 450px) {
@@ -80,6 +100,15 @@
 
     .header_setting{
         height: 31px;
+        margin-left: 12px;
+    }
+
+    .header_login {
+        height: 30px;
+    }
+
+    .header_signup {
+        height: 30px;
         margin-left: 12px;
     }
 }

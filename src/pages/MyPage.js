@@ -8,18 +8,18 @@ import axios from 'axios';
 const MyPage = () => {
     const [show, setShow] = useState(false);
 
+    // manager : 여러회사 선택가능 / user : 사용자 / company : 하나만 선택가능
+    // admin : 앱 관리자
     const [userInfo, setUserInfo] = useState({
         name: '',
         email: '',
-        auth: '',
-        carnumber: '26나2222',
-        // admin : 여러회사 선택가능 / user : 사용자 / company : 하나만 선택가능
-        company: ["강남구","세종시","소프트베리"]
+        businessNames: [],
+        carNames: []
     })
 
     const makeCompanyBox = () => {
         const companyBoxArr = [];
-        userInfo.company.map((ele) => {
+        userInfo.businessNames.map((ele) => {
             companyBoxArr.push(<div className='company-box'>{ele}</div>)
         })
 
@@ -27,25 +27,32 @@ const MyPage = () => {
     }
 
     const classifyAuth = () => {
-        switch(userInfo.auth) {
+        switch(localStorage.getItem('CL_auth')) {
             case 'USER': 
                 return <>
                         <div className='my-title-text'>차량 정보</div>
                         <div className='company-box'>{userInfo.carnumber}</div>
                     </>
-            case 'ADMIN': 
+            case 'MANAGER': 
                 return <>
                         <div className='my-title-text'>기업 정보</div>
                         <div id='company-container'>{makeCompanyBox()}</div>
                     </>
-            case 'COMPANY': {
+            case 'COMPANY': 
                 return ''
-            }
+            case 'ADMIN':
+                return ''
         }
     }
+    
 
     const onClickLogout = () => {
         // 로그아웃 통신
+        if(window.confirm("로그아웃 하시겠습니까 ?")) {
+            localStorage.removeItem('CL_accessToken');
+            localStorage.removeItem('CL_refreshToken');
+            localStorage.removeItem('CL_auth');
+        }
     }
 
     const onClickSignout = () => {
@@ -54,9 +61,10 @@ const MyPage = () => {
 
     useEffect(() => {
         // axios로 회원정보 통신
-        axios.get(`${PROXY}/member/user`, {
+        const auth = localStorage.getItem('CL_auth').toLowerCase();
+        axios.get(`${PROXY}/member/${auth}`, {
             headers: {
-                Authorization: localStorage.getItem('accessToken')
+                Authorization: localStorage.getItem('CL_accessToken')
             }
         })
         .then((res) => {
@@ -64,9 +72,8 @@ const MyPage = () => {
                 return { ...prev, 
                     name: res.data.name,
                     email: res.data.email,
-                    auth: 'COMPANY',
-                    // carnumber: res.data.carnumber
-                    carnumber: '26나2222'
+                    businessNames: res.data.businessNames,
+                    carNames: res.data.carNames
                 }
             })
         })

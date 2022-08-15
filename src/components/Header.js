@@ -3,6 +3,9 @@ import '../styles/components/Header.css';
 import FilterOffCanvas from './OffCanvases/FilterOffCanvas';
 import NoticeOffCanvas from './OffCanvases/NoticeOffCanvas';
 import { useNavigate } from 'react-router';
+import useInterval from './useInterval';
+import axios from 'axios';
+import { PROXY } from '../security/setupProxy';
 
 const Header = ({page}) => {
     const [showNotice, setShowNotice] = useState(false);
@@ -12,6 +15,19 @@ const Header = ({page}) => {
     const onClickLogo = () => {
         navigate("/");
     }
+
+    useInterval(() => {
+        // 반복할 로직 : 알림 쌓인것 있는지 1분마다 요청
+        axios.get(`${PROXY}/alarm`)
+        .then((res) => {
+            // 받아오는 데이터 중에 안읽은 것이 있으면 이미지 변경
+            
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+    }, 60000); // 1분 : 60000
 
     return (
         <>

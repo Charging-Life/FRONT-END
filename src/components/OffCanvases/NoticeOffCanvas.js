@@ -4,19 +4,15 @@ import { Offcanvas } from 'react-bootstrap';
 import { useState } from 'react';
 import NoticeModal from '../Modals/NoticeModal';
 import ChargingStationModal from '../Modals/ChargingStationModal';
-import { noticeInfo } from '../../security/noticeInfo.js';
+import { noticeInfo, noticeState } from '../../security/noticeInfo.js';
+import axios from 'axios';
+import { PROXY } from '../../security/setupProxy.js';
 
 const NoticeOffCanvas = ({show, onHide}) => {
     const [showNotice, setShowNotice] = useState(false);
-    const [showStation, setShowStation] = useState([false]);
+    const [showStation, setShowStation] = useState(false);
     const [detailInfo, setDetailInfo] = useState({});
-
-    const [noticeState] = useState({
-        charging_complete: ['차량 충전이 완료되었습니다.', 'images/CL_icon_notice_complete.png'],
-        general_vehicle: ['충전소에 일반차량이 있습니다.', 'images/CL_icon_notice_general.png'],
-        stowage: ['충전소에 적재물이 있습니다.', 'images/CL_icon_notice_stowage.png'],
-        bad_condition: ['충전소 상태가 좋지 않습니다.', 'images/CL_icon_notice_bad.png']
-    })
+    const [noticeList, setNoticeList] = useState([]);
 
     const selectState=(state)=>{
         const returnObject = {
@@ -77,6 +73,17 @@ const NoticeOffCanvas = ({show, onHide}) => {
         }
         return list;
     }
+
+    // if(show) {
+    //     axios.get(`${PROXY}/alarm`)
+    //     .then((res) => {
+    //         // 알람 데이터들 뿌리기
+    //         setNoticeList(res.data);
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
+    // }
 
     return (
         <>

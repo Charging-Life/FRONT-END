@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import '../styles/pages/MyPage.css';
 import Header from '../components/Header';
 import UpdateModal from '../components/Modals/UpdateModal';
-import {PROXY} from '../security/setupProxy';
 import axios from 'axios';
 
 const MyPage = () => {
@@ -62,7 +61,7 @@ const MyPage = () => {
     useEffect(() => {
         // axios로 회원정보 통신
         const auth = localStorage.getItem('CL_auth').toLowerCase();
-        axios.get(`${PROXY}/member/${auth}`, {
+        axios.get(`${process.env.REACT_APP_PROXY}/member/${auth}`, {
             headers: {
                 Authorization: localStorage.getItem('CL_accessToken')
             }

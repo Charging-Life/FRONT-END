@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import '../styles/components/LoginForm.css';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import {PROXY} from '../security/setupProxy';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -20,7 +19,7 @@ const LoginForm = () => {
     };
 
     const onClickLogin = () => {
-        axios.post(`${PROXY}/member/login`, loginInfo)
+        axios.post(`${process.env.REACT_APP_PROXY}/member/login`, loginInfo)
         .then((res) => {
             localStorage.setItem('CL_auth', res.data.auth);
             localStorage.setItem('CL_accessToken', res.data.accessToken);

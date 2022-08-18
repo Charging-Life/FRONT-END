@@ -3,9 +3,6 @@ import '../styles/components/Header.css';
 import FilterOffCanvas from './OffCanvases/FilterOffCanvas';
 import NoticeOffCanvas from './OffCanvases/NoticeOffCanvas';
 import { useNavigate } from 'react-router';
-import useInterval from './useInterval';
-import axios from 'axios';
-import { PROXY } from '../security/setupProxy';
 
 const Header = ({page}) => {
     const [showNotice, setShowNotice] = useState(false);

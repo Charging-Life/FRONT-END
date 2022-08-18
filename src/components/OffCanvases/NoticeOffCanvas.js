@@ -5,8 +5,6 @@ import { useState } from 'react';
 import NoticeModal from '../Modals/NoticeModal';
 import ChargingStationModal from '../Modals/ChargingStationModal';
 import { noticeInfo, noticeState } from '../../security/noticeInfo.js';
-import axios from 'axios';
-import { PROXY } from '../../security/setupProxy.js';
 
 const NoticeOffCanvas = ({show, onHide}) => {
     const [showNotice, setShowNotice] = useState(false);

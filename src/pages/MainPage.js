@@ -1,21 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/pages/MainPage.css';
 import KakaoMap from '../components/KakaoMap';
 import Header from '../components/Header';
 import axios from 'axios';
-import GetChargerStatusURL from '../security/GetChargerStatusURL.json'
 
 const MainPage = () => {
-    const url = GetChargerStatusURL['url'];
-    console.log(url);
+    const [station, setStation] = useState([]);
+    const [stationState, setStationState] = useState([]);
+    const [location, setLocation] = useState('');
 
     useEffect(()=>{
-        axios.get(url).then(function(res){
-            console.log(res);
-        }).catch(function(err){
-            console.log(err);
-        })
-    },[])
+        if(location !== ''){
+            axios.get(`${process.env.REACT_APP_PROXY}/station/city/${location}`)
+            .then((res)=>{
+                setStation(res.data);
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+            axios.get(`${process.env.REACT_APP_GET_STATION_URL}`)
+            .then((res)=>{
+                setStationState(res.data.items.item);
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+        }
+
+    },[location])
 
     return (
         <div className='MainPage'>
@@ -23,7 +35,7 @@ const MainPage = () => {
                 <Header page={"main"}/>
             </div>
             <div className='mainpage_kakaomap'>
-                <KakaoMap/>
+                <KakaoMap station={station} stationState={stationState} setLocation={setLocation}/>
             </div>
         </div>
     );

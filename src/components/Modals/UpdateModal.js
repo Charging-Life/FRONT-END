@@ -115,7 +115,7 @@ const UpdateModal = ({userInfo, show, onHide}) => {
                 <Modal.Header>
                     <div></div>
                     <span>회원정보 수정</span>
-                    <div id='close-icon' onClick={onHide}><img src='/images/CL_icon_close.png'/></div>
+                    <div id='close-icon' onClick={onHide}><img src='/images/icons/CL_icon_close.png'/></div>
                 </Modal.Header>
                 <Modal.Body className={ userInfo.auth === 'ADMIN' ? 'update-admin' : 'update-modal-body'}>
                     <div className='modal-member-info'>

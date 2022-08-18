@@ -12,7 +12,13 @@ const NoticeOffCanvas = ({show, onHide}) => {
     const [showNotice, setShowNotice] = useState(false);
     const [showStation, setShowStation] = useState(false);
     const [detailInfo, setDetailInfo] = useState({});
-    const [noticeList, setNoticeList] = useState([]);
+
+    const [noticeState] = useState({
+        charging_complete: ['차량 충전이 완료되었습니다.', 'images/icons/CL_icon_notice_complete.png'],
+        general_vehicle: ['충전소에 일반차량이 있습니다.', 'images/icons/CL_icon_notice_general.png'],
+        stowage: ['충전소에 적재물이 있습니다.', 'images/icons/CL_icon_notice_stowage.png'],
+        bad_condition: ['충전소 상태가 좋지 않습니다.', 'images/icons/CL_icon_notice_bad.png']
+    })
 
     const selectState=(state)=>{
         const returnObject = {
@@ -92,7 +98,7 @@ const NoticeOffCanvas = ({show, onHide}) => {
                         className='notice_offcanvas'>
                 <Offcanvas.Header>
                     <Offcanvas.Title className='offcanvas_title'>알림</Offcanvas.Title>
-                    <img src='images/CL_icon_close.png' alt='닫기'
+                    <img src='images/icons/CL_icon_close.png' alt='닫기'
                         className='offcanvas_close'
                         onClick={onHide}/>
                 </Offcanvas.Header>

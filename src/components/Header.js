@@ -44,7 +44,7 @@ const Header = ({page}) => {
                 {
                     page === "main" &&
                     <div>
-                        <img src='images/CL_icon_search.png' alt='search' 
+                        <img src='images/icons/CL_icon_search.png' alt='search' 
                             className='header_search'
                             onClick={()=>{setShowFilter(true)}}/>
                         {

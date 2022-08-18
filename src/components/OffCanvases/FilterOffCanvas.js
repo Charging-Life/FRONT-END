@@ -29,7 +29,7 @@ const FilterOffCanvas = ({show, onHide}) => {
                         className='filter_offcanvas'>
                 <Offcanvas.Header>
                     <Offcanvas.Title className='filter_offcanvas_title'>검색 필터</Offcanvas.Title>
-                    <img src='images/CL_icon_close.png' alt='닫기'
+                    <img src='images/icons/CL_icon_close.png' alt='닫기'
                         className='filter_offcanvas_close'
                         onClick={onHide}/>
                 </Offcanvas.Header>

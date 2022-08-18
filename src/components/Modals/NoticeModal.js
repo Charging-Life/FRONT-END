@@ -14,7 +14,7 @@ const NoticeModal = ({info, show, setShowStation, onHide}) => {
                 <Modal.Header>
                     <div></div>
                     <span>알림 상세보기</span>
-                    <div id='close-icon' onClick={onHide}><img src='/images/CL_icon_close.png'/></div>
+                    <div id='close-icon' onClick={onHide}><img src='/images/icons/CL_icon_close.png'/></div>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='modal-charging-info'>

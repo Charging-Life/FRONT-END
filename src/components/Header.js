@@ -21,13 +21,13 @@ const Header = ({page}) => {
                 {
                     page === "main" ? 
                     <div>
-                        <img src='images/CL_icon_search.png' alt='search' 
+                        <img src='images/icons/CL_icon_search.png' alt='search' 
                             className='header_search'
                             onClick={()=>{setShowFilter(true)}}/>
-                        <img src='images/CL_icon_notice.png' alt='notice' 
+                        <img src='images/icons/CL_icon_notice.png' alt='notice' 
                             className='header_notice'
                             onClick={()=>{setShowNotice(true)}}/>
-                        <img src='images/CL_icon_setting.png' alt='setting' 
+                        <img src='images/icons/CL_icon_setting.png' alt='setting' 
                             className='header_setting'
                             onClick={()=>{navigate('/my')}}/>
                     </div> : null

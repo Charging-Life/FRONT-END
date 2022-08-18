@@ -2,28 +2,57 @@ import React, {useEffect, useState} from 'react';
 import '../styles/pages/MyPage.css';
 import Header from '../components/Header';
 import UpdateModal from '../components/Modals/UpdateModal';
+import {PROXY} from '../security/setupProxy';
+import axios from 'axios';
 
 const MyPage = () => {
     const [show, setShow] = useState(false);
 
+    // manager : 여러회사 선택가능 / user : 사용자 / company : 하나만 선택가능
+    // admin : 앱 관리자
     const [userInfo, setUserInfo] = useState({
-        name: "이수화",
-        email: "tnghk9611@naver.com",
-        company: ["강남구","세종시","소프트베리"],
-        isAdmin: true
+        name: '',
+        email: '',
+        businessNames: [],
+        carNames: []
     })
 
     const makeCompanyBox = () => {
         const companyBoxArr = [];
-        userInfo.company.map((ele) => {
+        userInfo.businessNames.map((ele) => {
             companyBoxArr.push(<div className='company-box'>{ele}</div>)
         })
 
         return companyBoxArr;
     }
 
+    const classifyAuth = () => {
+        switch(localStorage.getItem('CL_auth')) {
+            case 'USER': 
+                return <>
+                        <div className='my-title-text'>차량 정보</div>
+                        <div className='company-box'>{userInfo.carnumber}</div>
+                    </>
+            case 'MANAGER': 
+                return <>
+                        <div className='my-title-text'>기업 정보</div>
+                        <div id='company-container'>{makeCompanyBox()}</div>
+                    </>
+            case 'COMPANY': 
+                return ''
+            case 'ADMIN':
+                return ''
+        }
+    }
+    
+
     const onClickLogout = () => {
         // 로그아웃 통신
+        if(window.confirm("로그아웃 하시겠습니까 ?")) {
+            localStorage.removeItem('CL_accessToken');
+            localStorage.removeItem('CL_refreshToken');
+            localStorage.removeItem('CL_auth');
+        }
     }
 
     const onClickSignout = () => {
@@ -32,6 +61,26 @@ const MyPage = () => {
 
     useEffect(() => {
         // axios로 회원정보 통신
+        const auth = localStorage.getItem('CL_auth').toLowerCase();
+        axios.get(`${PROXY}/member/${auth}`, {
+            headers: {
+                Authorization: localStorage.getItem('CL_accessToken')
+            }
+        })
+        .then((res) => {
+            setUserInfo((prev) => {
+                return { ...prev, 
+                    name: res.data.name,
+                    email: res.data.email,
+                    businessNames: res.data.businessNames,
+                    carNames: res.data.carNames
+                }
+            })
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
     }, []);
 
     return (
@@ -40,20 +89,11 @@ const MyPage = () => {
                 <Header page={"my"}/>
             </div>
             <div className='user-info-box'>
-                <div id='user-name'>{userInfo.name}님</div>
+                <div id='user-name'>{userInfo.name} 님</div>
                 <div className='my-title-text'>이메일</div>
                 <div id='email-text'>{userInfo.email}</div>
                 {
-                    userInfo.isAdmin ? 
-                    <>
-                        <div className='my-title-text'>기업 정보</div>
-                        <div id='company-container'>{makeCompanyBox()}</div>
-                    </>
-                    : 
-                    <>
-                        <div className='my-title-text'>차량 정보</div>
-                        <div className='company-box'>26나 1234</div>
-                    </>
+                    classifyAuth()
                 }
             </div>
             <div className='add-function-btns'>

@@ -84,7 +84,7 @@
     border: none;
 }
 
-.my-btns > button:nth-child(1) {
+.my-btns > button:nth-child(3) {
     background-color: #8FF4BD;
 }
 
@@ -92,11 +92,11 @@
     background-color: #48DB8C;
 }
 
-.my-btns > button:nth-child(3) {
+.my-btns > button:nth-child(1) {
     background-color: #34BD73;
 }
 
-.my-btns > button:nth-child(1):hover{
+.my-btns > button:nth-child(3):hover{
     background-color: #63cf94;
 }
 
@@ -104,7 +104,7 @@
     background-color: #31b870;
 }
 
-.my-btns > button:nth-child(3):hover{
+.my-btns > button:nth-child(1):hover{
     background-color: #249657;
 }
 

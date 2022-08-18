@@ -4,11 +4,13 @@ import { Offcanvas } from 'react-bootstrap';
 import { useState } from 'react';
 import NoticeModal from '../Modals/NoticeModal';
 import ChargingStationModal from '../Modals/ChargingStationModal';
-import { noticeInfo } from '../../security/noticeInfo.js';
+import { noticeInfo, noticeState } from '../../security/noticeInfo.js';
+import axios from 'axios';
+import { PROXY } from '../../security/setupProxy.js';
 
 const NoticeOffCanvas = ({show, onHide}) => {
     const [showNotice, setShowNotice] = useState(false);
-    const [showStation, setShowStation] = useState([false]);
+    const [showStation, setShowStation] = useState(false);
     const [detailInfo, setDetailInfo] = useState({});
 
     const [noticeState] = useState({
@@ -77,6 +79,17 @@ const NoticeOffCanvas = ({show, onHide}) => {
         }
         return list;
     }
+
+    // if(show) {
+    //     axios.get(`${PROXY}/alarm`)
+    //     .then((res) => {
+    //         // 알람 데이터들 뿌리기
+    //         setNoticeList(res.data);
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
+    // }
 
     return (
         <>

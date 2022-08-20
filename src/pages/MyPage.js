@@ -3,9 +3,11 @@ import '../styles/pages/MyPage.css';
 import Header from '../components/Header';
 import UpdateModal from '../components/Modals/UpdateModal';
 import axios from 'axios';
+import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
 
 const MyPage = () => {
     const [show, setShow] = useState(false);
+    const [showSearchModal, setShowSearchModal] = useState(false);
 
     // manager : 여러회사 선택가능 / user : 사용자 / company : 하나만 선택가능
     // admin : 앱 관리자
@@ -36,7 +38,7 @@ const MyPage = () => {
                return <>
                         <div className='charging-box'>
                             <span>관할 충전소 목록</span>
-                            <button id='search-station-btn'>추가하기</button>
+                            <button id='search-station-btn' onClick={()=>{setShowSearchModal(true)}}>추가하기</button>
                         </div>
                         <div>목록들 나열</div>
                     </>
@@ -110,6 +112,7 @@ const MyPage = () => {
                 </div>
             </div>
             <UpdateModal userInfo={userInfo} show={show} onHide={()=>setShow(false)}/>
+            <ChargingSearchModal show={showSearchModal} onHide={()=>{setShowSearchModal(false)}}/>
         </div>
     );
 };

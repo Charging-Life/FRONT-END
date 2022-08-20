@@ -11,7 +11,11 @@ const MainPage = () => {
 
     useEffect(()=>{
         if(location !== ''){
-            axios.get(`${process.env.REACT_APP_PROXY}/station/city/${location}`)
+            axios.get(`${process.env.REACT_APP_PROXY}/station/manager`,{
+                headers: {
+                    Authorization: localStorage.getItem('CL_accessToken')
+                }
+            })
             .then((res)=>{
                 setStation(res.data);
             })

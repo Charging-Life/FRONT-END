@@ -33,12 +33,18 @@ const MyPage = () => {
                         <div className='company-box'>{userInfo.carnumber}</div>
                     </>
             case 'MANAGER': 
-                return <>
+               return <>
+                        <div className='charging-box'>
+                            <span>관할 충전소 목록</span>
+                            <button id='search-station-btn'>검색하기</button>
+                        </div>
+                        <div>목록들 나열</div>
+                    </>
+            case 'COMPANY': 
+                 return <>
                         <div className='my-title-text'>기업 정보</div>
                         <div id='company-container'>{makeCompanyBox()}</div>
                     </>
-            case 'COMPANY': 
-                return ''
             case 'ADMIN':
                 return ''
         }

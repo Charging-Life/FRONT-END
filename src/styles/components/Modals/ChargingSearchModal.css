@@ -1,0 +1,113 @@
+.search_header{
+    display: flex;
+    border-radius: 0;
+}
+.search_header > input{
+    width: 100%;
+    height: 100%;
+    font-size: 15px;
+    outline: none;
+    border: none;
+    font-weight: bold;
+}
+.search_header > img{
+    width: 22px;
+}
+.search_body{
+    height: 350px;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    margin: 0 10px 15px 10px;
+}
+.search_body::-webkit-scrollbar {
+    display: none;
+}
+.search_click, .search_clicked{
+    margin-bottom: 5px;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+.search_clicked{
+    border: 1.5px solid #10a254;
+    background-color: #10a254;
+}
+.search_click{
+    border: 1.5px solid #bbbbbb;
+}
+.search_click > div:nth-of-type(1), .search_clicked > div:nth-of-type(1){
+    font-size: 16px;
+    font-weight: bold;
+}
+.search_clicked > div:nth-of-type(1){
+    color: white;
+}
+.search_clicked > div:nth-of-type(2){
+    color: white;
+}
+.search_click > div:nth-of-type(2), .search_clicked > div:nth-of-type(2){
+    font-size: 14px;
+    margin-top: -3px;
+}
+.search_select_horizenList{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    align-items: center;
+    padding: 0 20px;
+}
+.search_select_horizenList::-webkit-scrollbar {
+    display: none;
+}
+.search_select_horizenList > div{
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    align-items: center;
+    border: 1px solid #48DB8C;
+    margin-right: 5px;
+    padding: 3px 5px;
+    border-radius: 10px;
+}
+.search_select_horizenList > div > div{
+    font-size: 15px;
+    color: #48DB8C;
+    font-weight: 600;
+}
+.search_select_horizenList > div > button{
+    background-color: transparent;
+    outline: none;
+    border: none;
+}
+.search_select_horizenList > div > button > img{
+    width: 13px;   
+}
+.search_footer{
+    height: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.search_footer > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #48DB8C;
+    border-radius: 8px;
+    margin: 1px;
+    font-weight: bold;
+}
+.search_footer > div:nth-of-type(1){
+    color: #48DB8C;
+}
+.search_footer > div:nth-of-type(2){
+    color: white;
+    background-color: #48DB8C;
+}
+.search_empty, .search_empty2{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -34,7 +34,12 @@
     color: #48DB8C;
     background-color: #fff;
     font-weight: bold;
-    
+}
+
+#search-station-btn:hover {
+    background-color: #31b870;
+    border: 2px solid #31b870;
+    color: #fff;
 }
 
 .charging-box {

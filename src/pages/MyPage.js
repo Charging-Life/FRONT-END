@@ -36,7 +36,7 @@ const MyPage = () => {
                return <>
                         <div className='charging-box'>
                             <span>관할 충전소 목록</span>
-                            <button id='search-station-btn'>검색하기</button>
+                            <button id='search-station-btn'>추가하기</button>
                         </div>
                         <div>목록들 나열</div>
                     </>

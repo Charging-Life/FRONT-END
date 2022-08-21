@@ -6,6 +6,7 @@ import NoticeModal from '../Modals/NoticeModal';
 import ChargingStationModal from '../Modals/ChargingStationModal';
 // import { noticeInfo, noticeState } from '../../security/noticeInfo.js';
 import axios from 'axios';
+import useInterval from '../useInterval';
 
 const NoticeOffCanvas = ({show, onHide}) => {
     const [showNotice, setShowNotice] = useState(false);
@@ -104,6 +105,24 @@ const NoticeOffCanvas = ({show, onHide}) => {
         });
 
     }, []);
+
+    useInterval(() => {
+        // 반복할 로직 : 알림 쌓인것 있는지 1분마다 요청
+        axios.get(`${PROXY}/alarm`, {
+            headers : {
+                Authorization: localStorage.getItem('CL_accessToken')
+            }
+        })
+        .then((res) => {
+            // 받아오는 데이터 중에 안읽은 것이 있으면 이미지 변경
+            setNotices(res.data);
+            console.log(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+    }, 10000); 
     
     return (
         <>

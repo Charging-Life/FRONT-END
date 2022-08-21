@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import '../../styles/components/Modals/ChargingSearchModal.css';
 
-const ChargingSearchModal = ({show, onHide}) => {
+const ChargingSearchModal = ({show, onHide, manageStation, setManageStation}) => {
     const [searchValue, setSearchValue] = useState('');
     const [chargingList, setChargingList] = useState('');
     const [selectCharging, setSelectCharging] = useState([]);
@@ -49,7 +49,6 @@ const ChargingSearchModal = ({show, onHide}) => {
     }
 
     const showChargingList = () => {
-        console.log(chargingList);
         const showList = [];
 
         if(chargingList.length > 0){
@@ -90,26 +89,31 @@ const ChargingSearchModal = ({show, onHide}) => {
     }, [searchValue])
 
     const saveSelected = ()=>{
-        if(selectCharging.length > 0){
-            const sendList = selectCharging.map(charge=>{
-                return charge['statId'];
-            })
-
-            axios.post(`${process.env.REACT_APP_PROXY}/member/station`,{
-                statId: sendList
-            },{
-                headers: {Authorization: localStorage.getItem('CL_accessToken')}
-            })
-            .then((res)=>{
-                console.log(res);
-            })
-            .catch((err)=>{
-                console.log(err);
-            })
-
-            return;
+        if(window.confirm('추가 등록 하시겠습니까?')){
+            if(selectCharging.length > 0){
+                const sendList = selectCharging.map(charge=>{
+                    return charge['statId'];
+                })
+    
+                axios.post(`${process.env.REACT_APP_PROXY}/member/station`,{
+                    statId: sendList
+                },{
+                    headers: {Authorization: localStorage.getItem('CL_accessToken')}
+                })
+                .then((res)=>{
+                    setManageStation([...manageStation, ...selectCharging]);
+                    console.log(res);
+                    onHide();
+                    alert('등록되었습니다.');
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+    
+                return;
+            }
+            inputRef.current.focus();
         }
-        inputRef.current.focus();
     }
 
     const delCharging = (id) =>{
@@ -125,7 +129,7 @@ const ChargingSearchModal = ({show, onHide}) => {
         if(selectCharging !== []){
             for(let i = selectCharging.length-1; i >= 0 ; i--){
                 showList.push(
-                    <div>
+                    <div key={i}>
                         <div>{selectCharging[i]['statNm']}</div>
                         <button onClick={()=>{delCharging(selectCharging[i]['statId'])}}><img alt='취소' src='images/icons/CL_icon_close.png'/></button>
                     </div>
@@ -144,8 +148,10 @@ const ChargingSearchModal = ({show, onHide}) => {
                     <img alt='검색' src='images/icons/CL_icon_search.png'/>
                 </Modal.Header>
                 {selectCharging.length>0&&
-                <div className='search_select_horizenList'> 
-                    {showSelectHorizen()}
+                <div className='search_select_horizenList_parent'>
+                    <div className='search_select_horizenList'> 
+                        {showSelectHorizen()}
+                    </div>
                 </div>}
                 <Modal.Body>
                     <div className='search_body'>

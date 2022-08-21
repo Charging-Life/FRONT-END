@@ -134,6 +134,48 @@
     background-color: #249657;
 }
 
+.show_station_list{
+    width: 100%;
+    height: 200px;
+    overflow: scroll;
+    margin: 10px 0;
+}
+.station_empty{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(72, 72, 72);
+}
+.show_manage_station{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1.5px solid #48DB8C;
+    padding: 10px;
+    margin: 5px 10px;
+    border-radius: 10px;
+}
+.show_manage_station > div > div:nth-of-type(1){
+    font-size: 14px;
+    font-weight: 600;
+}
+.show_manage_station > div > div:nth-of-type(2){
+    font-size: 11px;
+}
+.show_manage_station > button{
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+.show_manage_station > button > img{
+    width: 15px;
+    margin-left: 5px;
+}
+
+
 /* media query */
 @media only screen and (min-width: 270px) and (max-width: 299px) {
     #user-name {

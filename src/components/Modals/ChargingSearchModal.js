@@ -27,7 +27,7 @@ const ChargingSearchModal = ({show, onHide}) => {
         })
 
         if(add === -1){
-            setSelectCharging([...selectCharging, {statNm: charging['statNm'],statId: charging['statId']}])
+            setSelectCharging([...selectCharging, charging])
         }
         else{
             const temp = [];
@@ -55,7 +55,7 @@ const ChargingSearchModal = ({show, onHide}) => {
         if(chargingList.length > 0){
             for(let i = 0; i < chargingList.length; i++){
                 showList.push(
-                    <div onClick={()=>{clickCharging(chargingList[i])}} className={checkClassName(chargingList[i]['statId'])}>
+                    <div key={i} onClick={()=>{clickCharging(chargingList[i])}} className={checkClassName(chargingList[i]['statId'])}>
                         <div>
                             {chargingList[i]['statNm']}
                         </div>
@@ -67,7 +67,7 @@ const ChargingSearchModal = ({show, onHide}) => {
             }
         }
         else{
-            showList.push(<div className='search_empty2'>검색 결과가 없습니다.</div>);
+            showList.push(<div key={-1} className='search_empty2'>검색 결과가 없습니다.</div>);
         }
 
 
@@ -91,8 +91,12 @@ const ChargingSearchModal = ({show, onHide}) => {
 
     const saveSelected = ()=>{
         if(selectCharging.length > 0){
+            const sendList = selectCharging.map(charge=>{
+                return charge['statId'];
+            })
+
             axios.post(`${process.env.REACT_APP_PROXY}/member/station`,{
-                statId: selectCharging
+                statId: sendList
             },{
                 headers: {Authorization: localStorage.getItem('CL_accessToken')}
             })
@@ -136,7 +140,7 @@ const ChargingSearchModal = ({show, onHide}) => {
         <div className='ChargingSearchModal'>
             <Modal centered show={show} onHide={onHide}>
                 <Modal.Header className='search_header'>
-                    <input ref={inputRef} placeholder='검색' value={searchValue} onChange={changeInput}/>
+                    <input ref={inputRef} autoFocus placeholder='검색' value={searchValue} onChange={changeInput}/>
                     <img alt='검색' src='images/icons/CL_icon_search.png'/>
                 </Modal.Header>
                 {selectCharging.length>0&&

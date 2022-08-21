@@ -48,6 +48,9 @@
     font-size: 14px;
     margin-top: -3px;
 }
+.search_select_horizenList_parent{
+    margin: 0 25px;
+}
 .search_select_horizenList{
     width: 100%;
     height: 50px;
@@ -55,7 +58,6 @@
     overflow-x: scroll;
     -ms-overflow-style: none;
     align-items: center;
-    padding: 0 20px;
 }
 .search_select_horizenList::-webkit-scrollbar {
     display: none;

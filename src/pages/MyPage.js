@@ -28,6 +28,29 @@ const MyPage = () => {
         return companyBoxArr;
     }
 
+    const showStationList = () =>{
+        const showList = [];
+
+        if(manageStation.length > 0){
+            for(let i = 0; i < manageStation.length; i++){
+                showList.push(
+                    <div key={i} className='show_manage_station'>
+                        <div>
+                            <div>{manageStation[i]['statNm']}</div>
+                            <div>{manageStation[i]['address']}</div>
+                        </div>
+                        <button><img alt='삭제' src='images/icons/CL_icon_delete.png'/></button>
+                    </div>
+                );
+            }
+        }
+        else{
+            showList.push(<div className='station_empty' key={-1}>등록된 충전소가 없습니다.</div>)
+        }
+
+        return showList;
+    }
+
     const classifyAuth = () => {
         switch(localStorage.getItem('CL_auth')) {
             case 'USER': 
@@ -41,7 +64,7 @@ const MyPage = () => {
                             <span>관할 충전소 목록</span>
                             <button id='search-station-btn' onClick={()=>{setShowSearchModal(true)}}>추가하기</button>
                         </div>
-                        <div>목록들 나열</div>
+                        <div className='show_station_list'>{showStationList()}</div>
                     </>
             case 'COMPANY': 
                  return <>
@@ -95,12 +118,23 @@ const MyPage = () => {
             }
         })
         .then((res)=>{
-            console.log(res);
+            const addList = [];
+            res.data.map(data=>{
+                addList.push({
+                    statNm: data['statNm'],
+                    statId: data['statId'],
+                    address: data['address'],
+                    location: data['location']
+                })
+            })
+            setManageStation(addList);
         })
         .catch((err)=>{
             console.log(err);
         })
     }, []);
+
+    console.log(manageStation);
 
     return (
         <div className='MyPage'>
@@ -124,7 +158,8 @@ const MyPage = () => {
                 </div>
             </div>
             <UpdateModal userInfo={userInfo} show={show} onHide={()=>setShow(false)}/>
-            <ChargingSearchModal show={showSearchModal} onHide={()=>{setShowSearchModal(false)}}/>
+            <ChargingSearchModal show={showSearchModal} onHide={()=>{setShowSearchModal(false)}}
+                                manageStation={manageStation} setManageStation={setManageStation}/>
         </div>
     );
 };

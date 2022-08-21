@@ -3,12 +3,15 @@ import '../styles/components/Header.css';
 import FilterOffCanvas from './OffCanvases/FilterOffCanvas';
 import NoticeOffCanvas from './OffCanvases/NoticeOffCanvas';
 import { useNavigate } from 'react-router';
+// import axios from 'axios';
+// import useInterval from '../components/useInterval';
 
 const Header = ({page}) => {
     const [showNotice, setShowNotice] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
     const [isUser, setIsUser] = useState(false);
     const navigate = useNavigate();
+    const PROXY = process.env.REACT_APP_PROXY;
 
     const onClickLogo = () => {
         navigate("/");
@@ -22,10 +25,14 @@ const Header = ({page}) => {
 
     // useInterval(() => {
     //     // 반복할 로직 : 알림 쌓인것 있는지 1분마다 요청
-    //     axios.get(`${PROXY}/alarm`)
+    //     axios.get(`${PROXY}/alarm`, {
+    //         headers : {
+    //             Authorization: localStorage.getItem('CL_accessToken')
+    //         }
+    //     })
     //     .then((res) => {
     //         // 받아오는 데이터 중에 안읽은 것이 있으면 이미지 변경
-            
+    //         console.log(res);
     //     })
     //     .catch((err) => {
     //         console.log(err);

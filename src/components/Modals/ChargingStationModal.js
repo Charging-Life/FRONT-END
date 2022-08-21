@@ -15,21 +15,44 @@ const ChargingStationModal = ({show, onHide}) => {
             'output': '50kW'
         },
         {
-            'chargingState' : '충전중',
+            'chargingState' : '대기중',
             'chargerType' : ['DC 차데모'],
             'output': '완속'
         },
         {
-            'chargingState' : '통신미연결',
+            'chargingState' : '대기중',
             'chargerType' : ['DC 콤보', 'DC 차데모'],
             'output': '50kW'
         },
         {
-            'chargingState' : '충전중',
+            'chargingState' : '대기중',
             'chargerType' : ['DC 차데모', 'AC3 상', 'DC 콤보'],
             'output': '완속'
         }
     ]
+
+    const setColor = (type) => {
+        let result = '';
+        switch(type) {
+            case '대기중' : {
+                result = 'holding';
+                break;
+            }
+            case '충전중' : {
+                result = 'charging';
+                break;
+            }
+            case '통신미연결' : {
+                result = 'disconnected';
+                break;
+            }
+            case '운영중지' : {
+                result = 'shutdown';
+                break;
+            }
+        }
+        return result;
+    }
 
     useEffect(()=>{
         if(show[1]){
@@ -61,7 +84,7 @@ const ChargingStationModal = ({show, onHide}) => {
                     <span>충전소 운영 현황</span>
                     <div id='close-icon' onClick={onHide}><img src='/images/icons/CL_icon_close.png'/></div>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className='station-detail-modal'>
                     <div className='modal-charging-info'>
                         <span id='charging-state'>충전 가능</span>
                         <div id='charging-location'>{stationDetail.statNm}</div>
@@ -79,7 +102,7 @@ const ChargingStationModal = ({show, onHide}) => {
                             {
                                 chargers.map((ele, idx) => 
                                     <div id='charger-box'>
-                                        <div><b>{ele.chargingState}<br/>{ele.output}</b></div>
+                                        <div><span id={setColor(ele.chargingState)}>{ele.chargingState}</span><br/>{ele.output}</div>
                                         <div>{chargerTypes.map((type, idx) => {
                                             if(ele.chargerType.includes(type)){
                                                 return <span style={{'color': '#48DB8C', 'fontWeight': 'bold'}}>{type}&nbsp;&nbsp;</span>
@@ -91,7 +114,7 @@ const ChargingStationModal = ({show, onHide}) => {
                                 )
                             }
                         </div>
-                        <br/><br/>
+                        <br/>
                     </div>
                 </Modal.Body>
             </Modal>

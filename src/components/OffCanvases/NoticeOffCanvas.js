@@ -4,18 +4,22 @@ import { Offcanvas } from 'react-bootstrap';
 import { useState } from 'react';
 import NoticeModal from '../Modals/NoticeModal';
 import ChargingStationModal from '../Modals/ChargingStationModal';
-import { noticeInfo, noticeState } from '../../security/noticeInfo.js';
+// import { noticeInfo, noticeState } from '../../security/noticeInfo.js';
+import axios from 'axios';
 
 const NoticeOffCanvas = ({show, onHide}) => {
     const [showNotice, setShowNotice] = useState(false);
     const [showStation, setShowStation] = useState(false);
     const [detailInfo, setDetailInfo] = useState({});
+    const [notices, setNotices] = useState([]);
+    const PROXY = process.env.REACT_APP_PROXY;
 
     const [noticeState] = useState({
         charging_complete: ['차량 충전이 완료되었습니다.', 'images/icons/CL_icon_notice_complete.png'],
         general_vehicle: ['충전소에 일반차량이 있습니다.', 'images/icons/CL_icon_notice_general.png'],
         stowage: ['충전소에 적재물이 있습니다.', 'images/icons/CL_icon_notice_stowage.png'],
-        bad_condition: ['충전소 상태가 좋지 않습니다.', 'images/icons/CL_icon_notice_bad.png']
+        bad_condition: ['충전소 상태가 좋지 않습니다.', 'images/icons/CL_icon_notice_bad.png'],
+        electronic_veicle: ['충전을 하지 않는 전기차량이 있습니다.', 'images/icons/CL_icon_notice_none.png']
     })
 
     const selectState=(state)=>{
@@ -41,6 +45,10 @@ const NoticeOffCanvas = ({show, onHide}) => {
                 returnObject['img_src'] = noticeState[state][1];
                 returnObject['phrases'] = noticeState[state][0];
                 break;
+            case 'electronic_veicle':
+                returnObject['img_src'] = noticeState[state][1];
+                returnObject['phrases'] = noticeState[state][0];
+                break;
             default:
         }
 
@@ -49,27 +57,30 @@ const NoticeOffCanvas = ({show, onHide}) => {
 
     // 알림 누르면 모달창 띄우기
     const handleNoticeDetail = (e) => {
-        setShowNotice(true);
-        setDetailInfo(noticeInfo[e.target.id-1]);
+        // 알람 상세보기 모달
+        // setShowNotice(true);
+        // setDetailInfo(noticeInfo[e.target.id-1]);
+        setShowStation([true, e.target.id]);
     }
 
     const showNotices =()=>{
         const list = [];
-        for(let i = 0; i < noticeInfo.length; i++){
+        for(let i = 0; i < notices.length; i++){
+            if(notices[i]['status'] === 'none') break;
             list.push(
-                <div key={i} id={noticeInfo[i]['id']} className={noticeInfo[i]['isChecked'] ? 'notice_checked_box' : 'notice_box'}
+                <div key={i} id={notices[i]['statId']} className={notices[i]['isChecked'] ? 'notice_checked_box' : 'notice_box'}
                     onClick={handleNoticeDetail}>
-                    <img src={selectState(noticeInfo[i]['state'])['img_src']}
+                    <img src={selectState(notices[i]['status'])['img_src']}
                         className='notice_img'/>
                     <div>
                         <div className='notice_msg'>
-                            {selectState(noticeInfo[i]['state'])['phrases']}
+                            {selectState(notices[i]['status'])['phrases']}
                         </div>
                         <div className='notice_sub_msg'>
-                            {noticeInfo[i]['number']}
+                            {notices[i]['statNm']}
                         </div>
                         <div className='notice_sub_msg'>
-                            {noticeInfo[i]['location']}
+                            {notices[i]['address']}
                         </div>
                     </div>
                 </div>
@@ -78,17 +89,22 @@ const NoticeOffCanvas = ({show, onHide}) => {
         return list;
     }
 
-    // if(show) {
-    //     axios.get(`${PROXY}/alarm`)
-    //     .then((res) => {
-    //         // 알람 데이터들 뿌리기
-    //         setNoticeList(res.data);
-    //     })
-    //     .catch((err) => {
-    //         console.log(err);
-    //     });
-    // }
+    useEffect(() => {
+        // axios로 알림정보 통신
+        axios.get(`${PROXY}/alarm`, {
+            headers : {
+                Authorization: localStorage.getItem('CL_accessToken')
+            }
+        })
+        .then((res) => {
+            setNotices(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 
+    }, []);
+    
     return (
         <>
         <div className='NoticeOffCanvas'>

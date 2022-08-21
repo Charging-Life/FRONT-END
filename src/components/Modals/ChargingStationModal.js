@@ -6,6 +6,30 @@ import '../../styles/components/Modals/ChargingStationModal.css';
 const ChargingStationModal = ({show, onHide}) => {
     const [stationDetail, setStationDetail] = useState({});
     const [chargerList, setChargerList] = useState([]);
+    const chargerTypes = ['DC 차데모', 'AC3 상', 'DC 콤보', 'AC 완속'];
+
+    const chargers = [
+        {
+            'chargingState' : '대기중',
+            'chargerType' : ['AC 완속'],
+            'output': '50kW'
+        },
+        {
+            'chargingState' : '충전중',
+            'chargerType' : ['DC 차데모'],
+            'output': '완속'
+        },
+        {
+            'chargingState' : '통신미연결',
+            'chargerType' : ['DC 콤보', 'DC 차데모'],
+            'output': '50kW'
+        },
+        {
+            'chargingState' : '충전중',
+            'chargerType' : ['DC 차데모', 'AC3 상', 'DC 콤보'],
+            'output': '완속'
+        }
+    ]
 
     useEffect(()=>{
         if(show[1]){
@@ -15,10 +39,11 @@ const ChargingStationModal = ({show, onHide}) => {
                     stat: '',
                     statNm: res.data.statNm,
                     address: res.data.address,
-                    business: res.data.business,
+                    business: res.data.business.business,
                     useTime: res.data.useTime,
                     businessCall: res.data.businessCall,
-                    parkingFree: res.data.parkingFree
+                    parkingFree: res.data.parkingFree,
+                    chargers: res.data.chargers
                 })
                 setChargerList(res.data.chargerDtos);
             })
@@ -41,15 +66,30 @@ const ChargingStationModal = ({show, onHide}) => {
                         <span id='charging-state'>충전 가능</span>
                         <div id='charging-location'>{stationDetail.statNm}</div>
                         <div id='charging-location-info'>{stationDetail.address}</div>
-                        <br/>
-                        <div id='charging-type'><b>충전기 타입</b> &nbsp; DC콤보</div>
-                        <hr/>
+                        <br/><hr/>
                         <div id='charging-station-info-text'><b>충전소 정보</b> </div>
                         <div className='charging-station-info'>
                             <div>운영 기관 &nbsp;&nbsp; {stationDetail.business}</div>
                             <div>운영 시간 &nbsp;&nbsp; {stationDetail.useTime?stationDetail.useTime:'-'}</div>
                             <div>연락처 &nbsp;&nbsp; {(stationDetail.businessCall&&stationDetail.businessCall!=='null')?stationDetail.businessCall:'-'}</div>
                             <div>주차 요금 &nbsp;&nbsp; {stationDetail.parkingFree?'무료':'유료'}</div>
+                        </div><br/><hr/>
+                        <div id='charging-type'><b>충전기 정보</b></div>
+                        <div id='charger-list-box'>
+                            {
+                                chargers.map((ele, idx) => 
+                                    <div id='charger-box'>
+                                        <div><b>{ele.chargingState}<br/>{ele.output}</b></div>
+                                        <div>{chargerTypes.map((type, idx) => {
+                                            if(ele.chargerType.includes(type)){
+                                                return <span style={{'color': '#48DB8C', 'fontWeight': 'bold'}}>{type}&nbsp;&nbsp;</span>
+                                            } else {
+                                                return <span>{type}&nbsp;&nbsp;</span>
+                                            }
+                                        })}</div>
+                                    </div>
+                                )
+                            }
                         </div>
                         <br/><br/>
                     </div>

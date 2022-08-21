@@ -54,12 +54,13 @@ const KakaoMap = ({station, stationState, setLocation}) => {
             geocoder.coord2RegionCode(128.34426484783592, 36.11765842312729, callback);
     
             station.map(stationData =>{
+                // console.log(stationData.business.businessId);
                 const latlng = new kakao.maps.LatLng(stationData['lat'], stationData['lng']);
     
-                const comImgSrc = `${process.env.REACT_APP_PROXY}/marker_${stationData['img']}.png`;
+                const comImgSrc = `${process.env.REACT_APP_PROXY}/marker_${stationData.business.businessId}.png`;
                 const comImgSize = new kakao.maps.Size(22, 40); 
     
-                const markerImgSrc = `${process.env.REACT_APP_PROXY}/CL_marker_${selectSrc(stationData['statId'])}.png`;
+                const markerImgSrc = `${process.env.REACT_APP_PROXY}/CL_marker_${selectSrc(stationData.business.businessId)}.png`;
                 const markerImgSize = new kakao.maps.Size(30, 44); 
     
                 const createComImg = new kakao.maps.MarkerImage(comImgSrc, comImgSize); 

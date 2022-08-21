@@ -47,18 +47,18 @@ const Header = ({page}) => {
                         {
                             isUser ? 
                             <>
-                                <img src='images/CL_icon_notice.png' alt='notice' 
+                                <img src='images/icons/CL_icon_notice.png' alt='notice' 
                                     className='header_notice'
                                     onClick={()=>{setShowNotice(true)}}/>
-                                <img src='images/CL_icon_setting.png' alt='setting' 
+                                <img src='images/icons/CL_icon_setting.png' alt='setting' 
                                     className='header_setting'
                                     onClick={()=>{navigate('/my')}}/>
                             </> : 
                             <>
-                                <img src='images/CL_icon_login.png' alt='login' 
+                                <img src='images/icons/CL_icon_login.png' alt='login' 
                                     className='header_login'
                                     onClick={()=>{navigate('/login')}}/>
-                                <img src='images/CL_icon_signup.png' alt='signup' 
+                                <img src='images/icons/CL_icon_signup.png' alt='signup' 
                                     className='header_signup'
                                     onClick={()=>{navigate('/signup')}}/>
                             </>

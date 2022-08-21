@@ -8,6 +8,7 @@ import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
 const MyPage = () => {
     const [show, setShow] = useState(false);
     const [showSearchModal, setShowSearchModal] = useState(false);
+    const [manageStation, setManageStation] = useState([]);
 
     // manager : 여러회사 선택가능 / user : 사용자 / company : 하나만 선택가능
     // admin : 앱 관리자
@@ -88,6 +89,17 @@ const MyPage = () => {
             console.log(err);
         })
 
+        axios.get(`${process.env.REACT_APP_PROXY}/station/manager`,{
+            headers: {
+                Authorization: localStorage.getItem('CL_accessToken')
+            }
+        })
+        .then((res)=>{
+            console.log(res);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
     }, []);
 
     return (

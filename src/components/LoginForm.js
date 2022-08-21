@@ -34,8 +34,8 @@ const LoginForm = () => {
 
     return (
         <div className='LoginForm'>
-            <input value={loginInfo.id} name='email' onChange={handleLoginData} placeholder='    e-mail을 입력하세요'/><br/>
-            <input value={loginInfo.pw} name='password' onChange={handleLoginData} placeholder='    password를 입력하세요'/><br/><br/>
+            <input value={loginInfo.id} type='text' name='email' onChange={handleLoginData} placeholder='    e-mail을 입력하세요'/><br/>
+            <input value={loginInfo.pw} type='password' name='password' onChange={handleLoginData} placeholder='    password를 입력하세요'/><br/><br/>
             <button onClick={onClickLogin}>login</button>
         </div>
     );

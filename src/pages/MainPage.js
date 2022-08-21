@@ -10,14 +10,18 @@ const MainPage = () => {
     const [location, setLocation] = useState('');
 
     useEffect(()=>{
+        axios.get(`${process.env.REACT_APP_PROXY}/station/manager`,{
+            headers: {
+                Authorization: localStorage.getItem('CL_accessToken')
+            }
+        })
+        .then((res)=>{
+            setStation(res.data);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
         if(location !== ''){
-            axios.get(`${process.env.REACT_APP_PROXY}/station/city/${location}`)
-            .then((res)=>{
-                setStation(res.data);
-            })
-            .catch((err)=>{
-                console.log(err);
-            })
             axios.get(`${process.env.REACT_APP_GET_STATION_URL}`)
             .then((res)=>{
                 setStationState(res.data.items.item);
@@ -26,7 +30,6 @@ const MainPage = () => {
                 console.log(err);
             })
         }
-
     },[location])
 
     return (

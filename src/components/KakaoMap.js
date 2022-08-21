@@ -35,8 +35,8 @@ const KakaoMap = ({station, stationState, setLocation}) => {
     useEffect(()=>{
         const mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapOption = { 
-            center: new kakao.maps.LatLng(36.11765842312729, 128.34426484783592), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
+            center: new kakao.maps.LatLng(36.14490754662367, 128.3917041774922), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
         };
 
         // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다

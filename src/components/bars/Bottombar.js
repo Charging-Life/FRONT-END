@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router';
 
-import './/..//styles/components/Bottombar.css';
+import './../../styles/components/bars/Bottombar.css';
 
 const Bottombar = ({value}) => {
 

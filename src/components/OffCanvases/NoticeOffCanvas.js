@@ -6,7 +6,7 @@ import NoticeModal from '../Modals/NoticeModal';
 import ChargingStationModal from '../Modals/ChargingStationModal';
 // import { noticeInfo, noticeState } from '../../security/noticeInfo.js';
 import axios from 'axios';
-import useInterval from '../useInterval';
+import useInterval from '../../hooks/useInterval';
 
 const NoticeOffCanvas = ({show, onHide}) => {
     const [showNotice, setShowNotice] = useState(false);
@@ -122,7 +122,7 @@ const NoticeOffCanvas = ({show, onHide}) => {
             console.log(err);
         });
 
-    }, 10000); 
+    }, 1000000); 
     
     return (
         <>

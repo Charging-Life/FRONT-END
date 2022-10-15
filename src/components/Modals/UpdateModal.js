@@ -14,7 +14,7 @@ const UpdateModal = ({userInfo, show, onHide}) => {
             email: userInfo.email,
             auth: userInfo.auth,
             company: userInfo.company,
-            carnumber: userInfo.carnumber
+            carnumber: userInfo.carNames
         })
     }, [userInfo]);
 
@@ -49,6 +49,8 @@ const UpdateModal = ({userInfo, show, onHide}) => {
             return;
         } 
         // 수정하기 통신 추가
+        
+
         onHide();
     }
     
@@ -126,7 +128,7 @@ const UpdateModal = ({userInfo, show, onHide}) => {
                             <>
                                 <div className='my-title-text'>차량 번호</div>
                                 <input id='email-input' value={modifyUserInfo.carnumber} onChange={handleCarnumber}/>
-                            </> : null
+                            </> : ''
                         }
                         {
                             userInfo.auth === 'ADMIN' ?
@@ -135,7 +137,7 @@ const UpdateModal = ({userInfo, show, onHide}) => {
                                 <div className='company-btns'>
                                     { makeCompanyBtns() }
                                 </div>
-                            </> : null
+                            </> : ''
                         }
                     </div>
                 </Modal.Body>

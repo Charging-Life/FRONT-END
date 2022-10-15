@@ -102,7 +102,6 @@ const ChargingSearchModal = ({show, onHide, manageStation, setManageStation}) =>
                 })
                 .then((res)=>{
                     setManageStation([...manageStation, ...selectCharging]);
-                    console.log(res);
                     onHide();
                     alert('등록되었습니다.');
                 })

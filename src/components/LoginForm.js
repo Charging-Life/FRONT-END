@@ -27,13 +27,13 @@ const LoginForm = () => {
             navigate("/");
         })
         .catch((err) => {
-            alert('로그인 실패 !');
+            alert('로그인에 실패하였습니다.');
             console.log(err);
         });
     }
 
     return (
-        <div className='LoginForm'>
+        <div className='Form'>
             <input value={loginInfo.id} type='text' name='email' onChange={handleLoginData} placeholder='    e-mail을 입력하세요'/><br/>
             <input value={loginInfo.pw} type='password' name='password' onChange={handleLoginData} placeholder='    password를 입력하세요'/><br/><br/>
             <button onClick={onClickLogin}>login</button>

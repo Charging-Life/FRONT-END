@@ -1,5 +1,4 @@
 /*global kakao*/ 
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import '../styles/components/KakaoMap.css';
 import ChargingStationModal from './Modals/ChargingStationModal'

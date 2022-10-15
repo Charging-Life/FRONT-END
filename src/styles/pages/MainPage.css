@@ -5,28 +5,26 @@
 }
 
 .mainpage_header{
-    border-bottom: 3px solid #48DB8C;
+    border-bottom: 3px solid #DFDFDF;
 }
 
 .mainpage_kakaomap{
     flex-grow: 1;
 }
 
+.mainpage_header{
+    height: 50px;
+}
+
 /* media query */
 @media only screen and (min-width: 270px) and (max-width: 299px) {
-    .mainpage_header{
-        height: 50px;
-    }
+    
 }
 
 @media only screen and (min-width: 300px) and (max-width: 449px) {
-    .mainpage_header{
-        height: 50px;
-    }
+    
 }
 
 @media only screen and (min-width: 450px) {
-    .mainpage_header{
-        height: 60px;
-    }
+    
 }

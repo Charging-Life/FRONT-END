@@ -1,4 +1,4 @@
-.LoginForm {
+.Form {
     width: 80%;
     height: 30%;
     display: flex;
@@ -6,7 +6,15 @@
     justify-content: center;
 }
 
-.LoginForm > * {
+#Signup {
+    height: 60%;
+}
+
+#Signup input {
+    margin: 8px 0;
+}
+
+.Form > * {
     height: 45px;
     border: none;
     border-bottom: 1px solid #8A8A8A;
@@ -15,12 +23,17 @@
     outline: none;
 }
 
-.LoginForm > input:focus {
-    border: 2px solid #5c615e34;
-    border-radius: 10px;
+.Form > input {
+    height: 40px;
 }
 
-.LoginForm > button {
+.Form > input:focus {
+    border: none;
+    border-bottom: 1.2px solid rgba(61, 61, 61, 0.7)
+    /* border-radius: 10px; */
+}
+
+.Form > button {
     font-size: 25px;
     height: 50px;
     color: #48DB8C;
@@ -30,26 +43,30 @@
     border: 2px solid #48DB8C;
 }
 
-.LoginForm > button:hover {
+.Form > button:hover {
     background-color: #48DB8C;
     color: #fff;
 }
 
-.LoginForm > input[type=password] {
+.Form > input[type=password] {
     font-family: '맑은 고딕';
 }
 
-.LoginForm > input[type=password]::placeholder {
+.Form > input[type=password]::placeholder {
     font-family: 'NanumSquare';
 }
 
 /* media query */
 @media only screen and (min-width: 270px) and (max-width: 299px) {
-
+    .Form > * {
+        font-size: 13px;
+    }
 }
 
 @media only screen and (min-width: 300px) and (max-width: 449px) {
-
+    .Form > * {
+        font-size: 15px;
+    }
 }
 
 @media only screen and (min-width: 450px) {

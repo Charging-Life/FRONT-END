@@ -1,0 +1,103 @@
+#User_main{
+    height: 100%;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#main_progress_box{
+    background-color: white;
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 260px;
+    top: 0;
+}
+#main_progress_info{
+    color: rgb(37, 37, 37);
+    font-weight: 750;
+}
+#main_progress_info > div:nth-child(1){
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+#main_progress_info > div:nth-child(2), #main_progress_info > div:nth-child(3){
+    font-size: 15px;
+}
+#main_progress_info > div > span{
+    color: #48DB8C;
+}
+
+#main_progress_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 0 0;
+}
+#main_progress_button > button{
+    border: 1.5px solid #48DB8C;
+    outline: none;
+    color: #48DB8C;
+    background-color: transparent;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 5px 20px;
+    transition: all 0.2s linear;
+}
+#main_progress_button > button:hover{
+    background-color: #48DB8C;
+    color: white;
+}
+
+#User_main > div:nth-child(2){
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+#main_search_box{
+    background-color: #72E7A8;
+}
+#main_qr_box{
+    background-color: #34BD73;
+}
+#main_search_box, #main_qr_box{
+    width: 140px;
+    height: 140px;
+    padding: 15px;
+    overflow: hidden;
+}
+#main_search_box > div, #main_qr_box > div{
+    display: flex;
+    justify-content: flex-end;
+    color: white;
+    font-size: 18px;
+    font-weight: 800;
+}
+#main_search_box > img, #main_qr_box > img{
+    width: 100px;
+    position: relative;
+    top: 10px;
+    left: -15px;
+}
+
+#main_progress_box, #main_search_box, #main_qr_box{
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px 1px rgb(214, 214, 214);
+    transition: all 0.2s linear;
+}
+#main_progress_box:hover{
+    width: 310px;
+    height: 270px;
+    padding: 25px;
+}
+#main_search_box:hover, #main_qr_box:hover{
+    width: 150px;
+    height: 150px;
+    padding: 20px;
+}

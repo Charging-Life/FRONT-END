@@ -1,0 +1,66 @@
+#typeRadio {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;    
+}
+
+input[type=radio] {
+    width: 18px;
+    height: 18px;
+    appearance: none;
+    border: 2px solid #48DB8C;
+    border-radius: 50%;   
+    transition: border 0.5s ease-in-out;
+}
+
+input[type=radio]:checked {
+    border: 6px solid #48DB8C;
+}
+
+#signupBox {
+    margin: 8px 0;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+#signupBox input {
+    margin: 0;
+    height: 100%;
+    outline: none;
+    border: none;
+}
+
+#certifBtn {    
+    height: 70%;
+    border-radius: 20px;
+    outline: none;
+    border: 3px solid #48DB8C;
+    background-color: #ffffff;
+    color: #48DB8C;
+    font-weight: bold;
+}
+
+#certifBtn:hover {
+    background-color: #48DB8C;
+    color: white;
+}
+
+/* media query */
+@media only screen and (min-width: 270px) and (max-width: 299px) {
+    #signupBox {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+@media only screen and (min-width: 300px) and (max-width: 449px) {
+    #signupBox {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+@media only screen and (min-width: 450px) {
+    
+}

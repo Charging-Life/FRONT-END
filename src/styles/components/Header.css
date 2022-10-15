@@ -8,9 +8,14 @@
 
 .header_logo, .header_search,
 .header_notice, .header_setting,
-.header_login, .header_signup
+.header_login, .header_signup,
+.header_view
  {
     cursor: pointer;
+}
+
+.header_view.map {
+    margin-right: 7px;
 }
 
 /* media query */
@@ -30,6 +35,11 @@
     
     .header_notice{
         height: 25px;
+    }
+
+    .header_view {
+        height: 25px;
+        margin-right: 1.5px;
     }
 
     .header_setting{
@@ -65,6 +75,11 @@
         height: 26px;
     }
 
+    .header_view {
+        height: 26px;
+        margin-right: 3px;
+    }
+
     .header_setting{
         height: 26px;
         margin-left: 8px;
@@ -96,6 +111,11 @@
     
     .header_notice{
         height: 31px;
+    }
+
+    .header_view {
+        height: 31px;
+        margin-right: 9px;
     }
 
     .header_setting{

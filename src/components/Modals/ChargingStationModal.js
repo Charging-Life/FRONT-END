@@ -6,7 +6,10 @@ import '../../styles/components/Modals/ChargingStationModal.css';
 const ChargingStationModal = ({show, onHide}) => {
     const [stationDetail, setStationDetail] = useState({});
     const [chargerList, setChargerList] = useState([]);
+    const [isSelected, setIsSelected] = useState(false);
     const chargerTypes = ['DC 차데모', 'AC3 상', 'DC 콤보', 'AC 완속'];
+    let isUser = localStorage.getItem('CL_auth') === 'USER' ? true : false;
+    // isUser = true;
 
     const chargers = [
         {
@@ -54,6 +57,10 @@ const ChargingStationModal = ({show, onHide}) => {
         return result;
     }
 
+    const handleBookMark = (e) => {
+        
+    }
+
     useEffect(()=>{
         if(show[1]){
             axios.get(`${process.env.REACT_APP_PROXY}/station/${show[1]}`)
@@ -61,12 +68,14 @@ const ChargingStationModal = ({show, onHide}) => {
                 setStationDetail({
                     stat: '',
                     statNm: res.data.statNm,
+                    statId: res.data.statId,
                     address: res.data.address,
                     business: res.data.business.business,
                     useTime: res.data.useTime,
                     businessCall: res.data.businessCall,
                     parkingFree: res.data.parkingFree,
-                    chargers: res.data.chargers
+                    chargers: res.data.chargers,
+                    memberCount: res.data.memberCount
                 })
                 setChargerList(res.data.chargerDtos);
             })
@@ -75,6 +84,20 @@ const ChargingStationModal = ({show, onHide}) => {
             })
         }
     },[show[1]])
+
+    // console.log(stationDetail);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_PROXY}/member/station/${stationDetail.statId}`, {
+            headers : {
+                'Authorization' : localStorage.getItem('CL_accessToken')
+            }
+        })
+            .then((res)=>{
+                setIsSelected(res.data);
+            })
+            .catch(err => console.log(err));
+    }, [])
 
     return (
         <div className='ChargingStationModal'>
@@ -87,10 +110,15 @@ const ChargingStationModal = ({show, onHide}) => {
                 <Modal.Body className='station-detail-modal'>
                     <div className='modal-charging-info'>
                         <span id='charging-state'>충전 가능</span>
-                        <div id='charging-location'>{stationDetail.statNm}</div>
-                        <div id='charging-location-info'>{stationDetail.address}</div>
-                        <br/><hr/>
-                        <div id='charging-station-info-text'><b>충전소 정보</b> </div>
+                        <div id='charging-location'>
+                            <div id={ isUser ? 'user-charging-location-info' : ''}>
+                                <b>{stationDetail.statNm}</b><br/>
+                                <span>{stationDetail.address}</span>
+                            </div>
+                            { isUser && <div id='starBox' onClick={handleBookMark}><img src={isSelected ? 'images/icons/CL_icon_selected_star.png' : 'images/icons/CL_icon_star.png'}/></div>}
+                        </div>
+                        <hr/>
+                        <div id='charging-station-info-text'><b>충전소 정보</b> { isUser && <span>현재 {stationDetail.memberCount}명이 대기중이예요 !</span>}</div>
                         <div className='charging-station-info'>
                             <div>운영 기관 &nbsp;&nbsp; {stationDetail.business}</div>
                             <div>운영 시간 &nbsp;&nbsp; {stationDetail.useTime?stationDetail.useTime:'-'}</div>
@@ -101,13 +129,13 @@ const ChargingStationModal = ({show, onHide}) => {
                         <div id='charger-list-box'>
                             {
                                 chargers.map((ele, idx) => 
-                                    <div id='charger-box'>
+                                    <div id='charger-box' key={idx}>
                                         <div><span id={setColor(ele.chargingState)}>{ele.chargingState}</span><br/>{ele.output}</div>
                                         <div>{chargerTypes.map((type, idx) => {
                                             if(ele.chargerType.includes(type)){
-                                                return <span style={{'color': '#48DB8C', 'fontWeight': 'bold'}}>{type}&nbsp;&nbsp;</span>
+                                                return <span key={idx} style={{'color': '#48DB8C', 'fontWeight': 'bold'}}>{type}&nbsp;&nbsp;</span>
                                             } else {
-                                                return <span>{type}&nbsp;&nbsp;</span>
+                                                return <span key={idx}>{type}&nbsp;&nbsp;</span>
                                             }
                                         })}</div>
                                     </div>
@@ -116,6 +144,11 @@ const ChargingStationModal = ({show, onHide}) => {
                         </div>
                         <br/>
                     </div>
+                    {isUser &&
+                    <div id='gotoBtn'>
+                        <button>지금 출발할게요 !</button>
+                    </div>
+                    }
                 </Modal.Body>
             </Modal>
         </div>

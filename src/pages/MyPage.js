@@ -1,14 +1,19 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
+
 import '../styles/pages/MyPage.css';
 import Header from '../components/Header';
 import UpdateModal from '../components/Modals/UpdateModal';
-import axios from 'axios';
 import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
+import Bottombar from '../components/Bottombar';
 
 const MyPage = () => {
+    const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const [showSearchModal, setShowSearchModal] = useState(false);
     const [manageStation, setManageStation] = useState([]);
+    const isUser = localStorage.getItem('CL_auth') === 'USER';
 
     // manager : 여러회사 선택가능 / user : 사용자 / company : 하나만 선택가능
     // admin : 앱 관리자
@@ -16,7 +21,8 @@ const MyPage = () => {
         name: '',
         email: '',
         businessNames: [],
-        carNames: []
+        carNames: [],
+        auth: ''
     })
 
     const makeCompanyBox = () => {
@@ -56,16 +62,16 @@ const MyPage = () => {
             case 'USER': 
                 return <>
                         <div className='my-title-text'>차량 정보</div>
-                        <div className='company-box'>{userInfo.carnumber}</div>
+                        <div className='car-box'>{userInfo.carNames}</div>
                     </>
             case 'MANAGER': 
-               return <>
+               return <div>
                         <div className='charging-box'>
                             <span>관할 충전소 목록</span>
                             <button id='search-station-btn' onClick={()=>{setShowSearchModal(true)}}>추가하기</button>
                         </div>
                         <div className='show_station_list'>{showStationList()}</div>
-                    </>
+                    </div>
             case 'COMPANY': 
                  return <>
                         <div className='my-title-text'>기업 정보</div>
@@ -83,6 +89,7 @@ const MyPage = () => {
             localStorage.removeItem('CL_accessToken');
             localStorage.removeItem('CL_refreshToken');
             localStorage.removeItem('CL_auth');
+            navigate('/');
         }
     }
 
@@ -92,19 +99,21 @@ const MyPage = () => {
 
     useEffect(() => {
         // axios로 회원정보 통신
-        const auth = localStorage.getItem('CL_auth').toLowerCase();
+        const auth = localStorage.getItem('CL_auth') && localStorage.getItem('CL_auth').toLowerCase();
         axios.get(`${process.env.REACT_APP_PROXY}/member/${auth}`, {
             headers: {
                 Authorization: localStorage.getItem('CL_accessToken')
             }
         })
         .then((res) => {
+            console.log(res);
             setUserInfo((prev) => {
                 return { ...prev, 
                     name: res.data.name,
                     email: res.data.email,
                     businessNames: res.data.businessNames,
-                    carNames: res.data.carNames
+                    carNames: res.data.carNames[0],
+                    auth: res.data.auth
                 }
             })
         })
@@ -134,22 +143,23 @@ const MyPage = () => {
         })
     }, []);
 
-    console.log(manageStation);
 
     return (
         <div className='MyPage'>
             <div className='mainpage_header'>
                 <Header page={"my"}/>
             </div>
-            <div className='user-info-box'>
-                <div id='user-name'>{userInfo.name} 님</div>
-                <div className='my-title-text'>이메일</div>
-                <div id='email-text'>{userInfo.email}</div>
+            <div className={isUser ? 'user-user-info-box' : 'user-info-box'}>
+                <div>
+                    <div id='user-name'>{userInfo.name} 님</div>
+                    <div className='my-title-text'>이메일</div>
+                    <div id='email-text'>{userInfo.email}</div>
+                </div>
                 {
                     classifyAuth()
                 }
             </div>
-            <div className='add-function-btns'>
+            <div className={isUser ? 'user-add-function-btns' : 'add-function-btns'}>
                 <div className='my-title-text'>추가 기능</div>
                 <div className='my-btns'>
                     <button onClick={() => setShow(true)}>회원정보 수정하기</button>
@@ -157,6 +167,7 @@ const MyPage = () => {
                     <button onClick={onClickSignout}>회원 탈퇴</button>
                 </div>
             </div>
+            {isUser && <Bottombar value={4}/>}
             <UpdateModal userInfo={userInfo} show={show} onHide={()=>setShow(false)}/>
             <ChargingSearchModal show={showSearchModal} onHide={()=>{setShowSearchModal(false)}}
                                 manageStation={manageStation} setManageStation={setManageStation}/>

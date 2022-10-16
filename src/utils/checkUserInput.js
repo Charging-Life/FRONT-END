@@ -16,7 +16,7 @@ const isValidCarNumber = (carNmber) => {
 }
 
 const checkSpecial = (str) => {
-    const regExp = '/[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g';
+    const regExp = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
     return regExp.test(str)
 }
 

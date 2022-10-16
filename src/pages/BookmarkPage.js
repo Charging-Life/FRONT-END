@@ -5,12 +5,14 @@ import Header from '../components/Header';
 import './/..//styles/pages/BookmarkPage.css';
 import Bottombar from '../components/bars/Bottombar.js';
 import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
+import BookmarkBox from '../components/BookmarkBox';
 
 const BookmarkPage = () => {
 
     const [isListView, setIsListView] = useState(true);
     const [manageStation, setManageStation] = useState([]);
     const [showSearchModal, setShowSearchModal] = useState(false);
+    console.log(manageStation);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_PROXY}/station/manager`,{
@@ -43,16 +45,7 @@ const BookmarkPage = () => {
                     <>
                         { 
                             manageStation.map((ele, idx) => {
-                                return (
-                                    <div id='stationBox' key={idx}>
-                                        <div>
-                                            {ele.statNm} <br/> 
-                                            <span>{ele.address}</span> <br/>
-                                            <b>현재 충전 가능합니다.</b>
-                                        </div>
-                                        <div><img src='/images/icons/CL_icon_selected_star.png'/></div>
-                                    </div>
-                                )
+                                return <BookmarkBox data={ele} key={idx} manageStation={manageStation} setManageStation={setManageStation} />
                             })
                         }
                         <div id='addBtn' onClick={() => setShowSearchModal(true)}>+</div>

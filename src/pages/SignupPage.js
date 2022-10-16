@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 
 import '../styles/pages/SignupPage.css';
-import SignupForm from '../components/SignupForm.js';
+import SignupForm from '../components/Forms/SignupForm.js';
 
 const SignupPage = () => {
     const navigate = useNavigate();

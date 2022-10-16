@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import '../styles/components/LoginForm.css';
+import '../../styles/components/LoginForm.css';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 

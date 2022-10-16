@@ -2,10 +2,9 @@ import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
-import '../styles/components/SignupForm.css';
-import {isValidEmail, isValidPassword, isValidCarNumber, checkSpecial} from '../utils/checkUserInput.js';
-import Timer from './Timer';
-import { useMediaQuery } from 'react-responsive';
+import '../../styles/components/SignupForm.css';
+import {isValidEmail, isValidPassword, isValidCarNumber, checkSpecial} from '../../utils/checkUserInput.js';
+import Timer from '../Timer';
 
 const SignupForm = () => {
 

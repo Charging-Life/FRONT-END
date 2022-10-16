@@ -35,6 +35,7 @@ const ChargingStationModal = ({show, onHide}) => {
     ]
 
     const setColor = (type) => {
+        
         let result = '';
         switch(type) {
             case '대기중' : {
@@ -54,11 +55,33 @@ const ChargingStationModal = ({show, onHide}) => {
                 break;
             }
         }
+
         return result;
     }
 
+    // 즐겨찾기 추가 / 해제 로직
     const handleBookMark = (e) => {
         
+    }
+
+    // 충전기 출력 
+    const makeChargerList = () => {
+
+        const result = [];
+        chargers.map((ele, idx) => 
+                result.push(<div id='charger-box' key={idx}>
+                <div><span id={setColor(ele.chargingState)}>{ele.chargingState}</span><br/>{ele.output}</div>
+                <div>{chargerTypes.map((type, idx) => {
+                    if(ele.chargerType.includes(type)){
+                        return <span key={idx} id='include'>{type}&nbsp;&nbsp;</span>
+                    } else {
+                        return <span key={idx}>{type}&nbsp;&nbsp;</span>
+                    }
+                })}</div>
+            </div>)
+        )
+        
+        return result;
     }
 
     useEffect(()=>{
@@ -84,8 +107,6 @@ const ChargingStationModal = ({show, onHide}) => {
             })
         }
     },[show[1]])
-
-    // console.log(stationDetail);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_PROXY}/member/station/${stationDetail.statId}`, {
@@ -127,20 +148,7 @@ const ChargingStationModal = ({show, onHide}) => {
                         </div><br/><hr/>
                         <div id='charging-type'><b>충전기 정보</b></div>
                         <div id='charger-list-box'>
-                            {
-                                chargers.map((ele, idx) => 
-                                    <div id='charger-box' key={idx}>
-                                        <div><span id={setColor(ele.chargingState)}>{ele.chargingState}</span><br/>{ele.output}</div>
-                                        <div>{chargerTypes.map((type, idx) => {
-                                            if(ele.chargerType.includes(type)){
-                                                return <span key={idx} style={{'color': '#48DB8C', 'fontWeight': 'bold'}}>{type}&nbsp;&nbsp;</span>
-                                            } else {
-                                                return <span key={idx}>{type}&nbsp;&nbsp;</span>
-                                            }
-                                        })}</div>
-                                    </div>
-                                )
-                            }
+                            {makeChargerList()}
                         </div>
                         <br/>
                     </div>

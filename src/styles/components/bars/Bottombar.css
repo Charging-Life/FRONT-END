@@ -18,13 +18,6 @@
 }
 
 #Bottombar > div > img {
-    width: 22px;
-    height: 27px;
-}
-
-#Bottombar > div > img:nth-child(1), 
-#Bottombar > div > img:nth-child(3) {
-    width: 27px;
     height: 27px;
 }
 

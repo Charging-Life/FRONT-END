@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Header from '../components/Header';
 import './/..//styles/pages/BookmarkPage.css';
-import Bottombar from '../components/Bottombar.js';
+import Bottombar from '../components/bars/Bottombar.js';
 import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
 
 const BookmarkPage = () => {

@@ -2,7 +2,7 @@ import '../styles/pages/MainPage.css';
 import Manager_main from '../components/Manager_main';
 import User_main from '../components/User_main';
 import Header from '../components/Header';
-import Bottombar from '../components/Bottombar';
+import Bottombar from '../components/bars/Bottombar';
 
 const MainPage = () => {
 

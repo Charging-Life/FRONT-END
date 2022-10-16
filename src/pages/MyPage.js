@@ -6,7 +6,7 @@ import '../styles/pages/MyPage.css';
 import Header from '../components/Header';
 import UpdateModal from '../components/Modals/UpdateModal';
 import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
-import Bottombar from '../components/Bottombar';
+import Bottombar from '../components/bars/Bottombar';
 
 const MyPage = () => {
     const navigate = useNavigate();

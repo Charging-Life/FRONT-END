@@ -1,0 +1,106 @@
+.qr_modal_question_show, .qr_modal_notice_unshow{
+    margin: 5px 10px 10px 10px;
+    font-size: 15px;
+    transition: all 0.1s linear;
+}
+.qr_modal_question_unshow, .qr_modal_notice_show{
+    position: absolute;
+    opacity: 0;
+}
+.qr_modal_select_box{
+    display: flex;
+    height: 50px;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 5px 5px 20px 5px;
+    overflow: hidden;
+    transition: all 0.4s linear;
+}
+.qr_modal_unselect_box{
+    height: 0px;
+    opacity: 0;
+}
+.qr_modal_unSelect_btn{
+    width: 45%;
+    height: 30px;
+    margin: 0 5px;
+    outline: none;
+    border: 2px solid rgb(215, 215, 215);
+    background-color: transparent;
+    border-radius: 10px;
+    color: rgb(132, 132, 132);
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.2s linear;
+}
+.qr_modal_unSelect_btn:hover{
+    border: 2px solid #48DB8C;
+    background-color: #48DB8C;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+}
+.qr_modal_select_btn{
+    width: 48%;
+    height: 32px;
+    border: 2px solid #48DB8C;
+    background-color: #48DB8C;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+}
+#qr_modal_create_box{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 10px 0 5px 0;
+}
+#qr_modal_create_box > button{
+    font-size: 13px;
+    margin: 0 3px;
+    padding: 2px 12px;
+    font-weight: 600;
+    border-radius: 10px;
+}
+#qr_modal_cancel_btn{
+    background-color: transparent;
+    border: 1.5px solid rgb(151, 151, 151);
+    color: rgb(89, 89, 89);
+    transition: all 0.2s linear;
+}
+#qr_modal_cancel_btn:hover{
+    background-color: rgb(151, 151, 151);
+    color: white;
+}
+.qr_modal_imposi_create{
+    background-color: transparent;
+    border: 1.5px solid rgb(222, 222, 222);
+    color: rgb(219, 219, 219);
+    transition: all 0.2s linear;
+}
+.qr_modal_posi_create{
+    border: 1.5px solid #48DB8C;
+    color: #48DB8C;
+    transition: all 0.2s linear;
+}
+.qr_modal_posi_create:hover{
+    background-color: #48DB8C;
+    border: 1.5px solid #48DB8C;
+    color: white;
+}
+.qr_modal_QR_box{
+    height: 0px;
+    transition: all 0.4s linear;
+    opacity: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.qr_modal_unQR_box{
+    height: 280px;
+    opacity: 1;
+}
+#qr_modal_QR_code{
+    width: 100%;
+}

@@ -30,6 +30,8 @@
     border-radius: 10px;
     border: none;
     margin-top: 8px;
+    box-shadow: 0 5.2px 16px 0 rgb(33 34 34 / 10%);
+    transition: all 0.2s linear;
 }
 
 .login-sigin-btn:hover {

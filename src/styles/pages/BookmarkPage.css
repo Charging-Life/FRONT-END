@@ -50,16 +50,21 @@
 }
 
 #stationBox {
-    width: 90%;
+    width: 85%;
     height: auto;
     display: flex;
-    margin: 10px auto;
+    margin: 15px auto;
     padding: 18px;
     color: #1d1d1d;
     font-size: 18px;
     font-weight: 700;
-    box-shadow: 0px 0px 15px 1px rgba(77, 77, 77, 0.15);
+    box-shadow: 0 5.2px 16px 0 rgb(33 34 34 / 10%);
     border-radius: 10px;
+    transition: all 0.2s linear;
+}
+
+#stationBox:hover {
+    transform: scale(1.05);
 }
 
 #stationBox > div:nth-child(1) {
@@ -99,6 +104,8 @@
     font-size: 40px;
     font-weight: bolder;
     cursor: pointer;
+    box-shadow: 0 5.2px 16px 0 rgb(33 34 34 / 10%);
+    transition: all 0.2s linear;
 }
 
 #addBtn:hover {
@@ -116,7 +123,35 @@
 }
 
 @media only screen and (min-width: 450px) {
-    #BookmarkPage {
-        width: 400px;
+    #bookmarkContainer {
+        padding: 50px 50px;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+    #stationBox {
+        height: 220px;
+    }
+}
+
+@media only screen and (min-width: 701px) {
+    #bookmarkContainer {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    #stationBox {
+        height: 250px;
+    }
+}
+
+@media only screen and (min-width: 1001px) {
+    #bookmarkContainer {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    #stationBox {
+        height: 280px;
     }
 }

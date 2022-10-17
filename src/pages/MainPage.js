@@ -2,7 +2,7 @@ import '../styles/pages/MainPage.css';
 import Manager_main from '../components/Manager_main';
 import User_main from '../components/User_main';
 import Header from '../components/Header';
-import Bottombar from '../components/bars/Bottombar';
+import Bar from '../components/bars/Bar';
 
 const MainPage = () => {
 
@@ -14,7 +14,7 @@ const MainPage = () => {
                 <Header page={"main"}/>
             </div> 
             { isManager ? <Manager_main/> : <User_main/> }
-            { isManager ? '' : <Bottombar value={1}/> }
+            <Bar value={1} />
         </div>
     );
 };

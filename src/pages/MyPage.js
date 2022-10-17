@@ -6,7 +6,7 @@ import '../styles/pages/MyPage.css';
 import Header from '../components/Header';
 import UpdateModal from '../components/Modals/UpdateModal';
 import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
-import Bottombar from '../components/bars/Bottombar';
+import Bar from '../components/bars/Bar';
 
 const MyPage = () => {
     const navigate = useNavigate();
@@ -106,7 +106,6 @@ const MyPage = () => {
             }
         })
         .then((res) => {
-            console.log(res);
             setUserInfo((prev) => {
                 return { ...prev, 
                     name: res.data.name,
@@ -167,7 +166,7 @@ const MyPage = () => {
                     <button onClick={onClickSignout}>회원 탈퇴</button>
                 </div>
             </div>
-            {isUser && <Bottombar value={4}/>}
+            <Bar value={4}/>
             <UpdateModal userInfo={userInfo} show={show} onHide={()=>setShow(false)}/>
             <ChargingSearchModal show={showSearchModal} onHide={()=>{setShowSearchModal(false)}}
                                 manageStation={manageStation} setManageStation={setManageStation}/>

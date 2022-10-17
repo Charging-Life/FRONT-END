@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import '../../styles/components/OffCanvases/NoticeOffCanvas.css';
+import React, { useEffect, useState } from 'react';
 import { Offcanvas } from 'react-bootstrap';
-import { useState } from 'react';
+import axios from 'axios';
+
+import '../../styles/components/OffCanvases/NoticeOffCanvas.css';
 import NoticeModal from '../Modals/NoticeModal';
 import ChargingStationModal from '../Modals/ChargingStationModal';
-// import { noticeInfo, noticeState } from '../../security/noticeInfo.js';
-import axios from 'axios';
 import useInterval from '../../hooks/useInterval';
 
 const NoticeOffCanvas = ({show, onHide}) => {

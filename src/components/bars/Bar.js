@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router';
 
-import './../../styles/components/bars/Bottombar.css';
+import './../../styles/components/bars/Bar.css';
 
-const Bottombar = ({value}) => {
+const Bar = ({value}) => {
 
     const navigate = useNavigate();
     const [activeNav, setActiveNav] = useState(value);
     const isLogined = localStorage.getItem('CL_auth') === null ? false : true;
 
+    // value에 따라서 navigate로 url 이동
     const handleNav = (e) => {
         if(!isLogined) {
             alert('로그인 후 이용해주세요.');
@@ -40,6 +41,7 @@ const Bottombar = ({value}) => {
     }
 
     return (
+        // activeNav에 따른 아이콘 변경
         <div id='Bottombar'>
             <div id='1' onClick={handleNav}>
                 <img src={activeNav === 1 ? '/images/icons/CL_icon_selected_home.png' : '/images/icons/CL_icon_home.png'} />
@@ -57,4 +59,4 @@ const Bottombar = ({value}) => {
     );
 };
 
-export default Bottombar;
+export default Bar;

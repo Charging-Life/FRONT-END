@@ -46,11 +46,12 @@
     color: #48DB8C;
     background-color: #fff;
     font-weight: bold;
+    transition: all 0.2s linear;
 }
 
 #search-station-btn:hover {
-    background-color: #31b870;
-    border: 2px solid #31b870;
+    background-color: #48DB8C;
+    border: 2px solid #48DB8C;
     color: #fff;
 }
 
@@ -127,6 +128,7 @@
     border-radius: 8px;
     font-family: 'NanumSquare';
     font-weight: bold;
+    transition: all 0.2s linear;
 }
 
 .my-btns > button:focus {
@@ -161,6 +163,7 @@
     width: 100%;
     height: calc(100% - 100px);
     overflow: scroll;
+    overflow-x: hidden;
     margin: 10px 0;
 }
 .station_empty{

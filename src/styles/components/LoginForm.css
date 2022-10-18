@@ -41,6 +41,8 @@
     background-color: #fff;
     border-radius: 10px;
     border: 2px solid #48DB8C;
+    box-shadow: 0 5.2px 16px 0 rgb(33 34 34 / 10%);
+    transition: all 0.2s linear;
 }
 
 .Form > button:hover {

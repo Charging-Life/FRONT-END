@@ -1,0 +1,28 @@
+#LoadingWindow{
+    width: 100%;
+    height: calc(100% - 46px);
+    background-color: rgb(0, 0, 0, 0.5);
+    position: absolute;
+    z-index: 1;
+    top: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#LoadingWindow > img{
+    width: 25px;
+    margin-bottom: 50px;
+}
+.loading_thunder_none{
+    opacity: 0.1;
+    transition: all 0.5s linear;
+}
+.loading_thunder{
+    opacity: 1;
+}
+#LoadingWindow > div{
+    font-size: 15px;
+    color: rgb(210, 210, 210);
+    font-weight: 800;
+}

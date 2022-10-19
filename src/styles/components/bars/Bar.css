@@ -8,6 +8,7 @@
     justify-content: space-around;
     border-top: 2px solid #CBCBCB;
     background-color: white;
+    z-index: 999;
 }
 
 #Bottombar > div {
@@ -34,7 +35,7 @@
         position: fixed;
         left: 0;
         top: 25%;
-        z-index: 2;
+        z-index: 999;
         border: none;
         border-top-right-radius: 15px;
         border-bottom-right-radius: 15px;

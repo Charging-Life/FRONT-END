@@ -95,6 +95,9 @@ const ProgressBar = ({ startTime }) => {
                 {`${startTime.sHour}:${startTime.sMinute}`}
                 <div>{leftTime.lHour !== 0 && leftTime.lHour + '시간'} {leftTime.lMinute}분 남았습니다.</div>
                 {`${endTime.eHour}:${endTime.eMinute}`}
+                {/* 시작
+                <div>충전을 시작하지 않았습니다.</div>
+                끝 */}
             </div>
         </>
     );

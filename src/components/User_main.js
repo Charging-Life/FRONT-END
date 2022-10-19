@@ -11,26 +11,26 @@ const User_main = () => {
     const [qrModal, setQRModal] = useState(false);
     // 시작 시간을 저장하는 useState
     const [startTime, setStartTime] = useState({
-        sHour: '14',
-        sMinute: '30',
-        status: 'SLOW',
+        sHour: '2',
+        sMinute: '10',
+        status: 'FAST',
         change: true
     });
     // 시작 시간을 set 하는 함수 -> 후에 axios로 수정 필요
     const setSTime = () => {
         // qr코드를 생성하는 모달이 켜져있는 동안은 실행 x
         // -> 주기적으로 실행되는데 qr 모달의 부모 요소기 때문에 재렌더링 되기 때문
-        if(qrModal) return;
+        if (qrModal) return;
         setStartTime({
-            sHour: '14',
-            sMinute: '30',
-            status: 'SLOW',
+            sHour: '2',
+            sMinute: '10',
+            status: 'FAST',
             // state가 바뀐다는 것을 명시하기 위한 프로퍼티
             change: !startTime.change
         })
     }
     // 1분마다 함수를 실행하는 hook
-    useInterval(setSTime ,60000);
+    useInterval(setSTime, 60000);
 
     // 진행된 시간을 저장하는 useState
     const [proceedTime, setProceedTime] = useState({
@@ -69,9 +69,9 @@ const User_main = () => {
     }
 
     // 시작 시간을 받아올 때마다 진행 시간 계산
-    useEffect(()=>{
+    useEffect(() => {
         proceededTime();
-    },[startTime])
+    }, [startTime])
 
     useEffect(() => {
         // 사용자의 정보 받아오는 axios
@@ -95,13 +95,15 @@ const User_main = () => {
             <div id='User_main'>
                 <div id='main_progress_box'>
                     <div id='main_progress_info'>
-                        {/* 후에 닉네임 처리 */}
-                        <div>{'이수화'}님</div> 
+                        <div>{'COCOPAS'}님</div>
                         <div>현재 {proceedTime.pHour !== 0 && proceedTime.pHour + '시간'} {proceedTime.pMinute}분 째
                             <span>
                                 {startTime.status === 'FAST' ? ' 급속 충전 ' : ' 완속 충전'} 중
                             </span> 입니다.
                         </div>
+                        {/* <div>
+                            QR코드를 생성하고 충전을 시작해보세요!
+                        </div> */}
                     </div>
                     <div id='main_progress_bar_box'>
                         <ProgressBar startTime={startTime} />
@@ -110,21 +112,15 @@ const User_main = () => {
                         <button>충전소 상세 보기</button>
                     </div>
                 </div>
-                <div id='main_bottom_box'>
-                    <div id='main_search_box'>
-                        <div>충전소 검색</div>
-                        <img src='images/icons/CL_icon_loc_white.png' alt='loc' />
-                    </div>
-                    <div id='main_qr_box' onClick={()=>setQRModal(true)}>
-                        <div>충전 시작하기</div>
-                        <img src='images/icons/CL_icon_QR.png' />
-                    </div>
+                <div id='main_qr_box' onClick={() => setQRModal(true)}>
+                    <div>충전 시작하기</div>
+                    <img src='images/icons/CL_icon_QR.png' />
                 </div>
             </div>
 
             <QRModal
                 show={qrModal}
-                onHide={()=>setQRModal(false)}
+                onHide={() => setQRModal(false)}
             />
         </>
     );

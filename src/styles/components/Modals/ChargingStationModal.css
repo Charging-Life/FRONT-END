@@ -61,6 +61,7 @@
     background-color: #48DB8C;
     color: white;
     font-weight: bolder;
+    transition: all 0.3s linear;
 }
 
 #gotoBtn > button:hover {
@@ -82,14 +83,10 @@
     width: 87%;
 }
 
-/* #charging-location > img {
-    width: 13%;
-    height: 13%;
-} */
-
 #starBox {
     width: 13%;
     height: 13%;
+    cursor: pointer;
 }
 
 #starBox > img {

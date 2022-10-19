@@ -4,54 +4,42 @@ import Modal from 'react-bootstrap/Modal';
 import '../../styles/components/Modals/ChargingStationModal.css';
 
 const ChargingStationModal = ({show, onHide}) => {
+
     const [stationDetail, setStationDetail] = useState({});
-    const [chargerList, setChargerList] = useState([]);
-    const [isSelected, setIsSelected] = useState(false);
-    const chargerTypes = ['DC 차데모', 'AC3 상', 'DC 콤보', 'AC 완속'];
+    const [business, setBusiness] = useState({});
+    const [selectBookmark, setSelectBookmark] = useState(false);
+    const [selectWish, setSelectWish] = useState();
+    const [count, setCount] = useState(0);
     let isUser = localStorage.getItem('CL_auth') === 'USER' ? true : false;
-    // isUser = true;
-
-    const chargers = [
-        {
-            'chargingState' : '대기중',
-            'chargerType' : ['AC 완속'],
-            'output': '50kW'
-        },
-        {
-            'chargingState' : '대기중',
-            'chargerType' : ['DC 차데모'],
-            'output': '완속'
-        },
-        {
-            'chargingState' : '대기중',
-            'chargerType' : ['DC 콤보', 'DC 차데모'],
-            'output': '50kW'
-        },
-        {
-            'chargingState' : '대기중',
-            'chargerType' : ['DC 차데모', 'AC3 상', 'DC 콤보'],
-            'output': '완속'
-        }
-    ]
-
-    const setColor = (type) => {
+    const chargerTypes = ['DC 차데모', 'AC3 상', 'DC 콤보', 'AC 완속'];
+    const mappingCharger = {
+        '01': ['DC 차데모'],
+        '02': ['AC 완속'],
+        '03': ['DC 차데모', 'AC3 상'],
+        '04': ['DC 콤보'],
+        '05': ['DC 차데모', 'DC 콤보'], 
+        '06': ['DC 차데모', 'AC3 상', 'DC 콤보'],
+        '07': ['AC3 상']
+    }
+    
+    const setType = (type) => {
         
-        let result = '';
+        const result = [];
         switch(type) {
-            case '대기중' : {
-                result = 'holding';
+            case 2 : { // 대기중
+                result.push(['holding', '대기중']);
                 break;
             }
-            case '충전중' : {
-                result = 'charging';
+            case 3 : { // 충전중
+                result.push(['charging', '충전중']);
                 break;
             }
-            case '통신미연결' : {
-                result = 'disconnected';
+            case 1: case 9: { // 통신미연결
+                result.push(['disconnected', '통신미연결']);
                 break;
             }
-            case '운영중지' : {
-                result = 'shutdown';
+            case 4: case 5: { // 운영중지
+                result.push(['shutdown', '운영중지']);
                 break;
             }
         }
@@ -64,15 +52,52 @@ const ChargingStationModal = ({show, onHide}) => {
         
     }
 
+    // 찜 등록 및 삭제 기능
+    const handleWish = () => {
+
+        if(selectWish) {
+            axios.delete(`${process.env.REACT_APP_PROXY}/member/destination/${stationDetail.statId}`, {
+                headers: { 
+                    Authorization: localStorage.getItem('CL_accessToken')
+                }
+            })
+            .then(res => {
+                setCount(count-1);
+                setSelectWish(false);
+            })
+            .catch(err => {console.log(err)});
+        }
+        else {
+            axios.post(`${process.env.REACT_APP_PROXY}/member/destination`, {
+                statId: [stationDetail.statId]
+            }, {
+                headers: { 
+                    Authorization: localStorage.getItem('CL_accessToken')
+                }
+            })
+            .then(res => {
+                setCount(count+1);
+                setSelectWish(true);
+            })
+            .catch(err => {console.log(err)});
+        }
+    
+    }
+
+    // 모달 닫을 때 실행
+    const handleClose = () => {
+        onHide();
+    }
+
     // 충전기 출력 
     const makeChargerList = () => {
 
         const result = [];
-        chargers.map((ele, idx) => 
+        stationDetail.chargers && stationDetail.chargers.map((ele, idx) => 
                 result.push(<div id='charger-box' key={idx}>
-                <div><span id={setColor(ele.chargingState)}>{ele.chargingState}</span><br/>{ele.output}</div>
+                <div><span id={setType(ele.stat)[0][0]}>{setType(ele.stat)[0][1]}</span><br/>{ele.outPut}kW</div>
                 <div>{chargerTypes.map((type, idx) => {
-                    if(ele.chargerType.includes(type)){
+                    if(mappingCharger[`${ele.chargerType}`].includes(type)){
                         return <span key={idx} id='include'>{type}&nbsp;&nbsp;</span>
                     } else {
                         return <span key={idx}>{type}&nbsp;&nbsp;</span>
@@ -86,21 +111,16 @@ const ChargingStationModal = ({show, onHide}) => {
 
     useEffect(()=>{
         if(show[1]){
-            axios.get(`${process.env.REACT_APP_PROXY}/station/${show[1]}`)
+            axios.get(`${process.env.REACT_APP_PROXY}/station/${show[1]}`, {
+                headers : {
+                    Authorization: localStorage.getItem('CL_accessToken')
+                }
+            })
             .then((res)=>{
-                setStationDetail({
-                    stat: '',
-                    statNm: res.data.statNm,
-                    statId: res.data.statId,
-                    address: res.data.address,
-                    business: res.data.business.business,
-                    useTime: res.data.useTime,
-                    businessCall: res.data.businessCall,
-                    parkingFree: res.data.parkingFree,
-                    chargers: res.data.chargers,
-                    memberCount: res.data.memberCount
-                })
-                setChargerList(res.data.chargerDtos);
+                setStationDetail(res.data);
+                setBusiness(res.data.business);
+                setCount(res.data.memberCount);
+                setSelectWish(res.data.checkDes);
             })
             .catch((err)=>{
                 console.log(err);
@@ -114,11 +134,13 @@ const ChargingStationModal = ({show, onHide}) => {
                 'Authorization' : localStorage.getItem('CL_accessToken')
             }
         })
-            .then((res)=>{
-                setIsSelected(res.data);
-            })
-            .catch(err => console.log(err));
-    }, [])
+        .then((res)=>{
+            if(res.data === true) {
+                setSelectBookmark(true);
+            }
+        })
+        .catch(err => console.log(err));
+    }, [show[1]])
 
     return (
         <div className='ChargingStationModal'>
@@ -126,7 +148,7 @@ const ChargingStationModal = ({show, onHide}) => {
                 <Modal.Header>
                     <div></div>
                     <span>충전소 운영 현황</span>
-                    <div id='close-icon' onClick={onHide}><img src='/images/icons/CL_icon_close.png'/></div>
+                    <div id='close-icon' onClick={() => handleClose()}><img src='/images/icons/CL_icon_close.png'/></div>
                 </Modal.Header>
                 <Modal.Body className='station-detail-modal'>
                     <div className='modal-charging-info'>
@@ -136,14 +158,14 @@ const ChargingStationModal = ({show, onHide}) => {
                                 <b>{stationDetail.statNm}</b><br/>
                                 <span>{stationDetail.address}</span>
                             </div>
-                            { isUser && <div id='starBox' onClick={handleBookMark}><img src={isSelected ? 'images/icons/CL_icon_selected_star.png' : 'images/icons/CL_icon_star.png'}/></div>}
+                            { isUser && <div id='starBox' onClick={handleBookMark}><img src={selectBookmark ? 'images/icons/CL_icon_selected_star.png' : 'images/icons/CL_icon_star.png'}/></div>}
                         </div>
                         <hr/>
-                        <div id='charging-station-info-text'><b>충전소 정보</b> { isUser && <span>현재 {stationDetail.memberCount}명이 대기중이예요 !</span>}</div>
+                        <div id='charging-station-info-text'><b>충전소 정보</b> { isUser && <span>현재 {count}대가 가는중이예요</span>}</div>
                         <div className='charging-station-info'>
-                            <div>운영 기관 &nbsp;&nbsp; {stationDetail.business}</div>
+                            <div>운영 기관 &nbsp;&nbsp; {business.business}</div>
                             <div>운영 시간 &nbsp;&nbsp; {stationDetail.useTime?stationDetail.useTime:'-'}</div>
-                            <div>연락처 &nbsp;&nbsp; {(stationDetail.businessCall&&stationDetail.businessCall!=='null')?stationDetail.businessCall:'-'}</div>
+                            <div>연락처 &nbsp;&nbsp; {(business.businessCall&&stationDetail.business.businessCall!=='null')?stationDetail.business.businessCall:'-'}</div>
                             <div>주차 요금 &nbsp;&nbsp; {stationDetail.parkingFree?'무료':'유료'}</div>
                         </div><br/><hr/>
                         <div id='charging-type'><b>충전기 정보</b></div>
@@ -154,7 +176,7 @@ const ChargingStationModal = ({show, onHide}) => {
                     </div>
                     {isUser &&
                     <div id='gotoBtn'>
-                        <button>지금 출발할게요 !</button>
+                        <button onClick={handleWish}>{selectWish ? '가고 있는 중입니다 !' : '지금 출발할게요 !'}</button>
                     </div>
                     }
                 </Modal.Body>

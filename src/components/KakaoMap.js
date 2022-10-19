@@ -4,10 +4,11 @@ import '../styles/components/KakaoMap.css';
 import LoadingWindow from './LoadingWindow';
 import ChargingStationModal from './Modals/ChargingStationModal'
 
-const KakaoMap = ({ station, stationState, setLocation, isManager, location }) => {
+const KakaoMap = ({ station, stationState, setLocation, isManager, location, userMain }) => {
     // 상세정보 모달 
     const [showModal, setShowModal] = useState(false);
     const [myLoc, setMyLoc] = useState(false);
+    const [center, setCenter] = useState({lat: 37.514575, lng: 127.0495556})
 
     // 마커 색 지정 함수
     const selectSrc = (id) => {
@@ -37,32 +38,18 @@ const KakaoMap = ({ station, stationState, setLocation, isManager, location }) =
     }
 
     useEffect(() => {
-        if (location === '') {
+        if (!userMain) {
             const mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                 mapOption = {
-                    center: new kakao.maps.LatLng(37.514575, 127.0495556), // 지도의 중심좌표
+                    center: new kakao.maps.LatLng(center.lat, center.lng), // 지도의 중심좌표
                     level: 5 // 지도의 확대 레벨
                 };
             // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
             const map = new kakao.maps.Map(mapContainer, mapOption);
 
-            const createMarker = (lat, lng) => {
+            const createMarker = () => {
                 // station, stationState가 있을 경우
                 if (station && stationState) {
-                    // 경도 위도를 통해 주소를 얻기 위한 api
-                    const geocoder = new kakao.maps.services.Geocoder();
-
-                    const callback = (result, status) => {
-                        // 주소가 정상적으로 받아와졌다면
-                        if (status === kakao.maps.services.Status.OK) {
-                            // 상위 주소만 받아와 저장
-                            const locationStr = result[0].address_name.split(' ');
-                            setLocation(locationStr[0]);
-                        }
-                    };
-                    // 좌표와 콜백 함수를 인자로 전달
-                    geocoder.coord2RegionCode(lng, lat, callback);
-
                     // 마커 생성
                     station.map(stationData => {
                         const businessId = isManager ? stationData.business.businessId : stationData.statId[0] + stationData.statId[1];
@@ -106,7 +93,19 @@ const KakaoMap = ({ station, stationState, setLocation, isManager, location }) =
                 setMyLoc(true);
             }
             const successGetLoc = (lat, lng) => {
-                createMarker(lat, lng);
+                // 경도 위도를 통해 주소를 얻기 위한 api
+                const geocoder = new kakao.maps.services.Geocoder();
+
+                const callback = (result, status) => {
+                    // 주소가 정상적으로 받아와졌다면
+                    if (status === kakao.maps.services.Status.OK) {
+                        // 상위 주소만 받아와 저장
+                        const locationStr = result[0].address_name.split(' ');
+                        setLocation(locationStr[0]);
+                    }
+                };
+                // 좌표와 콜백 함수를 인자로 전달
+                geocoder.coord2RegionCode(lng, lat, callback);
                 setMyLoc(true);
             }
             // 현재 위치 받아오기
@@ -123,6 +122,7 @@ const KakaoMap = ({ station, stationState, setLocation, isManager, location }) =
 
                         var locPosition = new kakao.maps.LatLng(lat, lng); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 
+                        setCenter({lat: lat, lng: lng});
                         map.setCenter(locPosition);
                         successGetLoc(lat, lng);
                         return;
@@ -138,15 +138,15 @@ const KakaoMap = ({ station, stationState, setLocation, isManager, location }) =
                     return;
                 }, 10000);
             }
-            if(!myLoc) getMyLoc();
+            if(station.length === 0) getMyLoc();
+            if(station.length > 0) createMarker();
         }
-    }, [station, stationState]);
+    }, [station, stationState, userMain]);
 
     return (
         <>
             <div id='map' className='KakaoMap'></div>
-            {!myLoc &&  <LoadingWindow/>}
-
+            {!myLoc && <LoadingWindow />}
             <ChargingStationModal
                 show={showModal}
                 onHide={() => { setShowModal(false) }}

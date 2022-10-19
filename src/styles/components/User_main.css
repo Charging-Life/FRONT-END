@@ -55,7 +55,7 @@
     color: white;
 }
 
-#User_main > div:nth-child(2){
+#main_bottom_box{
     width: 300px;
     display: flex;
     justify-content: space-between;

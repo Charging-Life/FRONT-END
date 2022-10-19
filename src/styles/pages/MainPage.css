@@ -1,12 +1,18 @@
 .MainPage{
     height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: fixed;
 }
 
 .mainpage_header{
     border-bottom: 3px solid #DFDFDF;
+    z-index: 999;
+}
+.MainPage > div:nth-child(2){
+    width: 100%;
+    height: 100%;
 }
 
 .mainpage_kakaomap{
@@ -17,13 +23,38 @@
     height: 50px;
 }
 
-/* media query */
-@media only screen and (min-width: 270px) and (max-width: 299px) {
-    
+.map_user_main_btn {
+    position: fixed;
+    z-index: 998;
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    border-radius: 40px;
+    outline: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 16px 0 rgb(33 34 34 / 15%);
+    transition: all 0.4s linear;
 }
 
-@media only screen and (min-width: 300px) and (max-width: 449px) {
-    
+.map_user_main_btn_img {
+    width: 70%;
+    opacity: 1;
+}
+
+.map_user_main_btn:hover {
+    box-shadow: 0 0 16px 0 rgb(33 34 34 / 40%);
+}
+
+/* media query */
+@media only screen and (max-width: 449px) {
+    .map_user_main_btn{
+        bottom: 70px;
+    }
 }
 
 @media only screen and (min-width: 450px) {

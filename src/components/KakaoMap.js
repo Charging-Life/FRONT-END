@@ -7,6 +7,7 @@ import ChargingStationModal from './Modals/ChargingStationModal'
 const KakaoMap = ({ station, stationState, setLocation, isManager, location, userMain }) => {
     // 상세정보 모달 
     const [showModal, setShowModal] = useState(false);
+    const [statId, setStatId] = useState('');
     const [myLoc, setMyLoc] = useState(false);
     const [center, setCenter] = useState({lat: 37.514575, lng: 127.0495556})
 
@@ -81,7 +82,8 @@ const KakaoMap = ({ station, stationState, setLocation, isManager, location, use
 
                         // 마커에 클릭이벤트를 등록합니다
                         kakao.maps.event.addListener(markerImg, 'click', () => {
-                            setShowModal([true, stationData['statId']]);
+                            setShowModal(true);
+                            setStatId(stationData['statId']);
                         });
                     })
                 }
@@ -149,6 +151,7 @@ const KakaoMap = ({ station, stationState, setLocation, isManager, location, use
             {!myLoc && <LoadingWindow />}
             <ChargingStationModal
                 show={showModal}
+                statId={statId}
                 onHide={() => { setShowModal(false) }}
             />
         </>

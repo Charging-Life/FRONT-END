@@ -7,7 +7,7 @@ const isValidPassword = (password) => {
 }
 
 const isValidCarNumber = (carNmber) => {
-    const reg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+    const reg = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
     let korCnt = 0;
     carNmber.split('').map(x => {
         if(reg.test(x)) korCnt++;
@@ -16,7 +16,7 @@ const isValidCarNumber = (carNmber) => {
 }
 
 const checkSpecial = (str) => {
-    const regExp = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
+    const regExp =  /[~!@#$%^&*()_+|<>?:{}]/g;
     return regExp.test(str)
 }
 

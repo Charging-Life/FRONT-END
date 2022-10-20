@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import '../../styles/components/Modals/ChargingStationModal.css';
 
-const ChargingStationModal = ({show, onHide}) => {
+const ChargingStationModal = ({show, statId, onHide}) => {
 
     const [stationDetail, setStationDetail] = useState({});
     const [business, setBusiness] = useState({});
@@ -110,13 +110,23 @@ const ChargingStationModal = ({show, onHide}) => {
     }
 
     useEffect(()=>{
-        if(show[1]){
-            axios.get(`${process.env.REACT_APP_PROXY}/station/${show[1]}`, {
-                headers : {
-                    Authorization: localStorage.getItem('CL_accessToken')
-                }
-            })
-            .then((res)=>{
+        console.log(statId);
+
+        let res;
+        if(statId){
+            
+            if(localStorage.getItem('CL_accessToken')) {
+                res = axios.get(`${process.env.REACT_APP_PROXY}/station/${statId}`, {
+                    headers : {
+                        Authorization: localStorage.getItem('CL_accessToken')
+                    }
+                })
+            }
+            else {
+                res = axios.get(`${process.env.REACT_APP_PROXY}/station/${statId}`)
+            }
+            
+            res.then((res)=>{
                 setStationDetail(res.data);
                 setBusiness(res.data.business);
                 setCount(res.data.memberCount);
@@ -125,8 +135,9 @@ const ChargingStationModal = ({show, onHide}) => {
             .catch((err)=>{
                 console.log(err);
             })
+
         }
-    },[show[1]])
+    },[statId])
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_PROXY}/member/station/${stationDetail.statId}`, {
@@ -140,11 +151,11 @@ const ChargingStationModal = ({show, onHide}) => {
             }
         })
         .catch(err => console.log(err));
-    }, [show[1]])
+    }, [statId])
 
     return (
         <div className='ChargingStationModal'>
-            <Modal centered show={show[0]} onHide={onHide}>
+            <Modal centered show={show} onHide={onHide}>
                 <Modal.Header>
                     <div></div>
                     <span>충전소 운영 현황</span>

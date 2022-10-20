@@ -57,29 +57,29 @@ const BoardPage = () => {
     const makeBoardList = () => {
         
         const result = [];
-        boards && boards.map((ele, idx) => {
-            result.push(
-                <div id='board_box' key={idx} onClick={()=>navigate(`/board/${ele.id}`)}>
-                    <div id='board_top_box'>
-                        <div>{ele.title}</div>
-                        <div>{chanageCategoryText(ele.category)}</div>
+        if(boards.length === 0) return [<div id='no_content'>현재 등록된 <br/>게시글이 없습니다</div>];
+        else {
+            boards.map((ele, idx) => {
+                result.push(
+                    <div id='board_box' key={idx} onClick={()=>navigate(`/board/${ele.id}`)}>
+                        <div id='board_top_box'>
+                            <div>{ele.title}</div>
+                            <div>{chanageCategoryText(ele.category)}</div>
+                        </div>
+                        <div>{ele.description}</div>
+                        <div>
+                            {"작성자"}&nbsp;|&nbsp;
+                            <img src='/images/icons/CL_icon_heart.png' alt='likes'/>&nbsp;
+                            {ele.likes}&nbsp;&nbsp;
+                            <img src='/images/icons/CL_icon_comment.png' alt='comments'/>&nbsp;
+                            {ele.comments}
+                        </div>
                     </div>
-                    <div>{ele.description}</div>
-                    <div>
-                        {"작성자"}&nbsp;|&nbsp;
-                        <img src='/images/icons/CL_icon_heart.png' alt='likes'/>&nbsp;
-                        {ele.likes}&nbsp;&nbsp;
-                        <img src='/images/icons/CL_icon_comment.png' alt='comments'/>&nbsp;
-                        {ele.comments}
-                    </div>
-                </div>
-            )
-        })
-
-        return result;
+                )
+            })
+            return result;
+        }   
     }
-
-    console.log()
 
     // 게시물 read
     useEffect(() => {
@@ -101,10 +101,11 @@ const BoardPage = () => {
                     {category.map((x, idx)=>
                         <div id={activeSort === idx ? 'selected_sort_item' : 'sort_item'} key={idx} onClick={() =>handleSort(idx)}>{x}</div>)}
                 </div>
-                <div class='board_list'>
+                <div className='board_list'>
                     {makeBoardList()}
                 </div>
             </div>
+            <div id='addBtn' onClick={() => navigate('/board/write')}><img src='/images/icons/CL_icon_write.png'/></div>
             <Bar value={3}/>
         </div>
     );

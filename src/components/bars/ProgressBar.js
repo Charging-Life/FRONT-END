@@ -79,25 +79,25 @@ const ProgressBar = ({ startTime }) => {
     return (
         <>
             <div id='progress_bar_img'>
-                {leftTime.percent === ''
+                {/* {leftTime.percent === ''
                     ? <img id='progress_bar_thunder' src='images/icons/CL_icon_thunder.png' alt='thunder' />
                     : <img id='progress_bar_thunder_move' style={{ left: `${leftTime.pxPercent - 10}px` }} src='images/icons/CL_icon_thunder.png' alt='thunder' />
-                }
+                } */}
 
             </div>
             <div id='progress_bar_bg'>
-                {leftTime.percent === ''
+                {/* {leftTime.percent === ''
                     ? <div id='process_bar_set' />
                     : <div id='process_bar_set_move' style={{width: `${leftTime.percent}%`}}/>
-                }
+                } */}
             </div>
             <div id='progress_bar_bottom'>
-                {`${startTime.sHour}:${startTime.sMinute}`}
+                {/* {`${startTime.sHour}:${startTime.sMinute}`}
                 <div>{leftTime.lHour !== 0 && leftTime.lHour + '시간'} {leftTime.lMinute}분 남았습니다.</div>
-                {`${endTime.eHour}:${endTime.eMinute}`}
-                {/* 시작
+                {`${endTime.eHour}:${endTime.eMinute}`} */}
+                시작
                 <div>충전을 시작하지 않았습니다.</div>
-                끝 */}
+                끝
             </div>
         </>
     );

@@ -11,7 +11,7 @@ const User_main = () => {
     const [qrModal, setQRModal] = useState(false);
     // 시작 시간을 저장하는 useState
     const [startTime, setStartTime] = useState({
-        sHour: '2',
+        sHour: '13',
         sMinute: '10',
         status: 'FAST',
         change: true
@@ -22,7 +22,7 @@ const User_main = () => {
         // -> 주기적으로 실행되는데 qr 모달의 부모 요소기 때문에 재렌더링 되기 때문
         if (qrModal) return;
         setStartTime({
-            sHour: '2',
+            sHour: '13',
             sMinute: '10',
             status: 'FAST',
             // state가 바뀐다는 것을 명시하기 위한 프로퍼티
@@ -96,14 +96,14 @@ const User_main = () => {
                 <div id='main_progress_box'>
                     <div id='main_progress_info'>
                         <div>{'COCOPAS'}님</div>
-                        <div>현재 {proceedTime.pHour !== 0 && proceedTime.pHour + '시간'} {proceedTime.pMinute}분 째
+                        {/* <div>현재 {proceedTime.pHour !== 0 && proceedTime.pHour + '시간'} {proceedTime.pMinute}분 째
                             <span>
                                 {startTime.status === 'FAST' ? ' 급속 충전 ' : ' 완속 충전'} 중
                             </span> 입니다.
-                        </div>
-                        {/* <div>
-                            QR코드를 생성하고 충전을 시작해보세요!
                         </div> */}
+                        <div>
+                            QR코드를 생성하고 충전을 시작해보세요!
+                        </div>
                     </div>
                     <div id='main_progress_bar_box'>
                         <ProgressBar startTime={startTime} />

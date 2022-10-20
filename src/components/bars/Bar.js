@@ -11,33 +11,36 @@ const Bar = ({value}) => {
 
     // value에 따라서 navigate로 url 이동
     const handleNav = (e) => {
-        if(!isLogined) {
-            alert('로그인 후 이용해주세요.');
-            return;
-        }
-        else {
-            setActiveNav(e.currentTarget.id);
-
-            switch(e.currentTarget.id) {
-                case '1' : {
-                    navigate('/');
-                    break;
-                }
-                case '2' : {
-                    navigate('/bookmark');
-                    break;
-                }
-                case '3' : {
-                    navigate('/board');
-                    break;
-                }
-                case '4' : {
-                    navigate('/my');
-                    break;
-                }
-                default : {}
+        
+        switch(e.currentTarget.id) {
+            case '1' : {
+                navigate('/');
+                break;
             }
+            case '2' : {
+                if(!isLogined) {
+                    alert('로그인 후 이용해주세요.');
+                    return;
+                }
+                navigate('/bookmark');
+                break;
+            }
+            case '3' : {
+                navigate('/board');
+                break;
+            }
+            case '4' : {
+                if(!isLogined) {
+                    alert('로그인 후 이용해주세요.');
+                    return;
+                }
+                navigate('/my');
+                break;
+            }
+            default : {}
         }
+
+        setActiveNav(e.currentTarget.id);
     }
 
     return (

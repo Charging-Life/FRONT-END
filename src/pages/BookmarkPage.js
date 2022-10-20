@@ -6,14 +6,13 @@ import './/..//styles/pages/BookmarkPage.css';
 import Bottombar from '../components/bars/Bar.js';
 import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
 import BookmarkBox from '../components/BookmarkBox';
-import KakaoMap from '../components/KakaoMap.js';
 
 const BookmarkPage = () => {
 
     const [isListView, setIsListView] = useState(true);
     const [manageStation, setManageStation] = useState([]);
     const [showSearchModal, setShowSearchModal] = useState(false);
-    
+    console.log(manageStation);
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_PROXY}/station/manager`,{
             headers: {
@@ -31,7 +30,7 @@ const BookmarkPage = () => {
             <div id='bookmarkHeader'>
                 <Header page={"bookmark"} isListView={isListView} setIsListView={setIsListView}/>
             </div>
-            <div id='bookmarkContainer'>
+            <>
                 {
                     manageStation.length === 0 ?
                     <div id='noBookmark'>
@@ -40,7 +39,7 @@ const BookmarkPage = () => {
                         <button onClick={() => setShowSearchModal(true)}>+ 추가하기</button>
                     </div>
                     :
-                    <>
+                    <div id='bookmarkContainer'>
                         { 
                             manageStation.map((ele, idx) => {
                                 return <BookmarkBox data={ele} key={idx} 
@@ -48,9 +47,9 @@ const BookmarkPage = () => {
                             })
                         }
                         <div id='addBtn' onClick={() => setShowSearchModal(true)}>+</div>
-                    </>
+                    </div>
                 }
-            </div>
+            </>
             <Bottombar value={2}/>
             <ChargingSearchModal show={showSearchModal} onHide={()=>{setShowSearchModal(false)}}
                                 manageStation={manageStation} setManageStation={setManageStation}/>

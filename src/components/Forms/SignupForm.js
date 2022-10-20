@@ -20,7 +20,8 @@ const SignupForm = () => {
         email : '',
         password : '',
         name : '', 
-        auth : 'USER'
+        auth : 'USER',
+        car : ''
     });
 
     const handleSignupData = (e) => {
@@ -31,16 +32,12 @@ const SignupForm = () => {
         else if (e.target.name === 'checkPassword') {
             setCheckPassword(e.target.value);
         }
-        else if (e.target.name === 'carNumber') {
-            setCarNumber(e.target.value);
-        }
         else {
             setSignupInfo({
                 ...signupInfo, 
                 [e.target.name]: e.target.value
             });
         }
-
     };
 
     // 이메일 인증 요청 통신
@@ -129,7 +126,7 @@ const SignupForm = () => {
             return;
         }
 
-        if(!isValidCarNumber(carNumber)) {
+        if(signupInfo.auth === 'USER' && !isValidCarNumber(carNumber)) {
             alert('차량번호를 올바르게 입력해 주세요.')
             return;
         }
@@ -148,7 +145,6 @@ const SignupForm = () => {
         let url = 'company';
         if(signupInfo.auth === 'USER') {
             url = 'new';
-            signupInfo.car = carNumber;
         }
 
         axios.post(`${process.env.REACT_APP_PROXY}/member/${url}`, signupInfo)
@@ -226,7 +222,7 @@ const SignupForm = () => {
                 <input 
                     value={carNumber} 
                     type='text' 
-                    name='carNumber'
+                    name='car'
                     onChange={handleSignupData} 
                     placeholder='  차량번호를 입력하세요'/>
                     : <div style={{width: "100px", height: "8%" , border: 'none'}}></div>

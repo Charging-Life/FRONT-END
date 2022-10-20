@@ -1,12 +1,14 @@
+import {Routes, Route} from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+
 import './App.css';
 import MainPage from './pages/MainPage.js';
 import LoginPage from './pages/LoginPage.js';
 import SignupPage from './pages/SignupPage.js';
 import MyPage from './pages/MyPage.js';
-import BoardPage from './pages/BoardPage.js';
+import BoardPage from './pages/BoardPage';
+import BoardDetailPage from './pages/BoardDetailPage';
 import BookmarkPage from './pages/BookmarkPage';
-import {Routes, Route} from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
 
 function App() {
   const showDevice = useMediaQuery({
@@ -23,6 +25,7 @@ function App() {
         <Route path="/signup" element={<SignupPage/>}/>
         <Route path="/bookmark" element={<BookmarkPage/>}/>
         <Route path="/board" element={<BoardPage/>}/>
+        <Route path="/board/:id" element={<BoardDetailPage/>}/>
         <Route path="/my" element={<MyPage/>}/>
         <Route path="*" element={<div>404</div>}/>
       </Routes>

@@ -14,7 +14,7 @@ const MainPage = () => {
     const [location, setLocation] = useState('');
     const [clickBtn, setClickBtn] = useState(false);
     const [userMain, setUserMain] = useState(false);
-console.log(location);
+
     useEffect(() => {
         if (isManager) {
             axios.get(`${process.env.REACT_APP_PROXY}/station/manager`, {
@@ -51,7 +51,7 @@ console.log(location);
     }, [location, userMain])
 
     const clickUserBtn = () => {
-        setClickBtn(true);
+        localStorage.getItem('CL_accessToken')?setClickBtn(true):alert('로그인 후 이용해주세요.');
     }
 
     useEffect(() => {

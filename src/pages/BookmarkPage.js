@@ -34,9 +34,7 @@ const BookmarkPage = () => {
                 {
                     manageStation.length === 0 ?
                     <div id='noBookmark'>
-                        <div></div>
                         현재 등록된 <br/>즐겨찾기가 없습니다 
-                        <button onClick={() => setShowSearchModal(true)}>+ 추가하기</button>
                     </div>
                     :
                     <div id='bookmarkContainer'>
@@ -46,9 +44,9 @@ const BookmarkPage = () => {
                                 manageStation={manageStation} setManageStation={setManageStation} />
                             })
                         }
-                        <div id='addBtn' onClick={() => setShowSearchModal(true)}>+</div>
                     </div>
                 }
+                <div id='addBtn' onClick={() => setShowSearchModal(true)}><img src='/images/icons/CL_icon_add_bookmark.png'/></div>
             </>
             <Bottombar value={2}/>
             <ChargingSearchModal show={showSearchModal} onHide={()=>{setShowSearchModal(false)}}

@@ -51,6 +51,14 @@
     height: calc(100% - 60px);
     overflow: scroll;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#no_content {
+    text-align: center;
 }
 
 #board_box {
@@ -96,6 +104,10 @@
 #board_box > div:nth-child(3) > img, #board_detail_box > div:nth-child(3) > img {
     width: 16px;
 } 
+
+#addBtn > img {
+    width: 35px;
+}
 
 @media only screen and (min-width: 270px) and (max-width: 299px) {
     .board_list::-webkit-scrollbar {

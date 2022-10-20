@@ -10,7 +10,7 @@
 #bookmarkHeader {
     width: 100%;
     height: 50px;
-    border-bottom: 2px solid #CBCBCB;
+    box-shadow: 0 3px 16px 0 rgb(33 34 34 / 10%);
 }
 
 #bookmarkContainer {
@@ -24,13 +24,12 @@
 }
 
 #noBookmark {
+    height: calc(100% - 100px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 20px;
-    font-weight: bold;
 }
 
 #noBookmark > div {
@@ -99,32 +98,100 @@
 }
 
 #addBtn {
-    width: 90%;
-    height: 60px;
-    margin: 15px auto;
-    background-color: #F4F4F4;
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: white;
+    border-radius: 40px;
     text-align: center;
-    border-radius: 15px;
     color: #CBCBCB;
     font-size: 40px;
+    line-height: 70px;
     font-weight: bolder;
     cursor: pointer;
-    box-shadow: 0 5.2px 16px 0 rgb(33 34 34 / 10%);
-    transition: all 0.3s linear;
+    box-shadow: 0 0 16px 0 rgb(33 34 34 / 15%);
+    transition: all 0.4s linear;
 }
 
 #addBtn:hover {
-    background-color: #CBCBCB;
-    color: white;
+    box-shadow: 0 0 16px 0 rgb(33 34 34 / 25%);
+    color: rgb(33 34 34 / 40%);
+}
+
+/* fade in */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translateZ(0);
+    }
+}
+
+#stationBox {
+    position: relative;
+    animation: fadeInUp 1s;
 }
 
 /* media query */
 @media only screen and (min-width: 270px) and (max-width: 299px) {
+    #stationBox > div:nth-child(1) {
+        font-size: 13px;
+    }
 
+    #stationBox > div > span:nth-of-type(1) {
+        font-size: 9px;
+        color:#636363;
+    }
+
+    #stationBox > div:nth-child(2) > img {
+        width: 22px;
+        height: 22px;
+    }
+
+    #stationBox > div:nth-child(1) {
+        width: 87%;
+    }
+
+    #stationBox > div:nth-child(2) {
+        width: 13%;
+    }
+
+    #addBtn {
+        bottom: 70px;
+    }
 }
 
 @media only screen and (min-width: 300px) and (max-width: 449px) {
+    #stationBox > div:nth-child(1) {
+        font-size: 15px;
+    }
 
+    #stationBox > div > span:nth-of-type(1) {
+        font-size: 11px;
+        color:#636363;
+    }
+
+    #stationBox > div:nth-child(2) > img {
+        width: 25px;
+        height: 25px;
+    }
+
+    #stationBox > div:nth-child(1) {
+        width: 85%;
+    }
+
+    #stationBox > div:nth-child(2) {
+        width: 15%;
+    }
+    
+    #addBtn {
+        bottom: 70px;
+    }
 }
 
 @media only screen and (min-width: 450px) {

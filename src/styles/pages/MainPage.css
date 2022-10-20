@@ -7,7 +7,7 @@
 }
 
 .mainpage_header{
-    border-bottom: 3px solid #DFDFDF;
+    box-shadow: 0 3px 16px 0 rgb(33 34 34 / 10%);
     z-index: 999;
 }
 .MainPage > div:nth-child(2){

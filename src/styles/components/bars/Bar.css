@@ -6,7 +6,7 @@
     bottom: 0;
     display: flex;
     justify-content: space-around;
-    border-top: 2px solid #CBCBCB;
+    box-shadow: 3px 0 16px 0 rgb(33 34 34 / 10%);
     background-color: white;
     z-index: 999;
 }

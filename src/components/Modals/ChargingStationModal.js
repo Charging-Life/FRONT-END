@@ -110,32 +110,37 @@ const ChargingStationModal = ({show, statId, onHide}) => {
     }
 
     useEffect(()=>{
-        console.log(statId);
-
-        let res;
+        let token = localStorage.getItem('CL_accessToken') ? localStorage.getItem('CL_accessToken') : "";
         if(statId){
-            
+
             if(localStorage.getItem('CL_accessToken')) {
-                res = axios.get(`${process.env.REACT_APP_PROXY}/station/${statId}`, {
+                axios.get(`${process.env.REACT_APP_PROXY}/station/${statId}`, {
                     headers : {
-                        Authorization: localStorage.getItem('CL_accessToken')
+                        Authorization: token
                     }
                 })
+                .then((res)=>{
+                    setStationDetail(res.data);
+                    setBusiness(res.data.business);
+                    setCount(res.data.memberCount);
+                    setSelectWish(res.data.checkDes);
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+    
+            } else {
+                axios.get(`${process.env.REACT_APP_PROXY}/station/${statId}`)
+                .then((res)=>{
+                    setStationDetail(res.data);
+                    setBusiness(res.data.business);
+                    setCount(res.data.memberCount);
+                    setSelectWish(res.data.checkDes);
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
             }
-            else {
-                res = axios.get(`${process.env.REACT_APP_PROXY}/station/${statId}`)
-            }
-            
-            res.then((res)=>{
-                setStationDetail(res.data);
-                setBusiness(res.data.business);
-                setCount(res.data.memberCount);
-                setSelectWish(res.data.checkDes);
-            })
-            .catch((err)=>{
-                console.log(err);
-            })
-
         }
     },[statId])
 
@@ -151,7 +156,7 @@ const ChargingStationModal = ({show, statId, onHide}) => {
             }
         })
         .catch(err => console.log(err));
-    }, [statId])
+    }, [])
 
     return (
         <div className='ChargingStationModal'>

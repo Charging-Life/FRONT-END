@@ -12,7 +12,7 @@ const BookmarkPage = () => {
     const [isListView, setIsListView] = useState(true);
     const [manageStation, setManageStation] = useState([]);
     const [showSearchModal, setShowSearchModal] = useState(false);
-    console.log(manageStation);
+
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_PROXY}/station/manager`,{
             headers: {
@@ -49,8 +49,11 @@ const BookmarkPage = () => {
                 <div id='addBtn' onClick={() => setShowSearchModal(true)}><img src='/images/icons/CL_icon_add_bookmark.png'/></div>
             </>
             <Bottombar value={2}/>
-            <ChargingSearchModal show={showSearchModal} onHide={()=>{setShowSearchModal(false)}}
-                                manageStation={manageStation} setManageStation={setManageStation}/>
+            <ChargingSearchModal 
+                    show={showSearchModal} 
+                    onHide={()=>{setShowSearchModal(false)}}
+                    manageStation={manageStation} 
+                    setManageStation={setManageStation}/>
         </div>
     );
 };

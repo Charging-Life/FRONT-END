@@ -47,6 +47,7 @@
 }
 
 .map_user_main_btn:hover {
+    scale: 1.1;
     box-shadow: 0 0 16px 0 rgb(33 34 34 / 40%);
 }
 

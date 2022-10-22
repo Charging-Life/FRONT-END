@@ -10,7 +10,6 @@ const MainPage = () => {
     const isManager = localStorage.getItem('CL_auth') && localStorage.getItem('CL_auth') === 'COMPANY' ? true : false;
 
     const [station, setStation] = useState([]);
-    const [stationState, setStationState] = useState([]);
     const [location, setLocation] = useState('');
     const [clickBtn, setClickBtn] = useState(false);
     const [userMain, setUserMain] = useState(false);
@@ -24,25 +23,15 @@ const MainPage = () => {
             })
                 .then((res) => {
                     setStation(res.data);
-                    console.log(station.length);
                 })
                 .catch((err) => {
                     console.log(err);
                 })
         }
-        if (location !== '' && !userMain) {
+        if (location !== '') {
             axios.get(`${process.env.REACT_APP_PROXY}${isManager ? '/station/manager' : `/station?city=${location}`}`)
                 .then((res) => {
                     setStation(res.data);
-                    console.log(res.data);
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-
-            axios.get(`${process.env.REACT_APP_GET_STATION_URL}`)
-                .then((res) => {
-                    setStationState(res.data.items.item);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -101,7 +90,7 @@ const MainPage = () => {
                 <Header page={"main"} />
             </div>
             <div>
-                <KakaoMap station={station} stationState={stationState} setLocation={setLocation} isManager={isManager} location={location} userMain={userMain} />
+                <KakaoMap station={station} setLocation={setLocation} isManager={isManager} location={location} userMain={userMain} />
                 {userMain && <User_main />}
                 <Bar value={1} />
             </div>

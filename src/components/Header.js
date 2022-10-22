@@ -69,9 +69,6 @@ const Header = ({ page, isListView, setIsListView }) => {
             }
             else {
                 result.push(<div>
-                    <img src='images/icons/CL_icon_search.png' alt='search'
-                        className='header_search'
-                        onClick={() => { setShowFilter(true) }} />
                     <img src={'images/icons/CL_icon_list_view.png'} alt='view'
                         className='header_view'
                         onClick={() => { setIsListView(!isListView) }} />

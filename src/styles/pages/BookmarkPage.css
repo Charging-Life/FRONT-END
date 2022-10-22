@@ -65,6 +65,7 @@
     box-shadow: 0 5.2px 16px 0 rgb(33 34 34 / 10%);
     border-radius: 10px;
     transition: all 0.2s linear;
+    cursor: pointer;
 }
 
 #stationBox:hover {
@@ -197,33 +198,31 @@
 @media only screen and (min-width: 450px) {
 
     #bookmarkContainer {
-        padding: 50px 50px;
+        padding: 50px;
         height: 100vh;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
     }
 
-    #stationBox {
-        height: 220px;
+    #noBookmark {
+        height: calc(100% - 50px);
     }
+
 }
 
 @media only screen and (min-width: 701px) {
     #bookmarkContainer {
-        grid-template-columns: 1fr 1fr 1fr;
+        width: 700px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
     }
 
-    #stationBox {
-        height: 250px;
-    }
 }
 
 @media only screen and (min-width: 1001px) {
     #bookmarkContainer {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-
-    #stationBox {
-        height: 280px;
+        width: 1000px;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
     }
 }

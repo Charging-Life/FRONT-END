@@ -1,13 +1,16 @@
 /*global kakao*/
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import '../styles/components/KakaoMap.css';
 import LoadingWindow from './LoadingWindow';
-import ChargingStationModal from './Modals/ChargingStationModal'
+import ChargingStationModal from './Modals/ChargingStationModal';
 
 const KakaoMap = ({ station, stationState, setLocation, isManager, location, userMain }) => {
     // 상세정보 모달 
     const [showModal, setShowModal] = useState(false);
     const [statId, setStatId] = useState('');
+    const [isbookmarked, setIsBookmarked] = useState(false);
     const [myLoc, setMyLoc] = useState(false);
     const [center, setCenter] = useState({lat: 37.514575, lng: 127.0495556})
 
@@ -36,6 +39,28 @@ const KakaoMap = ({ station, stationState, setLocation, isManager, location, use
             }
         });
         return !color ? 'green' : color;
+    }
+
+    // 마커 클릭 이벤트
+    const handleClick = (statId) => {
+        setIsBookmarked(false);
+        setStatId(statId);
+        bookmarkFlag(statId);
+    }
+
+    // 즐겨찾기 여부를 조회
+    const bookmarkFlag = (statId) => {
+        axios.get(`${process.env.REACT_APP_PROXY}/member/station/${statId}`, {
+            headers : {
+                'Authorization' : localStorage.getItem('CL_accessToken')
+            }
+        })
+        .then((res)=>{
+            if(res.data === true) {
+                setIsBookmarked(true);
+            }
+        })
+        .catch(err => console.log(err));
     }
 
     useEffect(() => {
@@ -82,8 +107,8 @@ const KakaoMap = ({ station, stationState, setLocation, isManager, location, use
 
                         // 마커에 클릭이벤트를 등록합니다
                         kakao.maps.event.addListener(markerImg, 'click', () => {
+                            handleClick(stationData.statId);
                             setShowModal(true);
-                            setStatId(stationData['statId']);
                         });
                     })
                 }
@@ -152,6 +177,8 @@ const KakaoMap = ({ station, stationState, setLocation, isManager, location, use
             <ChargingStationModal
                 show={showModal}
                 statId={statId}
+                isbookmarked={isbookmarked}
+                setIsBookmarked={setIsBookmarked}
                 onHide={() => { setShowModal(false) }}
             />
         </>

@@ -3,12 +3,10 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import '../../styles/components/Modals/ChargingStationModal.css';
 
-const ChargingStationModal = ({show, statId, onHide}) => {
-
+const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmarked}) => {
     const [stationDetail, setStationDetail] = useState({});
     const [business, setBusiness] = useState({});
-    const [selectBookmark, setSelectBookmark] = useState(false);
-    const [selectWish, setSelectWish] = useState();
+    const [isWished, setIsWished] = useState();
     const [count, setCount] = useState(0);
     let isUser = localStorage.getItem('CL_auth') === 'USER' ? true : false;
     const chargerTypes = ['DC 차데모', 'AC3 상', 'DC 콤보', 'AC 완속'];
@@ -21,7 +19,7 @@ const ChargingStationModal = ({show, statId, onHide}) => {
         '06': ['DC 차데모', 'AC3 상', 'DC 콤보'],
         '07': ['AC3 상']
     }
-    
+
     const setType = (type) => {
         
         const result = [];
@@ -47,27 +45,63 @@ const ChargingStationModal = ({show, statId, onHide}) => {
         return result;
     }
 
-    // 즐겨찾기 추가 / 해제 로직
+    // 즐겨찾기 추가 / 삭제 기능
     const handleBookMark = (e) => {
-        
+        // 추가 되어있으면 삭제
+        if(isbookmarked) {
+            if(!window.confirm('즐겨찾기를 해제하시겠습니까?')) return;
+            axios.delete(`${process.env.REACT_APP_PROXY}/member/${stationDetail.id}`,{
+                headers: {
+                    Authorization: localStorage.getItem('CL_accessToken')
+                }
+            })
+            .then(res => {
+                alert('해제되었습니다.');
+                setIsBookmarked(false);
+            })
+            .catch(err => console.log(err));
+        }
+        // 안되어있으면 추가
+        else {
+            if(!window.confirm('해당 충전소를 즐겨찾기에 추가하시겠습니까?')) return;
+            axios.post(`${process.env.REACT_APP_PROXY}/member/station`,{
+                statId: [stationDetail.statId]
+            },{
+                headers: {Authorization: localStorage.getItem('CL_accessToken')}
+            })
+            .then((res)=>{
+                alert('추가되었습니다.');
+                setIsBookmarked(true);
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+        }
     }
 
-    // 찜 등록 및 삭제 기능
+    // 찜 등록 및 해제 기능
     const handleWish = () => {
+        console.log(isWished);
 
-        if(selectWish) {
+        // 등록되어있으면 해제
+        if(isWished) {
+            if(!window.confirm('목적지 등록을 해제하시겠습니까?')) return;
             axios.delete(`${process.env.REACT_APP_PROXY}/member/destination/${stationDetail.statId}`, {
                 headers: { 
                     Authorization: localStorage.getItem('CL_accessToken')
                 }
             })
             .then(res => {
+                console.log(res);
+                alert('해제되었습니다.');
                 setCount(count-1);
-                setSelectWish(false);
+                setIsWished(false);
             })
             .catch(err => {console.log(err)});
         }
+        // 안되어있으면 등록
         else {
+            if(!window.confirm('해당 충전소를 목적지로 등록하시겠습니까?')) return;
             axios.post(`${process.env.REACT_APP_PROXY}/member/destination`, {
                 statId: [stationDetail.statId]
             }, {
@@ -76,17 +110,14 @@ const ChargingStationModal = ({show, statId, onHide}) => {
                 }
             })
             .then(res => {
+                console.log(res);
+                alert('등록되었습니다.');
                 setCount(count+1);
-                setSelectWish(true);
+                setIsWished(true);
             })
             .catch(err => {console.log(err)});
         }
     
-    }
-
-    // 모달 닫을 때 실행
-    const handleClose = () => {
-        onHide();
     }
 
     // 충전기 출력 
@@ -110,53 +141,32 @@ const ChargingStationModal = ({show, statId, onHide}) => {
     }
 
     useEffect(()=>{
-        let token = localStorage.getItem('CL_accessToken') ? localStorage.getItem('CL_accessToken') : "";
+        
+        let result;
         if(statId){
-
             if(localStorage.getItem('CL_accessToken')) {
-                axios.get(`${process.env.REACT_APP_PROXY}/station/${statId}`, {
+                result = axios.get(`${process.env.REACT_APP_PROXY}/station/${statId}`, {
                     headers : {
-                        Authorization: token
+                        Authorization: localStorage.getItem('CL_accessToken')
                     }
-                })
-                .then((res)=>{
-                    setStationDetail(res.data);
-                    setBusiness(res.data.business);
-                    setCount(res.data.memberCount);
-                    setSelectWish(res.data.checkDes);
-                })
-                .catch((err)=>{
-                    console.log(err);
                 })
     
             } else {
-                axios.get(`${process.env.REACT_APP_PROXY}/station/${statId}`)
-                .then((res)=>{
-                    setStationDetail(res.data);
-                    setBusiness(res.data.business);
-                    setCount(res.data.memberCount);
-                    setSelectWish(res.data.checkDes);
-                })
-                .catch((err)=>{
-                    console.log(err);
-                })
+                result = axios.get(`${process.env.REACT_APP_PROXY}/station/${statId}`)
             }
+
+            result.then((res)=>{
+                setStationDetail(res.data);
+                setBusiness(res.data.business);
+                setCount(res.data.memberCount);
+                setIsWished(res.data.checkDes);
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+            
         }
     },[statId])
-
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_PROXY}/member/station/${stationDetail.statId}`, {
-            headers : {
-                'Authorization' : localStorage.getItem('CL_accessToken')
-            }
-        })
-        .then((res)=>{
-            if(res.data === true) {
-                setSelectBookmark(true);
-            }
-        })
-        .catch(err => console.log(err));
-    }, [])
 
     return (
         <div className='ChargingStationModal'>
@@ -164,7 +174,7 @@ const ChargingStationModal = ({show, statId, onHide}) => {
                 <Modal.Header>
                     <div></div>
                     <span>충전소 운영 현황</span>
-                    <div id='close-icon' onClick={() => handleClose()}><img src='/images/icons/CL_icon_close.png'/></div>
+                    <div id='close-icon' onClick={onHide}><img src='/images/icons/CL_icon_close.png'/></div>
                 </Modal.Header>
                 <Modal.Body className='station-detail-modal'>
                     <div className='modal-charging-info'>
@@ -174,7 +184,7 @@ const ChargingStationModal = ({show, statId, onHide}) => {
                                 <b>{stationDetail.statNm}</b><br/>
                                 <span>{stationDetail.address}</span>
                             </div>
-                            { isUser && <div id='starBox' onClick={handleBookMark}><img src={selectBookmark ? 'images/icons/CL_icon_selected_star.png' : 'images/icons/CL_icon_star.png'}/></div>}
+                            { isUser && <div id='starBox' onClick={handleBookMark}><img src={isbookmarked ? 'images/icons/CL_icon_selected_star.png' : 'images/icons/CL_icon_star.png'}/></div>}
                         </div>
                         <hr/>
                         <div id='charging-station-info-text'><b>충전소 정보</b> { isUser && <span>현재 {count}대가 가는중이예요</span>}</div>
@@ -192,7 +202,7 @@ const ChargingStationModal = ({show, statId, onHide}) => {
                     </div>
                     {isUser &&
                     <div id='gotoBtn'>
-                        <button onClick={handleWish}>{selectWish ? '가고 있는 중입니다 !' : '지금 출발할게요 !'}</button>
+                        <button onClick={handleWish}>{isWished ? '가고 있는 중입니다 !' : '지금 출발할게요 !'}</button>
                     </div>
                     }
                 </Modal.Body>

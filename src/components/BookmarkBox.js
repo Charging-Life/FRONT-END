@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 
-const BookmarkBox = ({data, idx, manageStation, setManageStation}) => {
+const BookmarkBox = ({data, idx, handleClick, manageStation, setManageStation}) => {
 
     const handleCancelBookMark = (e) => {
         
-        if(window.confirm('삭제하시겠습니까 ?')) {
-            axios.delete(`${process.env.REACT_APP_PROXY}/member/${e.target.id}`,{
+        if(window.confirm('해당 충전소를 삭제하시겠습니까?')) {
+            axios.delete(`${process.env.REACT_APP_PROXY}/member/${data.id}`,{
                 headers: {
                     Authorization: localStorage.getItem('CL_accessToken')
                 }
@@ -24,14 +24,16 @@ const BookmarkBox = ({data, idx, manageStation, setManageStation}) => {
     }
 
     return (
-        <div id='stationBox' key={idx}>
-            <div>
-                {data.statNm} <br/> 
-                <span>{data.address}</span> <br/>
-                <span>현재 충전 가능합니다.</span>
+        <>
+            <div id='stationBox' key={idx} onClick={handleClick}>
+                <div>
+                    {data.statNm} <br/> 
+                    <span>{data.address}</span> <br/>
+                    <span>현재 충전 가능합니다.</span>
+                </div>
+                <div><img id={data.id} onClick={handleCancelBookMark} src='/images/icons/CL_icon_selected_star.png'/></div>
             </div>
-            <div><img id={data.id} onClick={handleCancelBookMark} src='/images/icons/CL_icon_selected_star.png'/></div>
-        </div>
+        </>
     );
 };
 

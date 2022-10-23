@@ -1,0 +1,67 @@
+.BoardCommentBox {
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    margin: 10px 0 0;
+    padding: 15px;
+    position: relative;
+    border-bottom: 1px solid rgb(224, 224, 224);
+}
+
+#comment_top_box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.BoardCommentBox > div:nth-child(2) {
+    width: 95%;
+    height: auto;
+    margin: 3px auto;
+    word-break: break-all;
+    font-size: 16px;
+}
+
+#comment_top_box > div:nth-child(1) {
+    font-size: 14px;
+}
+
+#comment_top_box > div:nth-child(1) > span {
+    font-size: 11px;
+}
+
+#comment_top_box > div:nth-child(2) > img {
+    width: 4px;
+    cursor: pointer;
+}
+
+.BoardCommentBox > div:nth-child(3) {
+    width: 95%;
+    margin: 3px auto;
+}
+
+.BoardCommentBox > div:nth-child(3) > img {
+    width: 15px;
+    cursor: pointer;
+}
+
+.comment_modal {
+    height: 30px;
+    line-height: 30px;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.comment_modal > span:hover {
+    cursor: pointer;
+    border-bottom: 1px solid rgb(122, 122, 122);
+}
+
+#board_detail_modify_delete > div > span {
+    line-height: 30px;
+}

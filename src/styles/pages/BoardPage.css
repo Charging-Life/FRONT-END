@@ -51,14 +51,15 @@
     height: calc(100% - 60px);
     overflow: scroll;
     overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 #no_content {
     text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #board_box {
@@ -92,16 +93,25 @@
     font-weight: 600;
 }
 
-#board_box > div:nth-child(2), #board_detail_box > div:nth-child(2) {
+#board_box > div:nth-child(2){
+    width: 75%;
+    height: 40px;
+    line-height: 40px;
     font-size: 15px;
     color:rgb(71, 71, 71);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 } 
 
-#board_box > div:nth-child(3), #board_detail_box > div:nth-child(3) {
+#board_box > div:nth-child(3),
+#board_detail_box > div:nth-child(3),
+#board_box > div:nth-child(4) {
     font-size: 13px;
 }
 
-#board_box > div:nth-child(3) > img, #board_detail_box > div:nth-child(3) > img {
+#board_box > div:nth-child(4) > img, #board_detail_box > div:nth-child(3) > img, 
+#board_box > div:nth-child(3) > img {
     width: 16px;
 } 
 

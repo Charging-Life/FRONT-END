@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 import '../../styles/components/SignupForm.css';
-import {isValidEmail, isValidPassword, isValidCarNumber, checkSpecial} from '../../utils/checkUserInput.js';
+import {isValidEmail, isValidPassword, isValidCarNumber} from '../../utils/checkUserInput.js';
 import Timer from '../Timer';
 
 const SignupForm = () => {
@@ -11,7 +11,6 @@ const SignupForm = () => {
     const navigate = useNavigate();
     const [certificationNum, setCertificationNum] = useState('');
     const [checkPassword, setCheckPassword] = useState('');
-    const [carNumber, setCarNumber] = useState('');
     const [timeover, setTimeover] = useState(false);
     const [completeCertification, setCompleteCertification] = useState(false);
     const [timerOn, setTimerOn] = useState(false);
@@ -24,6 +23,7 @@ const SignupForm = () => {
         car : ''
     });
 
+    // 회원가입 데이터 set
     const handleSignupData = (e) => {
         
         if(e.target.name === 'certification') {
@@ -42,6 +42,11 @@ const SignupForm = () => {
 
     // 이메일 인증 요청 통신
     const handleCertification = () => {
+
+        if(!signupInfo.email) {
+            alert('이메일을 입력해주세요.');
+            return;
+        }
 
         if(!isValidEmail(signupInfo.email)) {
             alert('이메일을 형식에 맞게 입력해 주세요.');
@@ -84,6 +89,11 @@ const SignupForm = () => {
 
     // 인증번호 입력 확인 통신
     const handleCheckCertifNum = () => {
+
+        if(!certificationNum) {
+            alert('인증번호를 입력해주세요.');
+            return;
+        }
         
         axios.get(`${process.env.REACT_APP_PROXY}/email?code=${certificationNum}&email=${signupInfo.email}`)
         .then((res) => {
@@ -101,52 +111,55 @@ const SignupForm = () => {
             }
         })
         .catch((err) => {
-            // // 인증번호 불일치
-            // alert('인증번호가 만료되었습니다. 재발급해주세요.');
-            // setTimeover(true);
-            // setTimerOn(false);
+            console.log(err);
         });
     }
 
     // 회원가입 입력값 예외 처리
     const checkSignupData = () => {
 
-        if(Object.values(signupInfo).includes('')) {
-            alert('입력되지 않은 값이 있습니다.');
-            return;
+        if(!signupInfo.name){
+            alert('이름을 입력해주세요.');
+            return false;
+        }
+        else if(!signupInfo.password) {
+            alert('비밀번호를 입력해주세요.');
+            return false;
+        }
+        else if(signupInfo.auth === 'USER' && !signupInfo.car){
+            alert('차량번호를 입력해주세요.');
+            return false;
         }
 
         if(!isValidPassword(signupInfo.password)) {
             alert('비밀번호를 8자리 이상 입력해 주세요.')
-            return;
+            return false;
         }
 
         if(signupInfo.password !== checkPassword) {
             alert('비밀번호가 일치하지 않습니다. 다시 입력해 주세요.');
-            return;
+            return false;
         }
 
-        if(signupInfo.auth === 'USER' && !isValidCarNumber(carNumber)) {
+        if(signupInfo.auth === 'USER' && !isValidCarNumber(signupInfo.car)) {
             alert('차량번호를 올바르게 입력해 주세요.')
-            return;
+            return false;
         }
 
         if(!completeCertification) {
             alert('인증이 완료되지 않았습니다.');
-            return;
+            return false;
         }
+
+        return true;
     }
 
     // 회원가입 통신
     const onClickSignup = () => {
 
-        checkSignupData();
+        if(!checkSignupData()) return;
         
-        let url = 'company';
-        if(signupInfo.auth === 'USER') {
-            url = 'new';
-        }
-
+        let url = signupInfo.auth === 'USER' ? 'new' : 'company';
         axios.post(`${process.env.REACT_APP_PROXY}/member/${url}`, signupInfo)
         .then((res) => {
             navigate("/login");
@@ -220,7 +233,7 @@ const SignupForm = () => {
             {
                 signupInfo.auth === 'USER' ?
                 <input 
-                    value={carNumber} 
+                    value={signupInfo.car} 
                     type='text' 
                     name='car'
                     onChange={handleSignupData} 

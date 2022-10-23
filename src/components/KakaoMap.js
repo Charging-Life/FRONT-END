@@ -16,6 +16,7 @@ const KakaoMap = ({ station, setLocation, isManager, location }) => {
     const [isbookmarked, setIsBookmarked] = useState(false);
     const [getCenter, setGetCenter] = useState('');
     const [getLevel, setGetLevel] = useState(5);
+    const [color, setColor] = useState('');
 
     // 즐겨찾기 여부를 조회
     const bookmarkFlag = (statId) => {
@@ -105,6 +106,7 @@ const KakaoMap = ({ station, setLocation, isManager, location }) => {
             // 마커에 클릭이벤트를 등록합니다
             kakao.maps.event.addListener(markerImg, 'click', () => {
                 handleClick(stationData.statId);
+                setColor(selectSrc(stationData.chargers));
                 setShowModal(true);
             });
         })
@@ -211,6 +213,7 @@ const KakaoMap = ({ station, setLocation, isManager, location }) => {
                 statId={statId}
                 isbookmarked={isbookmarked}
                 setIsBookmarked={setIsBookmarked}
+                color={color}
                 onHide={() => { setShowModal(false) }}
             />
         </>

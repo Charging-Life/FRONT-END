@@ -5,7 +5,7 @@ import '../styles/components/Header.css';
 import FilterOffCanvas from './OffCanvases/FilterOffCanvas';
 import NoticeOffCanvas from './OffCanvases/NoticeOffCanvas';
 
-const Header = ({ page, isListView, setIsListView }) => {
+const Header = ({ page, isListView, setIsListView, setFinalFilter, finalFilter }) => {
     const [showNotice, setShowNotice] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
     const navigate = useNavigate();
@@ -96,6 +96,8 @@ const Header = ({ page, isListView, setIsListView }) => {
             <FilterOffCanvas
                 show={showFilter}
                 onHide={() => { setShowFilter(false) }}
+                finalFilter ={finalFilter}
+                setFinalFilter = {setFinalFilter}
             />
         </>
 

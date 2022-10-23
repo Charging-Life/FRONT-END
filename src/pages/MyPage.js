@@ -61,20 +61,20 @@ const MyPage = () => {
         switch(localStorage.getItem('CL_auth')) {
             case 'USER': 
                 return <>
-                        <div className='my-title-text'>차량 정보</div>
-                        <div className='car-box'>{userInfo.carNames}</div>
+                        <div className='my_title_text'>차량 정보</div>
+                        <div className='car_box'>{userInfo.carNames}</div>
                     </>
-            case 'MANAGER': 
-               return <div>
-                        <div className='charging-box'>
+            case 'COMPANY': 
+               return <div id='manager_charging_list'>
+                        <div className='charging_box'>
                             <span>관할 충전소 목록</span>
                             <button id='search-station-btn' onClick={()=>{setShowSearchModal(true)}}>추가하기</button>
                         </div>
                         <div className='show_station_list'>{showStationList()}</div>
                     </div>
-            case 'COMPANY': 
+            case 'MANAGER': 
                  return <>
-                        <div className='my-title-text'>기업 정보</div>
+                        <div className='my_title_text'>기업 정보</div>
                         <div id='company-container'>{makeCompanyBox()}</div>
                     </>
             case 'ADMIN':
@@ -148,22 +148,22 @@ const MyPage = () => {
             <div className='mainpage_header'>
                 <Header page={"my"}/>
             </div>
-            <div className={isUser ? 'user-user-info-box' : 'user-info-box'}>
-                <div>
-                    <div id='user-name'>{userInfo.name} 님</div>
-                    <div className='my-title-text'>이메일</div>
-                    <div id='email-text'>{userInfo.email}</div>
+            <div id='mypage_container'>
+                <div className='user_info_box'>
+                    <div id='name_email_text'>
+                        <div>{userInfo.name} 님</div>
+                        <div class='my_title_text'>이메일</div>
+                        <div>{userInfo.email}</div>
+                    </div>
+                    { classifyAuth() }
                 </div>
-                {
-                    classifyAuth()
-                }
-            </div>
-            <div className={isUser ? 'user-add-function-btns' : 'add-function-btns'}>
-                <div className='my-title-text'>추가 기능</div>
-                <div className='my-btns'>
-                    <button onClick={() => setShow(true)}>회원정보 수정하기</button>
-                    <button onClick={onClickLogout}>로그아웃</button>
-                    <button onClick={onClickSignout}>회원 탈퇴</button>
+                <div className='add-function-btns'>
+                    <div className='my_title_text'>추가 기능</div>
+                    <div className='my_btns'>
+                        <button onClick={() => setShow(true)}>회원정보 수정하기</button>
+                        <button onClick={onClickLogout}>로그아웃</button>
+                        <button onClick={onClickSignout}>회원 탈퇴</button>
+                    </div>
                 </div>
             </div>
             <Bar value={4}/>

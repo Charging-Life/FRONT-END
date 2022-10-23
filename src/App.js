@@ -8,6 +8,7 @@ import SignupPage from './pages/SignupPage.js';
 import MyPage from './pages/MyPage.js';
 import BoardPage from './pages/BoardPage';
 import BoardDetailPage from './pages/BoardDetailPage';
+import BoardWritePage from './pages/BoardWritePage';
 import BookmarkPage from './pages/BookmarkPage';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/bookmark" element={<BookmarkPage/>}/>
         <Route path="/board" element={<BoardPage/>}/>
         <Route path="/board/:id" element={<BoardDetailPage/>}/>
+        <Route path="/board/write" element={<BoardWritePage/>}/>
         <Route path="/my" element={<MyPage/>}/>
         <Route path="*" element={<div>404</div>}/>
       </Routes>

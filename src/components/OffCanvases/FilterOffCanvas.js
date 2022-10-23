@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import '../../styles/components/OffCanvases/FilterOffCanvas.css';
 import { Offcanvas } from 'react-bootstrap';
 import FilterList from './FilterList';
+import axios from 'axios';
 
-const FilterOffCanvas = ({show, onHide}) => {
+const FilterOffCanvas = ({ show, onHide, finalFilter, setFinalFilter }) => {
     const [filterStation, setFilterStation] = useState({
         limit: [0],
         chger: [0],
@@ -19,26 +20,42 @@ const FilterOffCanvas = ({show, onHide}) => {
     });
 
     const sendFilterResult = () => {
-        console.log(filterStation);
+        let limits = filterStation.limit[0] === 0 ? false : filterStation.limit[0] - 1;
+        let types = filterStation.chger[0] === 0 ? false : filterStation.chger.map(x => '0' + x);
+        let speeds = filterStation.output[0] === 0 ? false : filterStation.output.map(x => {
+            let char = buttonGroup.output[x].split('');
+            let tempChar = char.filter(y => {
+                if (y !== 'k' && y !== 'W') return y;
+            }).join('');
+            return parseInt(tempChar);
+        });
+        let locations = filterStation.loc[0] === 0 ? false : `${buttonGroup.loc[filterStation.loc[0]]}`;
+        
+        setFinalFilter({
+            'limits': limits,
+            'types': types,
+            'speeds': speeds,
+            'locations': locations
+        });
         onHide();
     }
 
     return (
         <div className='FilterOffCanvas'>
             <Offcanvas show={show} onHide={onHide} placement='start'
-                        className='filter_offcanvas'>
+                className='filter_offcanvas'>
                 <Offcanvas.Header>
                     <Offcanvas.Title className='filter_offcanvas_title'>검색 필터</Offcanvas.Title>
                     <img src='images/icons/CL_icon_close.png' alt='닫기'
                         className='filter_offcanvas_close'
-                        onClick={onHide}/>
+                        onClick={onHide} />
                 </Offcanvas.Header>
                 <Offcanvas.Body className='filteroffcanvas_body'>
                     <FilterList
                         filterStation={filterStation}
-                        setFilterStation = {setFilterStation}
-                        buttonGroup = {buttonGroup}
-                        sendFilterResult = {sendFilterResult}
+                        setFilterStation={setFilterStation}
+                        buttonGroup={buttonGroup}
+                        sendFilterResult={sendFilterResult}
                     />
                 </Offcanvas.Body>
             </Offcanvas>

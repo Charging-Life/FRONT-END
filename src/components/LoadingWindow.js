@@ -1,8 +1,8 @@
  import '../styles/components/LoadingWindow.css';
  import useInterval from '../hooks/useInterval';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const LoadingWindow = () => {
+const LoadingWindow = ({falseMyLoc}) => {
     const [light, setLight] = useState(false);
 
     const controlLight = () => {
@@ -10,6 +10,12 @@ const LoadingWindow = () => {
     }
 
     useInterval(controlLight, 500);
+
+    const endLoad = () => {
+        falseMyLoc();
+    }
+
+    useInterval(endLoad, 30000);
 
     return (
         <div id='LoadingWindow'>

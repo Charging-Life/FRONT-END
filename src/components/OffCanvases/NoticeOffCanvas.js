@@ -92,7 +92,7 @@ const NoticeOffCanvas = ({ show, onHide }) => {
 
     useEffect(() => {
         // axios로 알림정보 통신
-        axios.get(`${PROXY}/alarm`, {
+        if(localStorage.getItem('CL_accessToken')) axios.get(`${PROXY}/alarm`, {
             headers: {
                 Authorization: localStorage.getItem('CL_accessToken')
             }
@@ -108,7 +108,7 @@ const NoticeOffCanvas = ({ show, onHide }) => {
 
     useInterval(() => {
         // 반복할 로직 : 알림 쌓인것 있는지 1분마다 요청
-        axios.get(`${PROXY}/alarm`, {
+        if(localStorage.getItem('CL_accessToken')) axios.get(`${PROXY}/alarm`, {
             headers: {
                 Authorization: localStorage.getItem('CL_accessToken')
             }

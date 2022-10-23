@@ -10,10 +10,70 @@ const MainPage = () => {
     const isManager = localStorage.getItem('CL_auth') && localStorage.getItem('CL_auth') === 'COMPANY' ? true : false;
 
     const [station, setStation] = useState([]);
-    const [stationState, setStationState] = useState([]);
     const [location, setLocation] = useState('');
     const [clickBtn, setClickBtn] = useState(false);
     const [userMain, setUserMain] = useState(false);
+    const [finalFilter, setFinalFilter] = useState('');
+
+    const filteringData = (data) => {
+        console.log(finalFilter);
+        console.log(data);
+        if(finalFilter !== ''){
+            let tempStation = data.filter(x=>{
+                if(!finalFilter.limits && !finalFilter.locations && !finalFilter.speeds && !finalFilter.types){
+                    return x;
+                }
+                if(finalFilter.limits){
+                    if(x.limitYn === finalFilter.limits) return x;
+                }
+                if(finalFilter.locations){
+                    let addressList = x.address.split(' ');
+                    let express = false;
+                    addressList.map(y=>{
+                        if(y.length >= 4){
+                            let charLen = y.length;
+                            if(y[charLen - 4] === '고' && y[charLen - 3] === '속'){
+                                express = true;
+                            }
+                        }
+                    })
+                    if(express){
+                        if(finalFilter.locations === '고속도로') return x;
+                    } 
+                    else{
+                        if(finalFilter.locations === '일반도로') return x
+                    }
+                 }
+                if(finalFilter.speeds){
+                    let tempOutPut = x.chargers.map(y=>y.outPut);
+                    let success = false;
+                    for(let t of tempOutPut){
+                        if(finalFilter.speeds.includes(t)){
+                            success = true;
+                            break;
+                        }
+                    }
+                    if(success) return x;
+                }
+                if(finalFilter.types){
+                    let tempType = x.chargers.map(y=>y.chargerType);
+                    let success = false;
+                    for(let t of tempType){
+                        if(finalFilter.types.includes(t)){
+                            success = true;
+                            break;
+                        }
+                    }
+                    if(success) return x;
+                }
+            });
+            console.log(tempStation);
+            setStation(tempStation);
+        }
+        else{
+            setStation(data);
+        }
+    }
 
     useEffect(() => {
         if (isManager) {
@@ -24,31 +84,21 @@ const MainPage = () => {
             })
                 .then((res) => {
                     setStation(res.data);
-                    console.log(station.length);
                 })
                 .catch((err) => {
                     console.log(err);
                 })
         }
-        if (location !== '' && !userMain) {
+        else if (location !== '') {
             axios.get(`${process.env.REACT_APP_PROXY}${isManager ? '/station/manager' : `/station?city=${location}`}`)
                 .then((res) => {
-                    setStation(res.data);
-                    console.log(res.data);
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-
-            axios.get(`${process.env.REACT_APP_GET_STATION_URL}`)
-                .then((res) => {
-                    setStationState(res.data.items.item);
+                    filteringData(res.data);
                 })
                 .catch((err) => {
                     console.log(err);
                 })
         }
-    }, [location, userMain])
+    }, [location, userMain, finalFilter])
 
     const clickUserBtn = () => {
         localStorage.getItem('CL_accessToken')?setClickBtn(true):alert('로그인 후 이용해주세요.');
@@ -62,7 +112,6 @@ const MainPage = () => {
             const smallRightLen = 30;
             const smallBottomLen = window.innerWidth >= 450 ? 30 : 70;
 
-            console.log();
             document.getElementsByClassName("map_user_main_btn")[0].setAttribute("style",
                 `width: ${standardLen}px;
                 height: ${standardLen}px;
@@ -98,10 +147,10 @@ const MainPage = () => {
     return (
         <div className='MainPage'>
             <div className='mainpage_header'>
-                <Header page={"main"} />
+                <Header page={"main"} finalFilter ={finalFilter} setFinalFilter={setFinalFilter}/>
             </div>
             <div>
-                <KakaoMap station={station} stationState={stationState} setLocation={setLocation} isManager={isManager} location={location} userMain={userMain} />
+                <KakaoMap station={station} setLocation={setLocation} isManager={isManager} location={location} userMain={userMain} />
                 {userMain && <User_main />}
                 <Bar value={1} />
             </div>

@@ -5,7 +5,7 @@ import '../styles/components/Header.css';
 import FilterOffCanvas from './OffCanvases/FilterOffCanvas';
 import NoticeOffCanvas from './OffCanvases/NoticeOffCanvas';
 
-const Header = ({ page, isListView, setIsListView }) => {
+const Header = ({ page, isListView, setIsListView, setFinalFilter, finalFilter }) => {
     const [showNotice, setShowNotice] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
     const navigate = useNavigate();
@@ -59,9 +59,9 @@ const Header = ({ page, isListView, setIsListView }) => {
             }
             else if (!isManager && isListView) {
                 result.push(<div>
-                    <img src={'images/icons/CL_icon_map_view.png'} alt='view'
+                    {/* <img src={'images/icons/CL_icon_map_view.png'} alt='view'
                         className='header_view map'
-                        onClick={() => { setIsListView(!isListView) }} />
+                        onClick={() => { setIsListView(!isListView) }} /> */}
                     <img src='images/icons/CL_icon_notice.png' alt='notice'
                         className='header_notice'
                         onClick={() => { setShowNotice(true) }} />
@@ -69,12 +69,9 @@ const Header = ({ page, isListView, setIsListView }) => {
             }
             else {
                 result.push(<div>
-                    <img src='images/icons/CL_icon_search.png' alt='search'
-                        className='header_search'
-                        onClick={() => { setShowFilter(true) }} />
-                    <img src={'images/icons/CL_icon_list_view.png'} alt='view'
+                    {/* <img src={'images/icons/CL_icon_list_view.png'} alt='view'
                         className='header_view'
-                        onClick={() => { setIsListView(!isListView) }} />
+                        onClick={() => { setIsListView(!isListView) }} /> */}
                     <img src='images/icons/CL_icon_notice.png' alt='notice'
                         className='header_notice'
                         onClick={() => { setShowNotice(true) }} />
@@ -99,6 +96,8 @@ const Header = ({ page, isListView, setIsListView }) => {
             <FilterOffCanvas
                 show={showFilter}
                 onHide={() => { setShowFilter(false) }}
+                finalFilter ={finalFilter}
+                setFinalFilter = {setFinalFilter}
             />
         </>
 

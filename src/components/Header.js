@@ -59,9 +59,9 @@ const Header = ({ page, isListView, setIsListView, setFinalFilter, finalFilter }
             }
             else if (!isManager && isListView) {
                 result.push(<div>
-                    <img src={'images/icons/CL_icon_map_view.png'} alt='view'
+                    {/* <img src={'images/icons/CL_icon_map_view.png'} alt='view'
                         className='header_view map'
-                        onClick={() => { setIsListView(!isListView) }} />
+                        onClick={() => { setIsListView(!isListView) }} /> */}
                     <img src='images/icons/CL_icon_notice.png' alt='notice'
                         className='header_notice'
                         onClick={() => { setShowNotice(true) }} />
@@ -69,9 +69,9 @@ const Header = ({ page, isListView, setIsListView, setFinalFilter, finalFilter }
             }
             else {
                 result.push(<div>
-                    <img src={'images/icons/CL_icon_list_view.png'} alt='view'
+                    {/* <img src={'images/icons/CL_icon_list_view.png'} alt='view'
                         className='header_view'
-                        onClick={() => { setIsListView(!isListView) }} />
+                        onClick={() => { setIsListView(!isListView) }} /> */}
                     <img src='images/icons/CL_icon_notice.png' alt='notice'
                         className='header_notice'
                         onClick={() => { setShowNotice(true) }} />

@@ -21,6 +21,7 @@ const LoginForm = () => {
     const onClickLogin = () => {
         axios.post(`${process.env.REACT_APP_PROXY}/member/login`, loginInfo)
         .then((res) => {
+            localStorage.setItem('CL_email', loginInfo.email);
             localStorage.setItem('CL_auth', res.data.auth);
             localStorage.setItem('CL_accessToken', res.data.accessToken);
             localStorage.setItem('CL_refreshToken', res.data.refreshToken);

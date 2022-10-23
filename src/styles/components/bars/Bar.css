@@ -8,7 +8,7 @@
     justify-content: space-around;
     box-shadow: 3px 0 16px 0 rgb(33 34 34 / 10%);
     background-color: white;
-    z-index: 999;
+    z-index: 998;
 }
 
 #Bottombar > div {

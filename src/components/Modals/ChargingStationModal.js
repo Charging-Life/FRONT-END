@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import '../../styles/components/Modals/ChargingStationModal.css';
 
-const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmarked}) => {
+const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmarked, color}) => {
     const [stationDetail, setStationDetail] = useState({});
     const [business, setBusiness] = useState({});
     const [isWished, setIsWished] = useState();
@@ -19,25 +19,39 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
         '06': ['DC 차데모', 'AC3 상', 'DC 콤보'],
         '07': ['AC3 상']
     }
+    const status = {
+        'green': '대기중', 
+        'blue': '충전중',
+        'yellow': '통신미연결',
+        'red': '운영중지'
+    }
+
+    const type = {
+        'holding': '대기중',
+        'charging': '충전중',
+        'disconnected': '통신미연결',
+        'shutdown': '운영중지'
+    }
+
 
     const setType = (type) => {
         
-        const result = [];
+        let result = '';
         switch(type) {
             case 2 : { // 대기중
-                result.push(['holding', '대기중']);
+                result = 'holding';
                 break;
             }
             case 3 : { // 충전중
-                result.push(['charging', '충전중']);
+                result = 'charging';
                 break;
             }
             case 1: case 9: { // 통신미연결
-                result.push(['disconnected', '통신미연결']);
+                result = 'disconnected';
                 break;
             }
             case 4: case 5: { // 운영중지
-                result.push(['shutdown', '운영중지']);
+                result = 'shutdown';
                 break;
             }
         }
@@ -126,7 +140,7 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
         const result = [];
         stationDetail.chargers && stationDetail.chargers.map((ele, idx) => 
                 result.push(<div id='charger-box' key={idx}>
-                <div><span id={setType(ele.stat)[0][0]}>{setType(ele.stat)[0][1]}</span><br/>{ele.outPut}kW</div>
+                <div><span id={setType(ele.stat)}>{type[setType(ele.stat)]}</span><br/>{ele.outPut}kW</div>
                 <div>{chargerTypes.map((type, idx) => {
                     if(mappingCharger[`${ele.chargerType}`].includes(type)){
                         return <span key={idx} id='include'>{type}&nbsp;&nbsp;</span>
@@ -178,7 +192,7 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
                 </Modal.Header>
                 <Modal.Body className='station-detail-modal'>
                     <div className='modal-charging-info'>
-                        <span id='charging-state'>충전 가능</span>
+                        <span id='charging-state' className={color}>{status[color]}</span>
                         <div id='charging-location'>
                             <div id={ isUser ? 'user-charging-location-info' : ''}>
                                 <b>{stationDetail.statNm}</b><br/>

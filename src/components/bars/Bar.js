@@ -20,6 +20,7 @@ const Bar = ({value}) => {
             case '2' : {
                 if(!isLogined) {
                     alert('로그인 후 이용해주세요.');
+                    navigate('/login');
                     return;
                 }
                 navigate('/bookmark');
@@ -32,6 +33,7 @@ const Bar = ({value}) => {
             case '4' : {
                 if(!isLogined) {
                     alert('로그인 후 이용해주세요.');
+                    navigate('/login');
                     return;
                 }
                 navigate('/my');

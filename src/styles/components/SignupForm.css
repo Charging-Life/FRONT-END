@@ -1,6 +1,6 @@
 #typeRadio {
     width: 100%;
-    height: 60px;
+    height: 13%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,27 +20,47 @@ input[type=radio]:checked {
     border: 6px solid #48DB8C;
 }
 
-#signupBox {
-    margin: 8px 0;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
+#Signup > input {
+    width: 98%;
+    height: 10%;
+    margin: 1% auto;
+    padding: 5px 1%;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #8A8A8A;
+    border-radius: 0px;
 }
 
-#signupBox input {
+#signupBox {
+    width: 98%;
+    height: 10%;
+    margin: 2% auto;
+    border-bottom: 1px solid #8A8A8A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#signupBox > input {
     margin: 0;
     height: 100%;
     outline: none;
     border: none;
+    flex-grow: 1;
+    margin: 1% auto;
+    padding: 5px 1%;
+    border-radius: 0px;
 }
 
-#certifBtn {    
-    height: 70%;
+#certifBtn { 
+    min-width: 45px;  
     border-radius: 20px;
     outline: none;
     border: 3px solid #48DB8C;
     background-color: #ffffff;
     color: #48DB8C;
     font-weight: bold;
+    font-size: 14px;
     transition: all 0.2s linear;
 }
 
@@ -49,16 +69,51 @@ input[type=radio]:checked {
     color: white;
 }
 
+#signin_btn {
+    width: 100%;
+    height: 40px;
+    font-size: 23px;
+    font-weight: bold;
+    color: #48DB8C;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid #48DB8C;
+    margin-top: 8px;
+    box-shadow: 0 5.2px 16px 0 rgb(33 34 34 / 10%);
+    transition: all 0.2s linear;
+}
+
+#signin_btn:hover {
+    background-color: #48DB8C;
+    color: #fff;
+}
+
 /* media query */
 @media only screen and (min-width: 270px) and (max-width: 299px) {
-    #signupBox {
-        grid-template-columns: 2fr 1fr;
+    #Signup > input, #signupBox > input { 
+        font-size: 12px;
+    }
+
+    #certifBtn {
+        font-size: 9px;
+    }
+
+    #typeRadio {
+        font-size: 13px;
     }
 }
 
 @media only screen and (min-width: 300px) and (max-width: 449px) {
-    #signupBox {
-        grid-template-columns: 2fr 1fr;
+    #Signup > input, #signupBox > input, #certifBtn { 
+        font-size: 14px;
+    }
+
+    #certifBtn {
+        font-size: 11px;
+    }
+
+    #typeRadio {
+        font-size: 15px;
     }
 }
 

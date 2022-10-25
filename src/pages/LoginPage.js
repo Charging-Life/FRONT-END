@@ -18,8 +18,8 @@ const LoginPage = () => {
             <div className='logo-text'>login</div>
             <LoginForm/>
             <div style={{width: "100px", height: "20%"}}></div>
-            <div id='none-auth-text'>아직 회원이 아니신가요 ?</div>
-            <button className='login-sigin-btn' onClick={handleLogin}>sign in</button>
+            <div id='none_auth_text'>아직 회원이 아니신가요 ?</div>
+            <button className='login_sigin_btn' onClick={handleLogin}>sign in</button>
         </section>
     );
 };

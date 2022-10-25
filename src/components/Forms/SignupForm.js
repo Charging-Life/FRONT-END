@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,9 +11,9 @@ const SignupForm = () => {
     const navigate = useNavigate();
     const [certificationNum, setCertificationNum] = useState('');
     const [checkPassword, setCheckPassword] = useState('');
-    const [timeover, setTimeover] = useState(false);
     const [completeCertification, setCompleteCertification] = useState(false);
     const [timerOn, setTimerOn] = useState(false);
+    const [timeover, setTimeover] = useState(false);
 
     const [signupInfo, setSignupInfo ] = useState({
         email : '',
@@ -76,14 +76,16 @@ const SignupForm = () => {
         })
         .then((res) => {
             // 재발급 성공
-            console.log(res);
             alert('입력한 이메일을 확인해주세요.');
             setTimerOn(true);
         })
         .catch((err) => {
             // 재발급 실패
             console.log(err);
-            setTimeover(true);
+            if(err.response.data.errorCode === 2001) {
+                alert('이전에 입력한 이메일과 일치하지 않습니다.');
+            }
+            setTimeover(true); // 재발급 on
         });
     }
 
@@ -105,13 +107,14 @@ const SignupForm = () => {
             }
             else {
                 // 인증번호 불일치
-                alert('인증번호가 만료되었습니다. 재발급해주세요.');
-                setTimeover(true);
-                setTimerOn(false);
+                alert('인증번호가 일치하지 않습니다. 다시 입력해주세요.');
             }
         })
         .catch((err) => {
             console.log(err);
+            alert('인증번호가 만료되었습니다. 재발급해주세요.');
+            setTimeover(true); // 재발급 on
+            setTimerOn(false);
         });
     }
 
@@ -170,21 +173,36 @@ const SignupForm = () => {
 
     }
 
+    useEffect(() => {
+        setSignupInfo({
+            email : '',
+            password : '',
+            name : '', 
+            auth : signupInfo.auth,
+            car : ''
+        });
+        setCompleteCertification(false);
+        setCertificationNum('');
+        setCheckPassword('');
+        setTimerOn(false);
+        setTimeover(false);
+    }, [signupInfo.auth]);
+
     return (
-        <div className='Form' id='Signup'>
+        <div id='Signup'>
             <div id='typeRadio'>
                 <input 
                     type='radio' 
                     value='USER' 
-                    name='auth' 
+                    name='auth'  
                     checked={signupInfo.auth === 'USER'} 
                     onChange={handleSignupData}/>
                     &nbsp;&nbsp;<label>사용자</label> 
                     &nbsp;&nbsp;&nbsp;
                 <input 
-                    type='radio' 
-                    value='MANAGER' 
-                    name='auth' 
+                    type='radio'   
+                    value='MANAGER'
+                    name='auth'    
                     checked={signupInfo.auth === 'MANAGER'} 
                     onChange={handleSignupData}/>
                     &nbsp;&nbsp;<label>관리자</label>
@@ -194,19 +212,19 @@ const SignupForm = () => {
                     value={signupInfo.name} 
                     name='name' 
                     onChange={handleSignupData}
-                    placeholder='  이름을 입력하세요'/>
+                    placeholder='이름을 입력하세요'/>
             <div id='signupBox'>
                 <input 
                     value={signupInfo.email} 
                     type='text' 
                     name='email' 
                     onChange={handleSignupData} 
-                    placeholder='  e-mail을 입력하세요'/>
+                    placeholder='e-mail을 입력하세요'/>
                 {
                     timerOn ? <Timer/> : (
                     timeover ? 
                     <button id='certifBtn' onClick={handleReCertification}>재발급받기</button> :
-                    <button id='certifBtn' onClick={handleCertification}>인증받기</button>)
+                    <button id='certifBtn' onClick={handleCertification}>인증하기</button>)
                 }
             </div>
             <div id='signupBox'>
@@ -215,7 +233,7 @@ const SignupForm = () => {
                     type='text' 
                     name='certification'
                     onChange={handleSignupData} 
-                    placeholder='  인증번호를 입력하세요'/>
+                    placeholder='인증번호를 입력하세요'/>
                     <button id='certifBtn' onClick={handleCheckCertifNum}>확인하기</button>
                 </div>
             <input 
@@ -223,13 +241,13 @@ const SignupForm = () => {
                 type='password' 
                 name='password' 
                 onChange={handleSignupData} 
-                placeholder='  password를 입력하세요 (8자리 이상)'/>
+                placeholder='password를 입력하세요 (8자리 이상)'/>
             <input 
                 value={checkPassword} 
                 type='password' 
                 name='checkPassword' 
                 onChange={handleSignupData} 
-                placeholder='  password를 한번 더 입력하세요'/>
+                placeholder='password를 한번 더 입력하세요'/>
             {
                 signupInfo.auth === 'USER' ?
                 <input 
@@ -237,10 +255,10 @@ const SignupForm = () => {
                     type='text' 
                     name='car'
                     onChange={handleSignupData} 
-                    placeholder='  차량번호를 입력하세요'/>
-                    : <div style={{width: "100px", height: "8%" , border: 'none'}}></div>
+                    placeholder='차량번호를 입력하세요'/>
+                    : <div style={{width: "100%", height: "12%"}}></div>
             }
-            <button onClick={onClickSignup}>sign in</button>
+            <button id="signin_btn" onClick={onClickSignup}>sign in</button>
         </div>
     );
 };

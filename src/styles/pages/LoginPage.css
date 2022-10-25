@@ -15,12 +15,13 @@
     color: #48DB8C;
 }
 
-#none-auth-text {
+#none_auth_text {
     font-size: 16px;
     color: #A8A8A8;
+    text-align: center;
 }
 
-.login-sigin-btn {
+.login_sigin_btn {
     width: 80%;
     height: 50px;
     font-size: 25px;
@@ -34,7 +35,7 @@
     transition: all 0.2s linear;
 }
 
-.login-sigin-btn:hover {
+.login_sigin_btn:hover {
     background-color: #fff;
     color: #48DB8C;
     border: 2px solid #48DB8C;

@@ -32,8 +32,8 @@ const Timer = () => {
 
     return (
         <div style={Style.timer}>
-            {String(min).length === 1 ? '0'+ min : min } : 
-            {String(sec).length === 1 ? '0'+ sec : sec }
+            {String(min).length === 1 ? '0'+ min : min }: 
+            {String(sec).length === 1 ? '0'+ sec : sec }&nbsp;&nbsp;
         </div>
     );
 };

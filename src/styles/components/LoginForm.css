@@ -6,14 +6,6 @@
     justify-content: center;
 }
 
-#Signup {
-    height: 60%;
-}
-
-#Signup input {
-    margin: 8px 0;
-}
-
 .Form > * {
     height: 45px;
     border: none;
@@ -25,6 +17,7 @@
 
 .Form > input {
     height: 40px;
+    border-radius: 0px;
 }
 
 .Form > input:focus {

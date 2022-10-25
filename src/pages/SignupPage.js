@@ -12,13 +12,15 @@ const SignupPage = () => {
     }
 
     return (
-        <section className='LoginPage'>
-            {/* <div style={{width: "100px", height: "20%"}}></div>/ */}
-            <div className='signUpLogoText'>sign in</div>
-            <SignupForm/>
-            <div style={{width: "100px", height: "5%"}}></div>
-            <div id='none-auth-text'>이미 회원이신가요 ?</div>
-            <button className='login-sigin-btn' onClick={handleLogin}>login</button>
+        <section className='SignupPage'>
+            <div id='signup_container'>
+                <div className='signup_logo_text'>sign in</div>
+                <SignupForm/>
+                <div id='login_btn_box'>
+                    <div id='none_auth_text'>이미 회원이신가요 ?</div>
+                    <button className='signin_login_btn' onClick={handleLogin}>login</button>
+                </div>
+            </div>
         </section>
     );
 };

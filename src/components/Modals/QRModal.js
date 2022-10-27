@@ -70,7 +70,7 @@ const QRModal = ({ show, onHide }) => {
                         <div className={['qr_modal_select_box', qrCode && 'qr_modal_unselect_box'].join(' ')}>
                             <button onClick={() => setMethod('fast')}
                                 className={['qr_modal_unSelect_btn', rapidity === true && 'qr_modal_select_btn'].join(' ')}>
-                                금속 충전
+                                급속 충전
                             </button>
                             <button onClick={() => setMethod('slow')}
                                 className={['qr_modal_unSelect_btn', rapidity === false && 'qr_modal_select_btn'].join(' ')}>

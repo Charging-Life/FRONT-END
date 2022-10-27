@@ -16,8 +16,6 @@ const MainPage = () => {
     const [finalFilter, setFinalFilter] = useState('');
 
     const filteringData = (data) => {
-        console.log(finalFilter);
-        console.log(data);
         if(finalFilter !== ''){
             let tempStation = data.filter(x=>{
                 if(!finalFilter.limits && !finalFilter.locations && !finalFilter.speeds && !finalFilter.types){
@@ -67,7 +65,6 @@ const MainPage = () => {
                     if(success) return x;
                 }
             });
-            console.log(tempStation);
             setStation(tempStation);
         }
         else{

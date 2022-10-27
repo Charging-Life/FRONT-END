@@ -116,7 +116,6 @@ const NoticeOffCanvas = ({ show, onHide }) => {
             .then((res) => {
                 // 받아오는 데이터 중에 안읽은 것이 있으면 이미지 변경
                 setNotices(res.data);
-                console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);

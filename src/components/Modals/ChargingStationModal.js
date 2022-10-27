@@ -95,8 +95,6 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
 
     // 찜 등록 및 해제 기능
     const handleWish = () => {
-        console.log(isWished);
-
         // 등록되어있으면 해제
         if(isWished) {
             if(!window.confirm('목적지 등록을 해제하시겠습니까?')) return;
@@ -106,7 +104,6 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
                 }
             })
             .then(res => {
-                console.log(res);
                 alert('해제되었습니다.');
                 setCount(count-1);
                 setIsWished(false);
@@ -124,7 +121,6 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
                 }
             })
             .then(res => {
-                console.log(res);
                 alert('등록되었습니다.');
                 setCount(count+1);
                 setIsWished(true);

@@ -83,7 +83,6 @@ const User_main = () => {
             }
         })
             .then((res) => {
-                console.log(res);
             })
             .catch((err) => {
                 console.log(err);

@@ -46,20 +46,26 @@ input[type=radio]:checked {
     height: 100%;
     outline: none;
     border: none;
-    flex-grow: 1;
     margin: 1% auto;
+    flex-grow: 1;
     padding: 5px 1%;
     border-radius: 0px;
 }
 
-#certifBtn { 
+#signupBox > div {
+    width: 80px;
+    height: 100%;
+}
+
+#certifBtn {
+    width: 100%;
     border-radius: 20px;
     outline: none;
-    border: 3px solid #48DB8C;
+    border: 2px solid #48DB8C;
     background-color: #ffffff;
     color: #48DB8C;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
     transition: all 0.2s linear;
 }
 
@@ -88,39 +94,36 @@ input[type=radio]:checked {
 }
 
 /* media query */
-@media only screen and (min-width: 270px) and (max-width: 299px) {
-    #Signup > input, #signupBox > input { 
-        font-size: 12px;
+@media only screen and (min-width: 270px) and (max-width: 300px) {
+
+    #signupBox > div {
+        width: 57px;
     }
 
     #certifBtn {
         font-size: 8px;
-        width: 55px; 
     }
 
-    #typeRadio {
+    #signupBox > input, #Signup > input, #typeRadio {
         font-size: 13px;
     }
 }
 
 @media only screen and (min-width: 300px) and (max-width: 449px) {
-    #Signup > input, #signupBox > input { 
-        font-size: 14px;
+
+    #signupBox > div {
+        width: 65px;
     }
 
     #certifBtn {
         font-size: 11px;
-        width: 65px; 
     }
 
-    #typeRadio {
+    #signupBox > input, #Signup > input, #typeRadio {
         font-size: 15px;
     }
 }
 
 @media only screen and (min-width: 450px) {
-    #certifBtn {
-        font-size: 14px;
-        width: 75px; 
-    }
+
 }

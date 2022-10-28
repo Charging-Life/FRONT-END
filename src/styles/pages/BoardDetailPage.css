@@ -128,7 +128,7 @@
 }
 
 #file_box > img {
-    width: 50%;
+    width: calc(100% - 20px);
     padding: 5px;
     margin: 10px;
 }
@@ -140,7 +140,7 @@
     }
 
     #comment_input {
-        width: 90%;
+        width: 100%;
         padding: 0;
     }
 }

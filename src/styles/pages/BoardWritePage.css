@@ -64,12 +64,12 @@
 }
 
 #image_none_textArea {
-    height: calc(100% - 150px);
+    height: calc(100% - 100px);
     padding: 10px 5px;
 }
 
 #image_exist_textArea {
-    height: calc(100% - 280px);
+    height: calc(100% - 230px);
     padding: 10px 0px;
 }
 

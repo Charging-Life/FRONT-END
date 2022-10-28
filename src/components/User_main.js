@@ -7,6 +7,7 @@ import useInterval from '../hooks/useInterval';
 import QRModal from './Modals/QRModal';
 
 const User_main = () => {
+    const [userName, setUserName] = useState('COCOPAS')
     // qr코드를 생성하는 모달
     const [qrModal, setQRModal] = useState(false);
     // 시작 시간을 저장하는 useState
@@ -83,6 +84,7 @@ const User_main = () => {
             }
         })
             .then((res) => {
+                setUserName(res.data.name);
             })
             .catch((err) => {
                 console.log(err);
@@ -94,7 +96,7 @@ const User_main = () => {
             <div id='User_main'>
                 <div id='main_progress_box'>
                     <div id='main_progress_info'>
-                        <div>{'COCOPAS'}님</div>
+                        <div>{userName}님</div>
                         {/* <div>현재 {proceedTime.pHour !== 0 && proceedTime.pHour + '시간'} {proceedTime.pMinute}분 째
                             <span>
                                 {startTime.status === 'FAST' ? ' 급속 충전 ' : ' 완속 충전'} 중

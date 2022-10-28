@@ -23,10 +23,10 @@ const Header = ({ page, isListView, setIsListView, setFinalFilter, finalFilter }
 
         if (!isLogined) {
             result.push(<div>
-                <img src='images/icons/CL_icon_login.png' alt='login'
+                <img src={`${process.env.PUBLIC_URL}/images/icons/CL_icon_login.png`} alt='login'
                     className='header_login'
                     onClick={() => { navigate('/login') }} />
-                <img src='images/icons/CL_icon_signup.png' alt='signup'
+                <img src={`${process.env.PUBLIC_URL}/images/icons/CL_icon_signup.png`} alt='signup'
                     className='header_signup'
                     onClick={() => { navigate('/signup') }} />
             </div>);
@@ -84,7 +84,7 @@ const Header = ({ page, isListView, setIsListView, setFinalFilter, finalFilter }
     return (
         <>
             <div className='Header'>
-                <img src='images/CL_Logo_horizontality.png' alt='logo'
+                <img src={`${process.env.PUBLIC_URL}/images/CL_Logo_horizontality.png`} alt='logo'
                     className='header_logo' onClick={onClickLogo} />
                 {makeIcons()}
             </div>

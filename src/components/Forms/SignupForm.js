@@ -214,12 +214,12 @@ const SignupForm = () => {
                     onChange={handleSignupData}
                     placeholder='이름을 입력하세요'/>
             <div id='signupBox'>
-                <input 
+                <div><input 
                     value={signupInfo.email} 
                     type='text' 
                     name='email' 
                     onChange={handleSignupData} 
-                    placeholder='e-mail을 입력하세요'/>
+                    placeholder='e-mail을 입력하세요'/></div>
                 <div>{
                     timerOn ? <Timer/> : (
                     timeover ? 
@@ -228,12 +228,12 @@ const SignupForm = () => {
                 }</div>
             </div>
             <div id='signupBox'>
-                <input 
+                <div><input 
                     value={certificationNum} 
                     type='text' 
                     name='certification'
                     onChange={handleSignupData} 
-                    placeholder='인증번호를 입력하세요'/>
+                    placeholder='인증번호를 입력하세요'/></div>
                     <div><button id='certifBtn' onClick={handleCheckCertifNum}>확인하기</button></div>
                 </div>
             <input 

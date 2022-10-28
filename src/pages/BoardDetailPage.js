@@ -188,7 +188,7 @@ const BoardDetailPage = () => {
     return (
         <div id='BoardDetailPage'>
             <div id='bookmarkHeader'>
-                <Header/>
+                <Header page={"board"}/>
             </div>
             <div id='board_detail_container'>
                 {

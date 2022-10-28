@@ -14,7 +14,6 @@ const BoardPage = () => {
     const category =['전체', '공지게시판', '자유게시판', '충전게시판'];
     const [boards, setBoards] = useState([]);
     const [activeSort, setActiveSort] = useState(0);
-    const [images, setImages] = useState([]);
 
     // 게시글 정렬을 위한 url 변경
     const handleSort = (idx) => {
@@ -61,7 +60,6 @@ const BoardPage = () => {
             alert('로그인 후 이용해주세요.');
             return;
         }
-        
         navigate('/board/write');
     }
 
@@ -76,7 +74,12 @@ const BoardPage = () => {
                             <div>{chanageCategoryText(ele.category)}</div>
                         </div>
                         <div>{ele.description}</div>
-                        <div>
+                        {ele.chargingStation.statNm && 
+                        <div id='station_box'>
+                            <img src='/images/icons/CL_icon_station.png' alt='station'/>
+                            <div>{ele.chargingStation.statNm}</div>
+                        </div>}
+                        <div id='board_bottom_box'>
                             {calcCreateTime(ele.creationDateTime)}&nbsp;|&nbsp;
                             {ele.member.name}&nbsp;|&nbsp;
                             <img src='/images/icons/CL_icon_heart.png' alt='likes'/>&nbsp;
@@ -94,13 +97,11 @@ const BoardPage = () => {
 
     // 게시물 read
     useEffect(() => {
-        
         axios.get(`${process.env.REACT_APP_PROXY}/board/list`)
         .then(res => {
             setBoards(res.data);
         })
         .catch(err => console.log(err));
-
     }, []);
 
     return (

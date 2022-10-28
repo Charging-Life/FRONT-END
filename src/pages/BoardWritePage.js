@@ -1,21 +1,22 @@
 import React, {useState} from 'react';
+import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router';
 
 import '../styles/pages/BoardWritePage.css';
 import '../components/UploadFile.js';
 import UploadFile from '../components/UploadFile.js';
-import axios from 'axios';
-import { useNavigate } from 'react-router';
 
 const BoardWritePage = () => {
 
-    const options = localStorage.getItem('CL_auth') === 'MANAGER' ? [['공지게시판', 'NOTICE']] : [['자유게시판', 'FREE']];
     const [file, setFile] = useState([]);
     const navigate = useNavigate();
+    const {state} = useLocation();
+    const category = state ? 'STATION' : 'FREE';
  
     const [writeData, setWriteData] = useState({
         title: '',
         description: '',
-        category: ''
+        category: category
     });
 
     const handleChangeData = (e) => {
@@ -41,6 +42,10 @@ const BoardWritePage = () => {
         if(!writeData.description) {
             alert('내용을 입력해주세요.');
             return;
+        }
+
+        if(state) {
+            writeData.statId = state;
         }
 
         if(window.confirm('게시글을 작성하시겠습니까?')) {
@@ -69,7 +74,10 @@ const BoardWritePage = () => {
                 navigate('/board');
             })
             .catch(err => {
-                alert('작성에 실패하였습니다.');
+                if(!checkExpireToken(err.response.status)) {
+                    navigate('/login');
+                }
+                else alert('작성에 실패하였습니다.');
             });
         }
 
@@ -80,14 +88,14 @@ const BoardWritePage = () => {
         <div id='BoardWritePage'>
             <div id='write_page_header'>
                 <div></div>
-                <div>게시글 작성</div>
+                <div>{state ? '충전소 게시글 작성' : '게시글 작성'}</div>
                 <div onClick={handlePost}>완료</div>
             </div>
             <div id='write_form'>
-                <select defaultValue=''  name='category' onChange={handleChangeData}>
+                {/* <select defaultValue=''  name='category' onChange={handleChangeData}>
                     <option disabled value=''>게시판 선택</option>
                     {options.map((x, i) => <option key={i} value={x[1]}>{x[0]}</option>)}
-                </select>
+                </select> */}
                 <input type='text' value={writeData.title} name='title' onChange={handleChangeData} placeholder='제목을 입력하세요.' />
                 <textarea id={file.length === 0 ? 'image_none_textArea' : 'image_exist_textArea'} value={writeData.description}  name='description' onChange={handleChangeData} placeholder='내용을 작성하세요.'></textarea>
                 <div>

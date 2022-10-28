@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from 'react-router';
 import '../../styles/components/Modals/ChargingStationModal.css';
 
 const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmarked, color}) => {
+    const navi = useNavigate();
+
     const [stationDetail, setStationDetail] = useState({});
     const [business, setBusiness] = useState({});
     const [isWished, setIsWished] = useState();
@@ -173,6 +176,12 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
             })
             .catch((err)=>{
                 console.log(err);
+                console.log('토큰이 만료되었습니다. 다시 로그인 해주세요.');
+                navi(`/login`);
+
+                localStorage.removeItem('CL_accessToken');
+                localStorage.removeItem('CL_refreshToken');
+                localStorage.removeItem('CL_auth');
             })
             
         }

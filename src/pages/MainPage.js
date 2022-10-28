@@ -90,7 +90,7 @@ const MainPage = () => {
                 })
         }
         else if (location !== '') {
-            axios.get(`${process.env.REACT_APP_PROXY}${isManager ? '/station/manager' : `/station?city=${location}`}`)
+            axios.get(`${process.env.REACT_APP_PROXY}/station?city=${location}`)
                 .then((res) => {
                     filteringData(res.data);
                 })

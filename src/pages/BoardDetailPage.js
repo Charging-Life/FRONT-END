@@ -8,6 +8,7 @@ import {chanageCategoryText} from '../utils/changeData';
 import '../styles/pages/BoardDetailPage.css';
 import BoardCommentBox from '../components/BoardCommentBox';
 import { calcCreateTime } from '../utils/changeData';
+import {checkExpireToken} from '../utils/checkExpireToken';
 
 const BoardDetailPage = () => {
 
@@ -18,6 +19,8 @@ const BoardDetailPage = () => {
     const [commentValue, setCommentValue] = useState('');
     const [isLiked, setIsLiked] = useState(false);
     const [likeCnt, setLikeCnt] = useState();
+
+    console.log(detailData);
 
     // ------------------------ 댓글 ------------------------------
 
@@ -35,6 +38,9 @@ const BoardDetailPage = () => {
     // category가 자유이면 사진 추가, 충전이면 충전소 위치 추가
     const makeDetailInfo = () => {
         if(detailData.category === 'FREE') {
+            return <div id='file_box'>{detailData.fileId && makeFile(detailData.fileId)}</div>
+        }
+        else if(detailData.category === 'STATION') {
             return <div id='file_box'>{detailData.fileId && makeFile(detailData.fileId)}</div>
         }
     }
@@ -78,7 +84,12 @@ const BoardDetailPage = () => {
                 setCommentValue('');
                 window.location.reload();
             })
-            .catch(err => console.log(err));
+            .catch(err =>{
+                if(!checkExpireToken(err.response.status)) {
+                    navigate('/login');
+                }
+                else alert('작성에 실패하였습니다.');
+            });
         }
     }
 
@@ -136,7 +147,10 @@ const BoardDetailPage = () => {
             }
         })
         .catch(err => {
-            console.log(err);
+            if(!checkExpireToken(err.response.status)) {
+                navigate('/login');
+            }
+            else alert('데이터를 불러오지 못했습니다.');
         })
 
     }
@@ -163,7 +177,12 @@ const BoardDetailPage = () => {
                     setLikeCnt(likeCnt+1);
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                if(!checkExpireToken(err.response.status)) {
+                    navigate('/login');
+                }
+                else alert('실패하였습니다.');
+            });
         }
     }
 
@@ -223,7 +242,7 @@ const BoardDetailPage = () => {
                         </div>
                     </>
                 }
-                <div id='comment_cnt'>{comments.length}개의 댓글</div>
+                <div id='comment_cnt'>&nbsp;{comments.length}개의 댓글</div>
                 {/* 댓글 입력창 */}
                 {
                     localStorage.getItem('CL_accessToken') && 

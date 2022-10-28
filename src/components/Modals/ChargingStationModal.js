@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router';
 import '../../styles/components/Modals/ChargingStationModal.css';
+import {checkExpireToken} from '../../utils/checkExpireToken';
 
 const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmarked, color}) => {
-    const navi = useNavigate();
+    const navigate = useNavigate();
 
     const [stationDetail, setStationDetail] = useState({});
     const [business, setBusiness] = useState({});
@@ -35,7 +36,6 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
         'disconnected': '통신미연결',
         'shutdown': '운영중지'
     }
-
 
     const setType = (type) => {
         
@@ -76,7 +76,12 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
                 alert('해제되었습니다.');
                 setIsBookmarked(false);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                if(!checkExpireToken(err.response.status)) {
+                    navigate('/login');
+                }
+                else alert('실패하였습니다.');
+            });
         }
         // 안되어있으면 추가
         else {
@@ -91,7 +96,10 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
                 setIsBookmarked(true);
             })
             .catch((err)=>{
-                console.log(err);
+                if(!checkExpireToken(err.response.status)) {
+                    navigate('/login');
+                }
+                else alert('실패하였습니다.');
             })
         }
     }
@@ -111,7 +119,12 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
                 setCount(count-1);
                 setIsWished(false);
             })
-            .catch(err => {console.log(err)});
+            .catch(err => {
+                if(!checkExpireToken(err.response.status)) {
+                    navigate('/login');
+                }
+                else alert('실패하였습니다.');
+            });
         }
         // 안되어있으면 등록
         else {
@@ -128,7 +141,12 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
                 setCount(count+1);
                 setIsWished(true);
             })
-            .catch(err => {console.log(err)});
+            .catch(err => {
+                if(!checkExpireToken(err.response.status)) {
+                    navigate('/login');
+                }
+                else alert('실패하였습니다.');
+            });
         }
     
     }
@@ -175,13 +193,10 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
                 setIsWished(res.data.checkDes);
             })
             .catch((err)=>{
-                console.log(err);
-                console.log('토큰이 만료되었습니다. 다시 로그인 해주세요.');
-                navi(`/login`);
-
-                localStorage.removeItem('CL_accessToken');
-                localStorage.removeItem('CL_refreshToken');
-                localStorage.removeItem('CL_auth');
+                if(!checkExpireToken(err.response.status)) {
+                    navigate('/login');
+                }
+                else alert('데이터를 불러오지 못하였습니다.');
             })
             
         }
@@ -197,13 +212,13 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
                 </Modal.Header>
                 <Modal.Body className='station-detail-modal'>
                     <div className='modal-charging-info'>
-                        <span id='charging-state' className={color}>{status[color]}</span>
+                        {color !== "none" && <span id='charging-state' className={color}>{status[color]}</span>}
                         <div id='charging-location'>
                             <div id={ isUser ? 'user-charging-location-info' : ''}>
                                 <b>{stationDetail.statNm}</b><br/>
                                 <span>{stationDetail.address}</span>
                             </div>
-                            { isUser && <div id='starBox' onClick={handleBookMark}><img src={isbookmarked ? 'images/icons/CL_icon_selected_star.png' : 'images/icons/CL_icon_star.png'}/></div>}
+                            { color !== "none" && isUser && <div id='starBox' onClick={handleBookMark}><img src={isbookmarked ? 'images/icons/CL_icon_selected_star.png' : 'images/icons/CL_icon_star.png'}/></div>}
                         </div>
                         <hr/>
                         <div id='charging-station-info-text'><b>충전소 정보</b> { isUser && <span>현재 {count}대가 가는중이예요</span>}</div>
@@ -212,16 +227,16 @@ const ChargingStationModal = ({show, onHide, statId, isbookmarked, setIsBookmark
                             <div>운영 시간 &nbsp;&nbsp; {stationDetail.useTime?stationDetail.useTime:'-'}</div>
                             <div>연락처 &nbsp;&nbsp; {(business.businessCall&&stationDetail.business.businessCall!=='null')?stationDetail.business.businessCall:'-'}</div>
                             <div>주차 요금 &nbsp;&nbsp; {stationDetail.parkingFree?'무료':'유료'}</div>
-                        </div><br/><hr/>
+                        </div><hr/>
                         <div id='charging-type'><b>충전기 정보</b></div>
                         <div id='charger-list-box'>
                             {makeChargerList()}
                         </div>
-                        <br/>
                     </div>
                     {isUser &&
                     <div id='gotoBtn'>
                         <button onClick={handleWish}>{isWished ? '가고 있는 중입니다 !' : '지금 출발할게요 !'}</button>
+                        <button onClick={() => navigate('/board/write', { state: stationDetail.statId })}>글쓰기</button>
                     </div>
                     }
                 </Modal.Body>

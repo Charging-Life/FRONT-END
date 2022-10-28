@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import UpdateModal from '../components/Modals/UpdateModal';
 import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
 import Bar from '../components/bars/Bar';
+import {checkExpireToken} from '../utils/checkExpireToken';
 
 const MyPage = () => {
     const navigate = useNavigate();
@@ -117,13 +118,10 @@ const MyPage = () => {
             })
         })
         .catch((err) => {
-            console.log(err);
-            console.log('토큰이 만료되었습니다. 다시 로그인 해주세요.');
-            navigate(`/login`);
-
-            localStorage.removeItem('CL_accessToken');
-            localStorage.removeItem('CL_refreshToken');
-            localStorage.removeItem('CL_auth');
+            if(!checkExpireToken(err.response.status)) {
+                navigate('/login');
+            }
+            else alert('데이터를 불러오지 못하였습니다.');
         })
 
         axios.get(`${process.env.REACT_APP_PROXY}/station/manager`,{
@@ -144,13 +142,10 @@ const MyPage = () => {
             setManageStation(addList);
         })
         .catch((err)=>{
-            console.log(err);
-            console.log('토큰이 만료되었습니다. 다시 로그인 해주세요.');
-            navigate(`/login`);
-
-            localStorage.removeItem('CL_accessToken');
-            localStorage.removeItem('CL_refreshToken');
-            localStorage.removeItem('CL_auth');
+            if(!checkExpireToken(err.response.status)) {
+                navigate('/login');
+            }
+            else alert('데이터를 불러오지 못했습니다.');
         })
     }, []);
 
@@ -164,7 +159,7 @@ const MyPage = () => {
                 <div className='user_info_box'>
                     <div id='name_email_text'>
                         <div>{userInfo.name} 님</div>
-                        <div class='my_title_text'>이메일</div>
+                        <div className='my_title_text'>이메일</div>
                         <div>{userInfo.email}</div>
                     </div>
                     { classifyAuth() }

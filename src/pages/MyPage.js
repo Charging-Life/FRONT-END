@@ -118,6 +118,12 @@ const MyPage = () => {
         })
         .catch((err) => {
             console.log(err);
+            console.log('토큰이 만료되었습니다. 다시 로그인 해주세요.');
+            navigate(`/login`);
+
+            localStorage.removeItem('CL_accessToken');
+            localStorage.removeItem('CL_refreshToken');
+            localStorage.removeItem('CL_auth');
         })
 
         axios.get(`${process.env.REACT_APP_PROXY}/station/manager`,{
@@ -139,6 +145,12 @@ const MyPage = () => {
         })
         .catch((err)=>{
             console.log(err);
+            console.log('토큰이 만료되었습니다. 다시 로그인 해주세요.');
+            navigate(`/login`);
+
+            localStorage.removeItem('CL_accessToken');
+            localStorage.removeItem('CL_refreshToken');
+            localStorage.removeItem('CL_auth');
         })
     }, []);
 

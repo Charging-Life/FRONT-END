@@ -5,6 +5,7 @@ import Bar from '../components/bars/Bar';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import KakaoMap from '../components/KakaoMap';
+import { useNavigate } from 'react-router';
 
 const MainPage = () => {
     const isManager = localStorage.getItem('CL_auth') && localStorage.getItem('CL_auth') === 'COMPANY' ? true : false;
@@ -14,6 +15,8 @@ const MainPage = () => {
     const [clickBtn, setClickBtn] = useState(false);
     const [userMain, setUserMain] = useState(false);
     const [finalFilter, setFinalFilter] = useState('');
+
+    const navi = useNavigate();
 
     const filteringData = (data) => {
         if(finalFilter !== ''){
@@ -98,7 +101,11 @@ const MainPage = () => {
     }, [location, userMain, finalFilter])
 
     const clickUserBtn = () => {
-        localStorage.getItem('CL_accessToken')?setClickBtn(true):alert('로그인 후 이용해주세요.');
+        if(localStorage.getItem('CL_accessToken')) setClickBtn(true)
+        else {
+            alert('로그인 후 이용해주세요.');
+            navi(`/login`);
+        }
     }
 
     useEffect(() => {

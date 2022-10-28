@@ -6,8 +6,10 @@ import './/..//styles/pages/BookmarkPage.css';
 import Bottombar from '../components/bars/Bar.js';
 import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
 import BookmarkBox from '../components/BookmarkBox';
+import { useNavigate } from 'react-router';
 
 const BookmarkPage = () => {
+    const navi = useNavigate();
 
     const [isListView, setIsListView] = useState(true);
     const [manageStation, setManageStation] = useState([]);
@@ -22,7 +24,15 @@ const BookmarkPage = () => {
         .then(res => {
             setManageStation(res.data);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            console.log('토큰이 만료되었습니다. 다시 로그인 해주세요.');
+            navi(`/login`);
+
+            localStorage.removeItem('CL_accessToken');
+            localStorage.removeItem('CL_refreshToken');
+            localStorage.removeItem('CL_auth');
+        });
     }, []);
 
     return (

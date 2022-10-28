@@ -6,8 +6,11 @@ import '../../styles/components/OffCanvases/NoticeOffCanvas.css';
 import NoticeModal from '../Modals/NoticeModal';
 import ChargingStationModal from '../Modals/ChargingStationModal';
 import useInterval from '../../hooks/useInterval';
+import { useNavigate } from 'react-router';
 
 const NoticeOffCanvas = ({ show, onHide }) => {
+    const navi = useNavigate();
+
     const [showNotice, setShowNotice] = useState(false);
     const [showStation, setShowStation] = useState(false);
     const [detailInfo, setDetailInfo] = useState({});
@@ -119,6 +122,12 @@ const NoticeOffCanvas = ({ show, onHide }) => {
             })
             .catch((err) => {
                 console.log(err);
+                console.log('토큰이 만료되었습니다. 다시 로그인 해주세요.');
+                navi(`/login`);
+
+                localStorage.removeItem('CL_accessToken');
+                localStorage.removeItem('CL_refreshToken');
+                localStorage.removeItem('CL_auth');
             });
 
     }, 1000000);

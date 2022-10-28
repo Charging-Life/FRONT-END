@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router';
 import '../styles/pages/BoardWritePage.css';
 import '../components/UploadFile.js';
 import UploadFile from '../components/UploadFile.js';
+import { checkExpireToken } from '../utils/checkExpireToken';
 
 const BoardWritePage = () => {
 

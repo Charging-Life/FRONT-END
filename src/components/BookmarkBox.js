@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 
-const BookmarkBox = ({data, idx, handleClick, manageStation, setManageStation}) => {
+const BookmarkBox = ({data, idx, handleDetail, manageStation, setManageStation}) => {
 
     const handleCancelBookMark = (e) => {
         
@@ -25,7 +25,7 @@ const BookmarkBox = ({data, idx, handleClick, manageStation, setManageStation}) 
 
     return (
         <>
-            <div id='stationBox' key={idx} onClick={handleClick}>
+            <div id='stationBox' key={idx} onClick={handleDetail}>
                 <div>
                     {data.statNm} <br/> 
                     <span>{data.address}</span> <br/>

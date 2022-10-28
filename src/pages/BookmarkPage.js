@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 import Header from '../components/Header';
 import './/..//styles/pages/BookmarkPage.css';
 import Bottombar from '../components/bars/Bar.js';
 import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
+import ChargingStationModal from '../components/Modals/ChargingStationModal';
 import BookmarkBox from '../components/BookmarkBox';
-import { useNavigate } from 'react-router';
 
 const BookmarkPage = () => {
     const navi = useNavigate();
@@ -14,6 +15,13 @@ const BookmarkPage = () => {
     const [isListView, setIsListView] = useState(true);
     const [manageStation, setManageStation] = useState([]);
     const [showSearchModal, setShowSearchModal] = useState(false);
+    const [showStationModal, setShowStationModal] = useState(false);
+    const [statId, setStatId] = useState('');
+
+    const handleDetail = (statId) => {
+        setStatId(statId);
+        setShowStationModal(true);
+    }
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_PROXY}/station/manager`,{
@@ -50,7 +58,7 @@ const BookmarkPage = () => {
                     <div id='bookmarkContainer'>
                         { 
                             manageStation.map((ele, idx) => {
-                                return <BookmarkBox data={ele} key={idx} 
+                                return <BookmarkBox data={ele} key={idx} handleDetail={() => handleDetail(ele.statId)}
                                 manageStation={manageStation} setManageStation={setManageStation} />
                             })
                         }
@@ -64,7 +72,15 @@ const BookmarkPage = () => {
                     onHide={()=>{setShowSearchModal(false)}}
                     manageStation={manageStation} 
                     setManageStation={setManageStation}/>
+            <ChargingStationModal
+                    show={showStationModal}
+                    statId={statId}
+                    isbookmarked={true}
+                    color={"none"}
+                    onHide={() => { setShowStationModal(false) }}
+            />
         </div>
+        
     );
 };
 

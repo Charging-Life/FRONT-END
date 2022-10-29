@@ -58,6 +58,7 @@ const BoardPage = () => {
     const handleWrite = () => {
         if(!localStorage.getItem('CL_accessToken')) {
             alert('로그인 후 이용해주세요.');
+            navigate('/login');
             return;
         }
         navigate('/board/write');

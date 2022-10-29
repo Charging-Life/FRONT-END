@@ -8,6 +8,7 @@ import Bottombar from '../components/bars/Bar.js';
 import ChargingSearchModal from '../components/Modals/ChargingSearchModal';
 import ChargingStationModal from '../components/Modals/ChargingStationModal';
 import BookmarkBox from '../components/BookmarkBox';
+import { checkExpireToken } from '../utils/checkExpireToken';
 
 const BookmarkPage = () => {
     const navi = useNavigate();
@@ -34,12 +35,9 @@ const BookmarkPage = () => {
         })
         .catch(err => {
             console.log(err);
-            console.log('토큰이 만료되었습니다. 다시 로그인 해주세요.');
-            navi(`/login`);
-
-            localStorage.removeItem('CL_accessToken');
-            localStorage.removeItem('CL_refreshToken');
-            localStorage.removeItem('CL_auth');
+            if(checkExpireToken(err.response.status)) {
+                navi('/login');
+            }
         });
     }, []);
 

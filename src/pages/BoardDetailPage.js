@@ -8,7 +8,7 @@ import {chanageCategoryText} from '../utils/changeData';
 import '../styles/pages/BoardDetailPage.css';
 import BoardCommentBox from '../components/BoardCommentBox';
 import { calcCreateTime } from '../utils/changeData';
-import {checkExpireToken} from '../utils/checkExpireToken';
+import { checkExpireToken } from '../utils/checkExpireToken';
 
 const BoardDetailPage = () => {
 
@@ -85,7 +85,7 @@ const BoardDetailPage = () => {
                 window.location.reload();
             })
             .catch(err =>{
-                if(!checkExpireToken(err.response.status)) {
+                if(checkExpireToken(err.response.status)) {
                     navigate('/login');
                 }
                 else alert('작성에 실패하였습니다.');
@@ -135,28 +135,35 @@ const BoardDetailPage = () => {
 
     // 게시글 좋아요 여부
     const getIsLiked = () => {
-        
-        axios.get(`${process.env.REACT_APP_PROXY}/board/${id}/check`, {
-            headers: {
-                'Authorization': localStorage.getItem('CL_accessToken')
-            }
-        }) 
-        .then(res => {
-            if(res.data === 'PRESENT') {
-                setIsLiked(true);
-            }
-        })
-        .catch(err => {
-            if(!checkExpireToken(err.response.status)) {
-                navigate('/login');
-            }
-            else alert('데이터를 불러오지 못했습니다.');
-        })
 
+        if(localStorage.getItem('CL_accessToken')) {
+            axios.get(`${process.env.REACT_APP_PROXY}/board/${id}/check`, {
+                headers: {
+                    'Authorization': localStorage.getItem('CL_accessToken')
+                }
+            }) 
+            .then(res => {
+                if(res.data === 'PRESENT') {
+                    setIsLiked(true);
+                }
+            })
+            .catch(err => {
+                if(checkExpireToken(err.response.status)) {
+                    navigate('/login');
+                }
+                else alert('데이터를 불러오지 못했습니다.');
+            })
+        }
     }
 
     // 게시글 좋아요 등록 / 취소 
     const handleLikes = () => {
+
+        if(!localStorage.getItem('CL_accessToken')) {
+            alert('로그인 후 이용해주세요.');
+            navigate('/login');
+            return;
+        }
 
         let flag = isLiked ? 'UNLIKE' : 'LIKE';
 
@@ -178,7 +185,7 @@ const BoardDetailPage = () => {
                 }
             })
             .catch(err => {
-                if(!checkExpireToken(err.response.status)) {
+                if(checkExpireToken(err.response.status)) {
                     navigate('/login');
                 }
                 else alert('실패하였습니다.');
@@ -224,7 +231,7 @@ const BoardDetailPage = () => {
                             </div>
                             {/* 제목, 설명 */}
                             <div id='board_middle_box'>
-                                <span>{detailData.title}</span><br/>{detailData.description}<br/><br/>
+                                <span>{detailData.title}</span><br/><br/>{detailData.description}<br/><br/>
                                 {/* category가 자유이면 사진 추가, 충전이면 충전소 위치 추가 */}
                                 {makeDetailInfo()}
                             </div>

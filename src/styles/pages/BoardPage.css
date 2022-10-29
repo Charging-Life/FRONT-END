@@ -84,8 +84,17 @@
     font-weight: bold;
 }
 
+#board_top_box > div:nth-child(1) {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 #board_top_box > div:nth-child(2) {
-    padding: 0px 8px;
+    width: 65px;
+    text-align: center;
+    margin-left: 15px;
     border-radius: 15px;
     box-shadow: 0 3px 16px 0 rgba(90, 92, 92, 0.1);
     color: #48DB8C;

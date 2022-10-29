@@ -12,7 +12,7 @@ const BoardWritePage = () => {
     const [file, setFile] = useState([]);
     const navigate = useNavigate();
     const {state} = useLocation();
-    const category = state ? 'STATION' : 'FREE';
+    const category = localStorage.getItem('CL_auth') === 'MANAGER' ? 'NOTICE' : state ? 'STATION' : 'FREE';
  
     const [writeData, setWriteData] = useState({
         title: '',
@@ -75,7 +75,7 @@ const BoardWritePage = () => {
                 navigate('/board');
             })
             .catch(err => {
-                if(!checkExpireToken(err.response.status)) {
+                if(checkExpireToken(err.response.status)) {
                     navigate('/login');
                 }
                 else alert('작성에 실패하였습니다.');
@@ -93,10 +93,6 @@ const BoardWritePage = () => {
                 <div onClick={handlePost}>완료</div>
             </div>
             <div id='write_form'>
-                {/* <select defaultValue=''  name='category' onChange={handleChangeData}>
-                    <option disabled value=''>게시판 선택</option>
-                    {options.map((x, i) => <option key={i} value={x[1]}>{x[0]}</option>)}
-                </select> */}
                 <input type='text' value={writeData.title} name='title' onChange={handleChangeData} placeholder='제목을 입력하세요.' />
                 <textarea id={file.length === 0 ? 'image_none_textArea' : 'image_exist_textArea'} value={writeData.description}  name='description' onChange={handleChangeData} placeholder='내용을 작성하세요.'></textarea>
                 <div>

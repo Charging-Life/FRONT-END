@@ -52,6 +52,11 @@ const SignupForm = () => {
             alert('이메일을 형식에 맞게 입력해 주세요.');
             return;
         }
+
+        if(completeCertification) {
+            alert('이미 인증이 완료되었습니다.');
+            return;
+        }
         
         axios.post(`${process.env.REACT_APP_PROXY}/email`, {
             'email': signupInfo.email
@@ -70,6 +75,11 @@ const SignupForm = () => {
 
     // 인증번호 재발송 요청 통신
     const handleReCertification = () => {
+
+        if(completeCertification) {
+            alert('이미 인증이 완료되었습니다.');
+            return;
+        }
 
         axios.patch(`${process.env.REACT_APP_PROXY}/email`, {
             'email': signupInfo.email
@@ -94,6 +104,11 @@ const SignupForm = () => {
 
         if(!certificationNum) {
             alert('인증번호를 입력해주세요.');
+            return;
+        }
+
+        if(completeCertification) {
+            alert('이미 인증이 완료되었습니다.');
             return;
         }
         
@@ -221,7 +236,7 @@ const SignupForm = () => {
                     onChange={handleSignupData} 
                     placeholder='e-mail을 입력하세요'/></div>
                 <div>{
-                    timerOn ? <Timer/> : (
+                    timerOn ? <Timer setTimeover={setTimeover} setTimerOn={setTimerOn}/> : (
                     timeover ? 
                     <button id='certifBtn' onClick={handleReCertification}>재발급받기</button> :
                     <button id='certifBtn' onClick={handleCertification}>인증하기</button>)

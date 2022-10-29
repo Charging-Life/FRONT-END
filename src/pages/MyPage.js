@@ -87,6 +87,7 @@ const MyPage = () => {
     const onClickLogout = () => {
         // 로그아웃 통신
         if(window.confirm("로그아웃 하시겠습니까 ?")) {
+            localStorage.removeItem('CL_email');
             localStorage.removeItem('CL_accessToken');
             localStorage.removeItem('CL_refreshToken');
             localStorage.removeItem('CL_auth');
@@ -96,6 +97,24 @@ const MyPage = () => {
 
     const onClickSignout = () => {
         // 회원탈퇴 통신
+        if(window.confirm('회원탈퇴를 진행하시겠습니까?')) {
+            axios.delete(`${process.env.REACT_APP_PROXY}/member`, {
+                headers: {
+                    Authorization: localStorage.getItem('CL_accessToken')
+                }
+            })
+            .then(res => {
+                alert('탈퇴되었습니다.');
+                localStorage.removeItem('CL_email');
+                localStorage.removeItem('CL_accessToken');
+                localStorage.removeItem('CL_refreshToken');
+                localStorage.removeItem('CL_auth');
+                navigate('/');
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
     }
 
     useEffect(() => {
@@ -118,10 +137,10 @@ const MyPage = () => {
             })
         })
         .catch((err) => {
-            if(!checkExpireToken(err.response.status)) {
+            if(checkExpireToken(err.response.status)) {
                 navigate('/login');
             }
-            else alert('데이터를 불러오지 못하였습니다.');
+            else alert('데이터를 불러오지 못했습니다.');
         })
 
         axios.get(`${process.env.REACT_APP_PROXY}/station/manager`,{
@@ -142,7 +161,7 @@ const MyPage = () => {
             setManageStation(addList);
         })
         .catch((err)=>{
-            if(!checkExpireToken(err.response.status)) {
+            if(checkExpireToken(err.response.status)) {
                 navigate('/login');
             }
             else alert('데이터를 불러오지 못했습니다.');

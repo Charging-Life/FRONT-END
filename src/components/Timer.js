@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const Timer = () => {
+const Timer = ({setTimeover, setTimerOn}) => {
     const [min, setMin] = useState(3);
     const [sec, setSec] = useState(0);
     const time = useRef(180);
@@ -17,7 +17,12 @@ const Timer = () => {
     }, []);
 
     useEffect(() => {
-        if(time.current <= 0) {
+        if(time.current === 0) {
+            alert('입력 시간을 초과하였습니다. 재발급해주세요.');
+            setTimeover(true);
+            setTimerOn(false);
+        }
+        if(time.current < 0) {
             clearInterval(timerId.current);
         }
     }, [sec]);

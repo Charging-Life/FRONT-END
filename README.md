@@ -10,7 +10,7 @@
 ## ⚡️ 프로젝트 소개
 
 <div align="center">
-  <div>슬리로운충전생활은 전기차 차주들의 충전소 이용과 충전소 단속 예방에 도움을 주고자 개발한 서비스입니다.</div>
+  <div>슬기로운 충전생활은 <b>전기차 차주들의 충전소 이용과 충전소 단속 예방에 도움을 주고자 개발한 서비스</b>입니다.</div>
   <div>주요 기능으로는 충전소 정보 확인, 전기차 충전 상태 조회, 충전소 관리 등이 있습니다.</div>
   <div>🏆 제 10회 K-해커톤에서 우수상 수상 프로젝트 입니다.</div>
 </div>
@@ -97,8 +97,8 @@
 
 ### 설치
 ```
-$ git clone https://github.com/GHWooo/LIKIT-Frontend.git
-$ cd LIKIT-Frontend
+$ git clone https://github.com/Charging-Life/FRONT-END.git
+$ cd FRONT-END
 ```
 
 ### 실행
